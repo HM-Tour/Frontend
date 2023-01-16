@@ -1,8 +1,7 @@
 import React from "react";
 import Comments from "./Comments";
 import Map from "./Map";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEnvelope } from '@fortawesome/free-solid-svg-icons'
+
 
 export default function PostDetails() {
   return (
