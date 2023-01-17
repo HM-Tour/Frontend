@@ -33,7 +33,7 @@ export default function CreateComment(){
 
     return(
 
-        <div class="max-w-lg rounded-lg shadow-md shadow-lg">
+        <div class="max-w-lg rounded-lg shadow-md shadow-lg ">
         <form onSubmit={handleSubmit} class="w-full p-4">
           <div class="mb-2">
             <label for="comment" class="text-lg text-gray-600">Add a comment</label>

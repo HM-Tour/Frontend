@@ -2,7 +2,7 @@
 
 import { Inter } from '@next/font/google'
 import Header from './components/Header';
-import PostDetails from './components/PostDetails';
+import PostDetails from './Post/page';
 import Map from './components/Map'
 
 import PostsCard from './components/PostsCard';
@@ -28,7 +28,7 @@ export default function Home({data , done}) {
           {posts.map((post) => <PostsCard key={post.title} post={post} />)}
 
       
-      <PostDetails/>
+      
       {/* {tokens ? <><Form/></> : <LoginForm/>} */}
       </div>
     </>

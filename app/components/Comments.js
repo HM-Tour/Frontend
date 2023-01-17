@@ -1,18 +1,16 @@
-
 "use client";
-import React, { useEffect,useState } from "react";
+import React, { useEffect, useState } from "react";
 import CreateComment from "./CreateComment";
 import axios from "axios";
 
 export default function Comments() {
-
-
   const [data, setData] = useState([]);
-
 
   useEffect(() => {
     const fetchData = async () => {
-      const result = await axios.get("http://127.0.0.1:8000/api/comments/post/1");
+      const result = await axios.get(
+        "http://127.0.0.1:8000/api/comments/post/1"
+      );
       setData(result.data);
     };
     const intervalId = setInterval(() => {
@@ -23,50 +21,49 @@ export default function Comments() {
 
   const handleDelete = async (id) => {
     await axios.delete(`http://127.0.0.1:8000/api/comments/${id}`);
-  }
-
+  };
 
   return (
-
     <>
-   
-   <CreateComment/>
-   <section  class="p-6 md:p-12 text-center md:text-left shadow-lg rounded-md" >
-   
-      <div class="max-w-3xl">
-   
-    {data.map((item) => (
      
-    
- 
 
-    
-        <div class="block p-6 rounded-lg shadow-lg bg-white m-4">
-          <div key={item.id} class="md:flex md:flex-row">
-            <div
-              class="md:w-96 w-36 flex justify-center items-center mb-6 lg:mb-0 mx-auto md:mx-0"
-            >
-              <img
-                src="https://mdbootstrap.com/img/Photos/Avatars/img%20%2810%29.jpg"
-                class="rounded-full shadow-md"
-                alt="woman avatar"
-              />
+      <div class="antialiased mx-auto max-w-screen-sm">
+        <h3 class="mb-4 text-lg font-semibold text-gray-900">Comments</h3>
+
+        {data.map((item) => (
+          <div key={item.id} class="space-y-4 ">
+            <div class="flex">
+              <div class="flex-shrink-0 mr-3">
+                <img
+                  class="mt-2 rounded-full w-8 h-8 sm:w-10 sm:h-10"
+                  src="https://images.unsplash.com/photo-1604426633861-11b2faead63c?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=200&h=200&q=80"
+                  alt=""
+                />
+              </div>
+              <div class="flex-1 border rounded-lg px-4 py-2 sm:px-6 sm:py-4 leading-relaxed">
+                <strong>{item.author.name}</strong>{" "}
+                <span class="text-xs text-gray-400">{item.created_at}</span>
+                <p class="text-sm">{item.body}</p>
+                <button
+                  onClick={handleDelete}
+                  type="button"
+                  title="Start buying"
+                  class="w-full py-3 px-6 text-center rounded-full transition bg-blue-400 hover:bg-blue-200 active:bg-blue-400 focus:bg-yellow-300 sm:w-max"
+                >
+                  <span class="block text-black font-semibold text-sm">
+                    Delete
+                  </span>
+                </button>
+              </div>
             </div>
-            <div class="md:ml-6">
-              <p class="text-gray-500 font-light mb-6">
-              {item.body}
-              </p>
-              <p class="font-semibold text-xl mb-2 text-gray-800">{item.author.name}</p>
-              
-            </div>
-            <button onClick={() => handleDelete(item.id)}>Delete</button>
           </div>
-        </div>
-     
-   
-))}
- </div>
-  </section>
-  </>
+        ))}
+      </div>
+
+      <div className="grid  place-items-center">
+      <CreateComment />
+      </div>
+      
+    </>
   );
 }
