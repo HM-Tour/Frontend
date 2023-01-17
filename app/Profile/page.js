@@ -1,12 +1,67 @@
 'use client'
 import react from "react";
-import { useState } from "react";
+import axios from 'axios';
+import Head from "next/head";
+import Image from 'next/image';
+import { useState, useEffect } from "react";
 // reactstrap components
+
 
 export default function Profile() {
 
     const [showModal, setShowModal] = useState(false);
+    const [image, setImage] = useState(null);
+    const [altText, setAltText] = useState('');
+    const [Title, setTitle] = useState('');
+    const [Description, setDescription] = useState('');
+    const [Date, setDate] = useState('');
+    const [Rate, setRate] = useState('');
+    const [Location, setLocation] = useState('');
+    const [Cost, setCost] = useState('');
+    const [images, setImages] = useState(null);
+    const [updated, setUpdated] = useState(false);
 
+    const onFileChange = e => setImage(e.target.files[0]);
+    const onAltChange = e => setAltText(e.target.value);
+    const onTitleChange = e => setTitle(e.target.value);
+    const onDescriptionChange = e => setDescription(e.target.value);
+    const onDateChange = e => setDate(e.target.value);
+    const onRateChange = e => setRate(e.target.value);
+    const onLocationChange = e => setLocation(e.target.value);
+    const onCostChange = e => setCost(e.target.value);
+
+    const onSubmit = async e => {
+        e.preventDefault();
+
+        const config = {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'multipart/form-data',
+            }
+        };
+
+    const formData = new FormData();
+    formData.append('image', image);
+    formData.append('alt_text', altText);
+    formData.append('Title', Title);
+    formData.append('Description', Description);
+    formData.append('Date', Date);
+    formData.append('Rate', Rate);
+    formData.append('Location', Location);
+    formData.append('Cost', Cost);
+
+    const body = formData;
+
+    try {
+        const res = await axios.post('http://localhost:8000/api/posts/upload', body, config);
+
+        if (res.status === 201) {
+            setUpdated(!updated);
+        }
+    } catch(err) {
+
+    }
+ };
     return (
         <>
 
@@ -51,7 +106,7 @@ export default function Profile() {
                 <div>
                     <div class="md:grid md:grid-cols-3 md:gap-6 ml-64">
                         <div class="mt-5 md:mt-0 md:col-span-2">
-                            <form action="#" method="POST">
+                            <form action="#" onSubmit={onSubmit} method="POST">
                                 <div class="shadow sm:rounded-md sm:overflow-hidden">
                                     <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
                                         {/**Title label & input */}
@@ -64,7 +119,7 @@ export default function Profile() {
                                                     <span class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
                                                         Title
                                                     </span>
-                                                    <input type="text" name="company_website" id="company_website" class="ml-6 focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300" placeholder="www.example.com" />
+                                                    <input onChange={onTitleChange} required type="text" name="Title" id="Title" class="ml-6 focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300" placeholder="www.example.com" />
                                                 </div>
                                             </div>
                                         </div>
@@ -74,7 +129,7 @@ export default function Profile() {
                                                 Description
                                             </label>
                                             <div class="mt-1">
-                                                <input id="about" name="about" rows="3" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border-gray-300 rounded-md h-16" placeholder="Description"></input>
+                                                <input id="Description" onChange={onDescriptionChange} required name="Description" rows="3" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border-gray-300 rounded-md h-16" placeholder="Description"></input>
                                             </div>
 
                                         </div>
@@ -83,19 +138,19 @@ export default function Profile() {
                                             <label class="block text-sm font-medium text-gray-700">
                                                 Date
                                             </label>
-                                            <input type="datetime-local"></input>
+                                            <input name='Date' id='Date' required onChange={onDateChange} type="datetime-local"></input>
                                         </div>
                                         {/**Rate */}
                                         <div>
                                             <label>
                                                 Rate
                                             </label>
-                                            <input type="range" className="ml-6 focus:ring-indigo-500 focus:border-indigo-500 flex-1 block rounded-none rounded-r-md sm:text-sm border-gray-300"></input>
+                                            <input type="number" name='Rate' onChange={onRateChange} id='Rate' required className="ml-6 focus:ring-indigo-500 focus:border-indigo-500 flex-1 block rounded-none rounded-r-md sm:text-sm border-gray-300"></input>
                                         </div>
 
 
                                         {/**Image */}
-                                        <div>
+                                        {/* <div>
                                             <label class="block text-sm font-medium text-gray-700">
                                                 Images
                                             </label>
@@ -107,7 +162,7 @@ export default function Profile() {
                                                     <div class="flex text-sm text-gray-600">
                                                         <label for="file-upload" class="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
                                                             <span>Upload a file</span>
-                                                            <input id="file-upload" name="file-upload" type="file" class="sr-only" />
+                                                            <input id="file-upload" name="image" onChange={onFileChange} required type="file" class="sr-only" />
                                                         </label>
                                                         <p class="pl-1">or drag and drop</p>
                                                     </div>
@@ -116,19 +171,29 @@ export default function Profile() {
                                                     </p>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> */}
+                                        <label className='form-label' htmlFor='image'>
+                                        Image Upload
+                                        </label>
+                                        <input
+                                        className='form-control'
+                                        type='file'
+                                        name='image'
+                                        onChange={onFileChange}
+                                        required
+                                        />
 
                                         {/**Location */}
                                         <div>
                                             <label className="my-10 py-10">Location</label>
-                                            <input type="text" className="ml-6 focus:ring-indigo-500 focus:border-indigo-500 flex-1 block rounded-none rounded-r-md sm:text-sm border-gray-300 shadow-lg border border-r-slate-300">
+                                            <input name='Location' id='Location' onChange={onLocationChange} required type="text" className="ml-6 focus:ring-indigo-500 focus:border-indigo-500 flex-1 block rounded-none rounded-r-md sm:text-sm border-gray-300 shadow-lg border border-r-slate-300">
                                             </input>
                                         </div>
 
                                         {/**Price */}
                                         <div>
                                             <label>Price</label>
-                                            <input type="text" className="ml-6 focus:ring-indigo-500 focus:border-indigo-500 flex-1 block rounded-none rounded-r-md sm:text-sm border-gray-300 shadow-lg border border-r-slate-300" placeholder="0.0"></input>
+                                            <input onChange={onCostChange} id='Cost' required name='Cost' type="text" className="ml-6 focus:ring-indigo-500 focus:border-indigo-500 flex-1 block rounded-none rounded-r-md sm:text-sm border-gray-300 shadow-lg border border-r-slate-300" placeholder="0.0"></input>
                                         </div>
 
                                     </div>
