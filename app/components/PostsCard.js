@@ -3,9 +3,18 @@ import Image from 'next/image'
 import moment from 'moment';
 import Link from 'next/link';
 
+import {useContext} from 'react';
+//import {AuthContext} from '../contexts/auth'
+import axios from "axios";
+//import useSWR from 'swr';
+
 
 
 export default function PostsCard({post}) {
+
+  // Data fetching part: 
+  // const url = "http://127.0.0.1:8000/api/posts"
+  // await.get(url,)
 
 
     return (
@@ -18,7 +27,7 @@ export default function PostsCard({post}) {
                 <img
                   src={post.image}
                   alt=""
-                  className="object-top absolute h-80 w-full object-cover  shadow-lg rounded-t-lg lg:rounded-lg"
+                  className="object-top absolute h-80 w-100 object-cover shadow-lg rounded-t-lg lg:rounded-lg"
                 />
               </div>
               <h1 className="transition duration-700 text-center mb-8 cursor-pointer hover:text-pink-600 text-3xl font-semibold">

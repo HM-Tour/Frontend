@@ -12,9 +12,9 @@ const posts = [
 
 const inter = Inter({ subsets: ['latin'] })
 
-export default function Home({data , done}) {
-  console.log('data:>> ', data);
-  console.log('done:>> ', done);
+export default function Home({}) {
+  // console.log('data:>> ', data);
+  // console.log('done:>> ', done);
 
   // const {tokens} = useContext(AuthContext)
   return (
@@ -41,7 +41,7 @@ export default function Home({data , done}) {
 //   return {
 //     props:{
 //       data : data,
-//       done : true,
+//       done : true
 //     }
 //   }
 // }
