@@ -12,7 +12,10 @@ const posts = [
 
 const inter = Inter({ subsets: ['latin'] })
 
-export default function Home() {
+export default function Home({data , done}) {
+  console.log('data:>> ', data);
+  console.log('done:>> ', done);
+
   // const {tokens} = useContext(AuthContext)
   return (
     <>
@@ -29,3 +32,16 @@ export default function Home() {
     </>
   )
 }
+
+// export async function getStaticProps(){
+//   const response = await fetch("http://127.0.0.1:8000/api/posts")
+
+//   const data = await response.json()
+
+//   return {
+//     props:{
+//       data : data,
+//       done : true,
+//     }
+//   }
+// }
