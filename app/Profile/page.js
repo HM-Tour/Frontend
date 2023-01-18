@@ -8,6 +8,7 @@ import { IoIosCreate } from "react-icons/io";
 import { AiFillEdit } from "react-icons/ai";
 import { AuthContext } from "../contexts/auth";
 
+
 // reactstrap components
 
 
@@ -49,7 +50,7 @@ export default function Profile() {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'multipart/form-data',
-                "Authorization": `Bearer ${tokens.access}`,
+
 
             }
         };
@@ -269,12 +270,13 @@ export default function Profile() {
 
             {/** Card post */}
             {postData.map((post) => (
-
+                
                 <section>
-                    <div className="p-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-5">
+                    <div className="p-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 xl:grid-cols-3 gap-5">
 
                         {/**--------------------------------------- */}
 
+                            
                         <div class="max-w-2xl mx-auto">
                             <div class="bg-white shadow-md border border-gray-200 rounded-lg max-w-sm dark:bg-gray-800 dark:border-gray-700">
 
@@ -338,7 +340,6 @@ export default function Profile() {
                                 </div>
                             </div>
                         </div>
-
                         {/** --------------------------------------- */}
 
 
@@ -351,7 +352,7 @@ export default function Profile() {
                                 
                                 <div class="py-4">
                                     <div class='flex justify-between'>
-
+                                    
                                         <h4 class="text-gray-900 font-bold text-2xl tracking-tight mb-2 dark:text-white">Title</h4>
                                         <h6>01/01/2023</h6>
                                     </div>
@@ -365,8 +366,8 @@ export default function Profile() {
                                                 src="https://images.pexels.com/photos/247929/pexels-photo-247929.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" />
                                         </a>
                                         <a class="flex" href="#">
-                                            <img class="max-w-full rounded-tr-lg"
-                                                src="https://images.pexels.com/photos/631522/pexels-photo-631522.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" />
+                                        <img class="max-w-full rounded-tr-lg"
+                                        src="https://images.pexels.com/photos/631522/pexels-photo-631522.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" />
                                         </a>
                                     </div>
                                     <div class="flex justify-between gap-1">
@@ -379,7 +380,7 @@ export default function Profile() {
                                                 src="https://images.pexels.com/photos/69020/pexels-photo-69020.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" />
                                         </a>
                                     </div>
-                                </div>
+                                    </div>
                                 <div class="px-6">
                                     <p class="font-normal text-gray-700 mb-3 dark:text-gray-400">Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p>
                                 </div>
@@ -431,7 +432,7 @@ export default function Profile() {
 
                                 <ul id="gallery" class="flex flex-1 flex-wrap -m-1">
                                     <li id="empty" class="h-full w-full text-center flex flex-col items-center justify-center items-center">
-                                        <img class="mx-auto w-32" src="https://user-images.githubusercontent.com/507615/54591670-ac0a0180-4a65-11e9-846c-e55ffce0fe7b.png" alt="no data" />
+                                    <img class="mx-auto w-32" src="https://user-images.githubusercontent.com/507615/54591670-ac0a0180-4a65-11e9-846c-e55ffce0fe7b.png" alt="no data" />
                                         <span class="text-small text-gray-500">No files selected</span>
                                     </li>
                                 </ul>
