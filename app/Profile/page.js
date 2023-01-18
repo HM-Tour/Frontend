@@ -3,10 +3,10 @@ import react from "react";
 import axios from 'axios';
 import Head from "next/head";
 import Image from 'next/image';
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { IoIosCreate } from "react-icons/io";
 import { AiFillEdit } from "react-icons/ai";
-
+import { AuthContext } from "../contexts/auth";
 
 // reactstrap components
 
@@ -27,6 +27,7 @@ export default function Profile() {
     const [Cost, setCost] = useState('');
     const [images, setImages] = useState(null);
     const [updated, setUpdated] = useState(false);
+    
 
     const onFileChange = e => setImage(e.target.files[0]);
     const onAltChange = e => setAltText(e.target.value);
@@ -37,6 +38,9 @@ export default function Profile() {
     const onLocationChange = e => setLocation(e.target.value);
     const onCostChange = e => setCost(e.target.value);
 
+
+    const {tokens}=useContext(AuthContext)
+
     {/**onSubmit */ }
     const onSubmit = async e => {
         e.preventDefault();
@@ -45,6 +49,8 @@ export default function Profile() {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'multipart/form-data',
+                "Authorization": `Bearer ${tokens.access}`,
+
             }
         };
 
@@ -57,6 +63,8 @@ export default function Profile() {
         formData.append('Rate', Rate);
         formData.append('Location', Location);
         formData.append('Cost', Cost);
+        
+
 
         const body = formData;
 
@@ -283,7 +291,11 @@ export default function Profile() {
                                         <a class="flex" href="#">
                                             <img class="max-w-full rounded-tl-lg"
                                                 src={post.image} />
+                                                
                                         </a>
+                                        <div>
+                                        {console.log(post.image)}
+                                        </div>
                                         <a class="flex" href="#">
                                             <img class="max-w-full"
                                                 src={post.image} />
@@ -333,12 +345,10 @@ export default function Profile() {
 
                         {/**------------------------------------------ */}
 
-                        <div class="max-w-2xl mx-auto">
+                        {/* <div class="max-w-2xl mx-auto">
                             <div class="bg-white shadow-md border border-gray-200 rounded-lg max-w-sm dark:bg-gray-800 dark:border-gray-700">
 
-                                {/**Header */}
-
-                                {/** Photos */}
+                                
                                 <div class="py-4">
                                     <div class='flex justify-between'>
 
@@ -373,13 +383,13 @@ export default function Profile() {
                                 <div class="px-6">
                                     <p class="font-normal text-gray-700 mb-3 dark:text-gray-400">Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p>
                                 </div>
-                                {/**Delete and update Button */}
+                                //Delete and update Button 
                                 <div class='relative py-8 mx-6'>
                                     <button class="absolute bottom-0 right-0 h-12 w-16 focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Delete</button>
                                     <button className="absolute bottom-0 right-20 h-12 w-16 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Update</button>
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
 
                         {/**-------------------------------------------- */}
 
@@ -390,7 +400,7 @@ export default function Profile() {
             ))}
 
 
-            <section>
+            {/* <section>
 
                 <div class="bg-gray-500 h-screen w-screen sm:px-8 md:px-16 sm:py-8">
                     <main class="container mx-auto max-w-screen-lg h-full">
@@ -494,10 +504,10 @@ export default function Profile() {
                     </li>
                 </template>
 
-                    
 
-                
-            </section>
+
+
+            </section> */}
 
         </>
 
