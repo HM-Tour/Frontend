@@ -11,30 +11,29 @@ export default function CreateComment(){
     
     const handleSubmit=async(e)=>{
 
-        
+      
       e.preventDefault()
       let body=e.target.comment.value
-      console.log('create comment file',tokens.access)
-      const config = {
-          headers: { 'Authorization': `Bearer ${tokens.access}` }
-      };
+     
+
+      const formData = new FormData();
+      formData.append("body", body);
+      formData.append("post", 1);
+      formData.append("owner", 1);
+
+      const headers = new Headers();
+      headers.append("Authorization", `Bearer ${tokens.access}`);
+
       
-      const bodyParameters = {
-        body: `${body}`,
-         
-        post: 1,
-        
-        owner:1
+
+      const requestOptions = {
+        method: "POST",
+        body: formData,
+        headers: headers,
       };
 
-      console.log(config)
-      await axios.post('http://127.0.0.1:8000/api/comments/post/1',config)
-        
-          
-          
-        
-          
-      
+      await fetch('http://127.0.0.1:8000/api/comments/post/1',requestOptions);
+
 
       const textArea = document.querySelector("textarea[name=comment]");
       textArea.value = "";
