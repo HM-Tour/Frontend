@@ -7,7 +7,7 @@ import { useState, useEffect, useContext } from "react";
 import { IoIosCreate } from "react-icons/io";
 import { AiFillEdit } from "react-icons/ai";
 import { AuthContext } from "../contexts/auth";
-import { Col, Row } from "react-bootstrap";
+
 
 // reactstrap components
 
@@ -28,6 +28,7 @@ export default function Profile() {
     const [Cost, setCost] = useState('');
     const [images, setImages] = useState(null);
     const [updated, setUpdated] = useState(false);
+    
 
     const onFileChange = e => setImage(e.target.files[0]);
     const onAltChange = e => setAltText(e.target.value);
@@ -49,7 +50,7 @@ export default function Profile() {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'multipart/form-data',
-            "Authorization": `Bearer ${tokens.access}`,
+
 
             }
         };
@@ -63,6 +64,8 @@ export default function Profile() {
         formData.append('Rate', Rate);
         formData.append('Location', Location);
         formData.append('Cost', Cost);
+        
+
 
         const body = formData;
 
@@ -290,7 +293,11 @@ export default function Profile() {
                                         <a class="flex" href="#">
                                             <img class="max-w-full rounded-tl-lg"
                                                 src={post.image} />
+                                                
                                         </a>
+                                        <div>
+                                        {console.log(post.image)}
+                                        </div>
                                         <a class="flex" href="#">
                                             <img class="max-w-full"
                                                 src={post.image} />

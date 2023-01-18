@@ -1,5 +1,6 @@
 "use client";
 import  {useContext,  useState ,useEffect} from "react";
+import Link from "next/link"
 
 import {AuthContext} from '../contexts/auth';
 
@@ -49,64 +50,31 @@ export default function Login(){
 
     return (
 
-      <section class="h-screen">
-      <div class="container px-6 py-12 h-full">
-        <div class="flex justify-center items-center flex-wrap h-full g-6 text-gray-800">
-          <div class="md:w-8/12 lg:w-6/12 mb-12 md:mb-0">
-            <img
-              src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg"
-              class="w-full"
-              alt="Phone image"
-            />
-          </div>
-          <div class="md:w-8/12 lg:w-5/12 lg:ml-20">
-            <form onSubmit={handleOnSubmit}>
-            
-              <div class="mb-6">
-                <input
-                onChange={usernameOnChangeHandler}
-                  type="text"
-                  id='username'
-                  class="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                  placeholder="username"
-                />
-              </div>
-    
-            
-              <div class="mb-6">
-                <input
-                  onChange={passwordOnChangeHandler}
-                  type="password"
-                  class="form-control block w-full px-4 py-2 text-xl font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                  placeholder="Password"
-                />
-              </div>
-    
-           
-    
-            
-              <button
-                type="submit"
-                class="inline-block px-7 py-3 bg-blue-600 text-white font-medium text-sm leading-snug uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out w-full"
-                data-mdb-ripple="true"
-                data-mdb-ripple-color="light"
-              >
-                Sign in
-              </button>
-    
-             
-            
-         
-            
-        
-            </form>
-          </div>
-        </div>
+      <div class="bg-petra flex h-screen w-full items-center justify-center bg-gray-900 bg-cover bg-no-repeat">
+  <div class="rounded-xl bg-gray-800 bg-opacity-50 px-16 py-10 shadow-lg backdrop-blur-md max-sm:px-8">
+    <div class="text-white">
+      <div class="mb-8 flex flex-col items-center">
+        <img src="https://o.remove.bg/downloads/faa7e67b-b420-47f5-bade-b5748e725475/logo-removebg-preview.png"width="150" alt="" srcset="" />
+        <h1 class="mb-2 text-2xl">HM Tour</h1>
+        <span class="text-gray-300"> Login </span>
       </div>
-    </section>
-     
-          
-        
+      <form action="#" onSubmit={handleOnSubmit}>
+        <div class="mb-4 text-lg">
+          <input class="rounded-3xl border-none bg-yellow-400 bg-opacity-50 px-6 py-2 text-center text-inherit placeholder-slate-200 shadow-lg outline-none backdrop-blur-md" type="text" name="name" placeholder="UserName" onChange={usernameOnChangeHandler} />
+        </div>
+
+        <div class="mb-4 text-lg">
+          <input class="rounded-3xl border-none bg-yellow-400 bg-opacity-50 px-6 py-2 text-center text-inherit placeholder-slate-200 shadow-lg outline-none backdrop-blur-md" type="Password" name="name" placeholder="password"onChange={passwordOnChangeHandler} />
+        </div>
+        <div class="mt-8 flex justify-center text-lg text-black">
+          {/* <Link href = "/"> */}
+          <button type="submit" class="rounded-3xl bg-yellow-400 bg-opacity-50 px-10 py-2 text-white shadow-xl backdrop-blur-md transition-colors duration-300 hover:bg-yellow-600">Login</button>
+          {/* </Link> */}
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
     )
 
 

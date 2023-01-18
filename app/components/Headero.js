@@ -50,11 +50,9 @@ export default function Headero() {
                                 Sign up
                             </span>
                         </button>
-                        <button type="button" title="Start buying" class="w-full py-3 px-6 text-center rounded-full transition bg-blue-400 hover:bg-blue-200 active:bg-blue-400 focus:bg-yellow-300 sm:w-max">
-                            <span class="block text-black font-semibold text-sm">
-                                Login
-                            </span>
-                        </button>
+                        <Link href="/Login" class="w-full py-3 px-6 text-center rounded-full transition bg-blue-400 hover:bg-blue-200 active:bg-blue-400 focus:bg-yellow-300 sm:w-max">
+<span>Login</span>
+</Link>
                     </div>
                 </div>
             </div>
