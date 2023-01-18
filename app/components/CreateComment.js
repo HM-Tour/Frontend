@@ -34,6 +34,7 @@ export default function CreateComment(){
 
       await fetch('http://127.0.0.1:8000/api/comments/post/1',requestOptions);
 
+
       const textArea = document.querySelector("textarea[name=comment]");
       textArea.value = "";
         
