@@ -14,18 +14,7 @@ export default function CreateComment(){
       
       e.preventDefault()
       let body=e.target.comment.value
-      // console.log('create comment file',tokens.access)
-      // const config = {
-      //     headers: { Authorization: `Bearer ${tokens.access}`,'Content-Type': 'application/json; charset=UTF-8'}
-      // };
-      
-      // const bodyParameters = {
-      //   body: `${body}`,
-         
-      //   post: 1,
-        
-      //   owner:1
-      // };
+     
 
       const formData = new FormData();
       formData.append("body", body);
@@ -35,8 +24,7 @@ export default function CreateComment(){
       const headers = new Headers();
       headers.append("Authorization", `Bearer ${tokens.access}`);
 
-      // console.log(config)
-      // await axios.post('http://127.0.0.1:8000/api/comments/post/1',config)
+      
 
       const requestOptions = {
         method: "POST",
