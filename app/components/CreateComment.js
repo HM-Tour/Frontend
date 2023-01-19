@@ -1,12 +1,12 @@
 "use client";
-import axios from "axios";
-
-
 import React,{useState,useContext} from "react";
 import { AuthContext } from "../contexts/auth";
 
 
-export default function CreateComment(){ 
+export default function CreateComment({postId}){ 
+
+
+    const idt=JSON.parse(localStorage.getItem('details'))
 
     const {tokens}=useContext(AuthContext)
     
@@ -21,7 +21,7 @@ export default function CreateComment(){
 
       const formData = new FormData();
       formData.append("body", body);
-      formData.append("post", 1);
+      formData.append("post", postId);
       formData.append("owner", 1);
 
       const headers = new Headers();
@@ -32,10 +32,11 @@ export default function CreateComment(){
       const requestOptions = {
         method: "POST",
         body: formData,
+        
         headers: headers,
       };
 
-      await fetch('http://127.0.0.1:8000/api/comments/post/1',requestOptions);
+      await fetch(`http://127.0.0.1:8000/api/comments/post/${postId}`,requestOptions);
 
 
       const textArea = document.querySelector("textarea[name=comment]");
@@ -65,10 +66,7 @@ export default function CreateComment(){
             <button class="px-3 py-2 text-sm text-blue-100 bg-blue-600 rounded">
               Comment
             </button>
-            {/* <button
-              class="px-3 py-2 text-sm text-blue-600 border border-blue-500 rounded">
-              Cancel
-            </button> */}
+           
           </div>
         </form>
       </div>

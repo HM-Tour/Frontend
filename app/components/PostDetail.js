@@ -1,26 +1,23 @@
 "use client";
 import Comments from "./Comments";
 import Map from "./Map";
-//import axios from "axios";
-
 
 
 
 export default function PostDetail() {
 
-
-
-
-
+  const details=JSON.parse(localStorage.getItem('details'))
+  
   return (
 
     <>
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 my-32">
       <div className="col-span-1 lg:col-span-1 lg:h-screen">
-        <img className="h-full object-cover rounded-lg lg:shadow-2xl" src='https://dynamic-media-cdn.tripadvisor.com/media/photo-o/15/33/f7/94/granada.jpg?w=700&h=500&s=1' alt="your image name" />
+        <img className="h-full object-cover rounded-lg lg:shadow-2xl" src={details.image} alt="your image name" />
       </div>
       <div className="col-span-1 lg:col-span-1 bg-white rounded-lg shadow-lg py-8 px-8 lg:px-12 lg:py-12">
-        <h1 className="text-3xl font-bold">title</h1>
+        <h1 className="text-3xl font-bold">{details.title} </h1>
+       
         <div className="mx-auto lg:mx-0 w-4/5 pt-3 border-b-2 border-green-500 opacity-25"></div>
         <p className="pt-8 text-base font-bold">
           <svg
@@ -32,14 +29,7 @@ export default function PostDetail() {
             Experience
           </p>
           <p className="pt-8 text-md">
-            Totally optional short description about yourself, what you do and
-            so on.
-            Totally optional short description about yourself, what you do and
-            so on.
-            Totally optional short description about yourself, what you do and
-            so on.
-            Totally optional short description about yourself, what you do and
-            so on.
+          {details.description}
    
           </p>
 
@@ -51,7 +41,7 @@ export default function PostDetail() {
             >
               <path d="M10 20a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm7.75-8a8.01 8.01 0 0 0 0-4h-3.82a28.81 28.81 0 0 1 0 4h3.82zm-.82 2h-3.22a14.44 14.44 0 0 1-.95 3.51A8.03 8.03 0 0 0 16.93 14zm-8.85-2h3.84a24.61 24.61 0 0 0 0-4H8.08a24.61 24.61 0 0 0 0 4zm.25 2c.41 2.4 1.13 4 1.67 4s1.26-1.6 1.67-4H8.33zm-6.08-2h3.82a28.81 28.81 0 0 1 0-4H2.25a8.01 8.01 0 0 0 0 4zm.82 2a8.03 8.03 0 0 0 4.17 3.51c-.42-.96-.74-2.16-.95-3.51H3.07zm13.86-8a8.03 8.03 0 0 0-4.17-3.51c.42.96.74 2.16.95 3.51h3.22zm-8.6 0h3.34c-.41-2.4-1.13-4-1.67-4S8.74 3.6 8.33 6zM3.07 6h3.22c.2-1.35.53-2.55.95-3.51A8.03 8.03 0 0 0 3.07 6z" />
             </svg>{" "}
-            Rate: 
+            Rate:  {details.rate}
           </p>
          
 
@@ -69,7 +59,7 @@ export default function PostDetail() {
             Location
           </p>
          
-          <Map/>
+          <Map location={details.location} />
         
 
 
@@ -84,37 +74,11 @@ export default function PostDetail() {
       </div>
 
    
-    <Comments/>
-    {/* </div>
-    ))} */}
+    <Comments postId={details.id}  />
+    
           
     </>
 
   );
 }
 
-// export async function getStaticPaths(){
-//   const response = await fetch(`http://127.0.0.1:8000/api/posts`)
-//   const data = await response.json()
-
-//   const allp = data.map(item => item.id)
-
-//   const paths =  allp.map(post => ({ params: {id:post}}))
-
-//   return{
-//     paths,
-//     fallback: false,
-//   }
-// }
-
-// export async function getStaticProps({ params}){
-//   const response = await fetch(`http://127.0.0.1:8000/api/posts/${params.id}`)
-//   const data = await response.json()
-
-//   return {
-//     props : {
-//       data
-//     }
-//   }
-
-// }

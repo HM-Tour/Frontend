@@ -3,15 +3,18 @@ import React, { useEffect, useState } from "react";
 import moment from 'moment';
 import Link from 'next/link';
 import axios from "axios";
-import PostDetails from "../Post/[id]/page"
 
 
 
 
-export default function PostsCard(props) {
+
+export default function PostsCard({handleUpdate}) {
 
   // Data fetching part: 
   const [postData, setPostData] = useState([]);
+
+
+  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -20,7 +23,7 @@ export default function PostsCard(props) {
 
       );
 
-      console.log(result.data)
+      // console.log(result.data)
       setPostData(result.data);
       const id = result.data.id;
       //console.log(id)
@@ -182,8 +185,11 @@ export default function PostsCard(props) {
                 </div>
                 </div>
 
-              <div className="text-center">
-                <Link href="/Post/[id]" as={`/Post/${post.id}`}>
+              <div className="text-center" onClick={()=>{
+                handleUpdate(post)
+              }}>
+
+                <Link href="/Post" >
 
                   <span className="transition duration-500 ease transform hover:-translate-y-1 inline-block bg-pink-600 text-lg font-medium rounded-full text-white px-5 py-0 cursor-pointer">
                     more Details
