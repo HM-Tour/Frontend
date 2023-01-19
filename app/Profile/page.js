@@ -50,6 +50,7 @@ export default function Profile() {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'multipart/form-data',
+                "Authorization": `Bearer ${tokens.access}`
 
 
             }

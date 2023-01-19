@@ -4,31 +4,54 @@ import CreateComment from "./CreateComment";
 import axios from "axios";
 import { AuthContext } from "../contexts/auth";
 
-export default function Comments() {
+export default function Comments({postId}) {
+
+
+
   const {tokens}=useContext(AuthContext)
   const [data, setData] = useState([]);
+
     
   useEffect(() => {
+
     const fetchData = async () => {
+
       const result = await axios.get(
-        "http://127.0.0.1:8000/api/comments/post/1"
+
+        `http://127.0.0.1:8000/api/comments/post/${postId}`
+
       );
       setData(result.data);
     };
     const intervalId = setInterval(() => {
+
       fetchData();
+
     }, 5000);
+
     return () => clearInterval(intervalId);
+
   }, []);
 
+
+
+
+  
+
   const handleDelete = async (id) => {
-   
-    await axios.delete(`http://127.0.0.1:8000/api/comments/${id}`, {
-      headers: {
-        'Authorization': `Bearer ${tokens}`
-      },
-    }
-    );
+
+
+
+    const headers = new Headers();
+    headers.append("Authorization", `Bearer ${tokens.access}`);
+    
+    const requestOptions = {
+        method: "DELETE",
+        headers: headers,
+      };
+
+    await fetch(`http://127.0.0.1:8000/api/comments/${id}`,requestOptions);
+
   };
 
   return (
@@ -39,6 +62,9 @@ export default function Comments() {
         <h3 class="mb-4 text-lg font-semibold text-gray-900">Comments</h3>
 
         {data.map((item) => (
+
+
+
           <div key={item.id} class="space-y-4 ">
             <div class="flex">
               <div class="flex-shrink-0 mr-3">
@@ -53,7 +79,7 @@ export default function Comments() {
                 <span class="text-xs text-gray-400">{item.created_at}</span>
                 <p class="text-sm">{item.body}</p>
                 <button
-                  onClick={handleDelete}
+                  onClick={()=>handleDelete(item.id)}
                   type="button"
                   title="Start buying"
                   class="w-full py-3 px-6 text-center rounded-full transition bg-blue-400 hover:bg-blue-200 active:bg-blue-400 focus:bg-yellow-300 sm:w-max"
@@ -69,7 +95,7 @@ export default function Comments() {
       </div>
 
       <div className="grid  place-items-center">
-      <CreateComment />
+      <CreateComment  postId={postId}/>
       </div>
       
     </>
