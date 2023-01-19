@@ -4,8 +4,9 @@ import { Inter } from '@next/font/google'
 import Header from './components/Header';
 import PostDetails from './Post/page';
 import Map from './components/Map'
-
+import Login from './Login/page';
 import PostsCard from './components/PostsCard';
+import Link from 'next/link';
 
 // const posts = [
 //   {owner : 'noor1' ,title : 'Paries', description : 'Tourism to Paries', date : '1/2/2023', rate : '5' , location : 'Paries',price : '50$', image : 'https://luggagehero.com/wp-content/uploads/2020/11/paris-statistics-banner.png'  },
@@ -26,7 +27,8 @@ export default function Home({}) {
       {/* <LoginForm/> */}
 
           {/* {posts.map((post) => <PostsCard key={post.title} post={post} />)} */}
-          <PostsCard/>
+          
+        <PostsCard/>
 
       
       
