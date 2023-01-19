@@ -1,6 +1,6 @@
 import Header from './components/Header'
 import Headero from './components/Headero'
-// import Footer from './components/Footer'
+import Footer from './components/Footer'
 
 import AuthWrapper from './contexts/auth';
 
@@ -27,7 +27,7 @@ export default function RootLayout({ children }) {
         </main>
         
         <footer>
-          {/* <Footer/> */}
+          <Footer/>
 
         </footer>
       </body>
