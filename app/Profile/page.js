@@ -3,9 +3,10 @@ import react from "react";
 import axios from 'axios';
 import Head from "next/head";
 import Image from 'next/image';
-import { useState, useEffect } from "react";
+import { useState, useEffect,useContext } from "react";
 import { IoIosCreate } from "react-icons/io";
 import { AiFillEdit } from "react-icons/ai";
+import { AuthContext } from "../contexts/auth";
 
 
 // reactstrap components
@@ -36,7 +37,7 @@ export default function Profile() {
     const onRateChange = e => setRate(e.target.value);
     const onLocationChange = e => setLocation(e.target.value);
     const onCostChange = e => setCost(e.target.value);
-
+    const {tokens}=useContext(AuthContext)
     {/**onSubmit */ }
     const onSubmit = async e => {
         e.preventDefault();
@@ -45,6 +46,7 @@ export default function Profile() {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'multipart/form-data',
+                "Authorization": `Bearer ${tokens.access}`
             }
         };
 
