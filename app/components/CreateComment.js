@@ -1,27 +1,45 @@
 "use client";
 import axios from "axios";
-import React from "react";
 
+
+import React,{useState,useContext} from "react";
+import { AuthContext } from "../contexts/auth";
 
 
 export default function CreateComment(){ 
 
+    const {tokens}=useContext(AuthContext)
     
 
     
     const handleSubmit=async(e)=>{
 
-        e.preventDefault()
-        let body=e.target.comment.value
-        await axios.post('http://127.0.0.1:8000/api/comments/post/1',{
-            "body": `${body}`,
-         
-            "post": 1,
-            
-            "author":1})
+      
+      e.preventDefault()
+      let body=e.target.comment.value
+     
 
-        const textArea = document.querySelector("textarea[name=comment]");
-        textArea.value = "";
+      const formData = new FormData();
+      formData.append("body", body);
+      formData.append("post", 1);
+      formData.append("owner", 1);
+
+      const headers = new Headers();
+      headers.append("Authorization", `Bearer ${tokens.access}`);
+
+      
+
+      const requestOptions = {
+        method: "POST",
+        body: formData,
+        headers: headers,
+      };
+
+      await fetch('http://127.0.0.1:8000/api/comments/post/1',requestOptions);
+
+
+      const textArea = document.querySelector("textarea[name=comment]");
+      textArea.value = "";
         
         
     }

@@ -4,7 +4,9 @@ import { Inter } from '@next/font/google'
 import Map from './components/Map'
 import Articles from './components/Articles';
 
+import Login from './Login/page';
 import PostsCard from './components/PostsCard';
+import Link from 'next/link';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -33,6 +35,14 @@ export default function Home({}) {
           </div>
           </div>
           
+
+          {/* {posts.map((post) => <PostsCard key={post.title} post={post} />)} */}
+          {Login && 
+                <Link href={<PostsCard/>}>
+                  
+                </Link>
+                }
+          {/* <PostsCard/> */}
 
       
           </div>

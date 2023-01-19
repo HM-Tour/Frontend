@@ -1,11 +1,13 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import CreateComment from "./CreateComment";
 import axios from "axios";
+import { AuthContext } from "../contexts/auth";
 
 export default function Comments() {
+  const {tokens}=useContext(AuthContext)
   const [data, setData] = useState([]);
-
+    
   useEffect(() => {
     const fetchData = async () => {
       const result = await axios.get(
@@ -20,7 +22,13 @@ export default function Comments() {
   }, []);
 
   const handleDelete = async (id) => {
-    await axios.delete(`http://127.0.0.1:8000/api/comments/${id}`);
+   
+    await axios.delete(`http://127.0.0.1:8000/api/comments/${id}`, {
+      headers: {
+        'Authorization': `Bearer ${tokens}`
+      },
+    }
+    );
   };
 
   return (
@@ -41,7 +49,7 @@ export default function Comments() {
                 />
               </div>
               <div class="flex-1 border rounded-lg px-4 py-2 sm:px-6 sm:py-4 leading-relaxed">
-                <strong>{item.author.name}</strong>{" "}
+                <strong>{item.owner}</strong>{" "}
                 <span class="text-xs text-gray-400">{item.created_at}</span>
                 <p class="text-sm">{item.body}</p>
                 <button
