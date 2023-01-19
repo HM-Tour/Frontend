@@ -3,11 +3,12 @@ import React, { useEffect, useState } from "react";
 import moment from 'moment';
 import Link from 'next/link';
 import axios from "axios";
+import PostDetails from "../Post/[id]/page"
 
 
 
 
-export default function PostsCard() {
+export default function PostsCard(props) {
 
   // Data fetching part: 
   const [postData, setPostData] = useState([]);
@@ -21,6 +22,8 @@ export default function PostsCard() {
 
       console.log(result.data)
       setPostData(result.data);
+      const id = result.data.id;
+      //console.log(id)
     };
     const intervalId = setInterval(() => {
       fetchData();
@@ -35,9 +38,9 @@ export default function PostsCard() {
       <>
       {postData.map((post) => (
         <div key={post.title} >
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center justify-center">
+        {/* <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center justify-center">
         
-          <div className="lg:col-span-9 col-span-1 items-center justify-center">
+          <div className="lg:col-span-9 col-span-1 items-center justify-center"> */}
             <div className="bg-white shadow-lg rounded-lg p-0 lg:p-8 pb-12 mb-8 mt-5">
               <div className="relative overflow-hidden shadow-md pb-80 mb-6">
                 <img
@@ -180,8 +183,8 @@ export default function PostsCard() {
                 </div>
 
               <div className="text-center">
-                <Link href={`/Post`}>
-                {/* <Link href={`Post/${title}`}> */}
+                <Link href="/Post/[id]" as={`/Post/${post.id}`}>
+
                   <span className="transition duration-500 ease transform hover:-translate-y-1 inline-block bg-pink-600 text-lg font-medium rounded-full text-white px-5 py-0 cursor-pointer">
                     more Details
                   </span>
@@ -190,8 +193,8 @@ export default function PostsCard() {
             </div>
           </div>
       
-        </div>
-        </div>
+        // </div>
+        // </div>
         ))}
       </>
     );

@@ -1,9 +1,17 @@
-import React from "react";
-import Comments from "../components/Comments";
-import Map from "../components/Map";
+"use client";
+import Comments from "./Comments";
+import Map from "./Map";
+//import axios from "axios";
 
 
-export default function PostDetails() {
+
+
+export default function PostDetail() {
+
+
+
+
+
   return (
 
     <>
@@ -12,7 +20,7 @@ export default function PostDetails() {
         <img className="h-full object-cover rounded-lg lg:shadow-2xl" src='https://dynamic-media-cdn.tripadvisor.com/media/photo-o/15/33/f7/94/granada.jpg?w=700&h=500&s=1' alt="your image name" />
       </div>
       <div className="col-span-1 lg:col-span-1 bg-white rounded-lg shadow-lg py-8 px-8 lg:px-12 lg:py-12">
-        <h1 className="text-3xl font-bold">Place Name</h1>
+        <h1 className="text-3xl font-bold">title</h1>
         <div className="mx-auto lg:mx-0 w-4/5 pt-3 border-b-2 border-green-500 opacity-25"></div>
         <p className="pt-8 text-base font-bold">
           <svg
@@ -77,8 +85,36 @@ export default function PostDetails() {
 
    
     <Comments/>
+    {/* </div>
+    ))} */}
           
     </>
 
   );
 }
+
+// export async function getStaticPaths(){
+//   const response = await fetch(`http://127.0.0.1:8000/api/posts`)
+//   const data = await response.json()
+
+//   const allp = data.map(item => item.id)
+
+//   const paths =  allp.map(post => ({ params: {id:post}}))
+
+//   return{
+//     paths,
+//     fallback: false,
+//   }
+// }
+
+// export async function getStaticProps({ params}){
+//   const response = await fetch(`http://127.0.0.1:8000/api/posts/${params.id}`)
+//   const data = await response.json()
+
+//   return {
+//     props : {
+//       data
+//     }
+//   }
+
+// }
