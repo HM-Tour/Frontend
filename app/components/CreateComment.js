@@ -1,4 +1,5 @@
 "use client";
+import axios from "axios";
 import React,{useState,useContext} from "react";
 import { AuthContext } from "../contexts/auth";
 
@@ -15,24 +16,28 @@ export default function CreateComment({postId}){
     const handleSubmit=async(e)=>{
 
       
-      e.preventDefault()
-      let body=e.target.comment.value
+      
      
 
+
+      e.preventDefault()
+      const headers = new Headers();
+      headers.append("Authorization", `Bearer ${tokens.access}`);
+
+     
+     
+    
+      let body=e.target.comment.value
       const formData = new FormData();
       formData.append("body", body);
       formData.append("post", postId);
       formData.append("owner", 1);
-
-      const headers = new Headers();
-      headers.append("Authorization", `Bearer ${tokens.access}`);
 
       
 
       const requestOptions = {
         method: "POST",
         body: formData,
-        
         headers: headers,
       };
 
