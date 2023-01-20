@@ -75,7 +75,7 @@ export default function Comments({postId}) {
                 />
               </div>
               <div class="flex-1 border rounded-lg px-4 py-2 sm:px-6 sm:py-4 leading-relaxed">
-                <strong>{item.owner}</strong>{" "}
+                <strong>{item.owner_username}</strong>{" "}
                 <span class="text-xs text-gray-400">{item.created_at}</span>
                 <p class="text-sm">{item.body}</p>
                 <button
