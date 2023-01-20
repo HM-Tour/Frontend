@@ -8,14 +8,17 @@ import { IoIosCreate } from "react-icons/io";
 import { AiFillEdit } from "react-icons/ai";
 import { AuthContext } from "../contexts/auth";
 
-
 // reactstrap components
 
 
 export default function Profile() {
 
-    {/**This for modal */ }
+    {/**This for Show modal */ }
     const [showModal, setShowModal] = useState(false);
+    const [showModal2, setShowModal2] = useState(false);
+    const [showModal3, setShowModal3] = useState(false);
+
+
 
     {/**This for a database */ }
     const [image, setImage] = useState(null);
@@ -28,7 +31,7 @@ export default function Profile() {
     const [Cost, setCost] = useState('');
     const [images, setImages] = useState(null);
     const [updated, setUpdated] = useState(false);
-    
+
 
     const onFileChange = e => setImage(e.target.files[0]);
     const onAltChange = e => setAltText(e.target.value);
@@ -40,7 +43,7 @@ export default function Profile() {
     const onCostChange = e => setCost(e.target.value);
 
 
-    const {tokens}=useContext(AuthContext)
+    const { tokens } = useContext(AuthContext)
 
     {/**onSubmit */ }
     const onSubmit = async e => {
@@ -65,11 +68,10 @@ export default function Profile() {
         formData.append('Rate', Rate);
         formData.append('Location', Location);
         formData.append('Cost', Cost);
-        
+
 
 
         const body = formData;
-
         try {
             const res = await axios.post('http://localhost:8000/api/posts/upload', body, config);
 
@@ -83,12 +85,10 @@ export default function Profile() {
 
     {/**For card posts */ }
     const [postData, setPostData] = useState([]);
-
     useEffect(() => {
         const fetchData = async () => {
             const result = await axios.get(
                 "http://127.0.0.1:8000/api/posts"
-
             );
             setPostData(result.data);
         };
@@ -99,54 +99,58 @@ export default function Profile() {
     }, []);
 
 
+    {/**Delete the posts */ }
+    const handleDelete = async (id) => {
+        const headers = new Headers();
+        headers.append("Authorization", `Bearer ${tokens.access}`);
+        const requestOptions = {
+            method: "DELETE",
+            headers: headers,
+        };
+        await fetch(`http://127.0.0.1:8000/api/posts/${id}`, requestOptions);
+    };
+
     return (
         <>
 
             {/** Profile */}
-            <section>
-
-                <div class="p-10 relative max-w-md mx-auto md:max-w-2xl mt-6 min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded-xl mt-16">
-                    <div class="relative">
-                        <div class="absolute top-0 right-0 h-16 w-16">
-
-                            <button >
-                                <AiFillEdit class="text-lg" />
-
-                            </button>
-
-                        </div>
-                    </div>
+            <section class="py-10">
+                <div class="relative max-w-md mx-auto md:max-w-2xl mt-6 min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded-xl mt-16">
                     <div class="px-6">
-
-
                         <div class="flex flex-wrap justify-center">
                             <div class="w-full flex justify-center">
                                 <div class="relative">
-                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTET6QR3qi8Bi-1O4U2fWIP2EZ53EN9ykHl6_yvLZlxMJwpy6CtY6DxCvOcJtNKK_gI4kI&usqp=CAU" class="shadow-xl rounded-full align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-[150px]" />
+                                    <img src="https://github.com/creativetimofficial/soft-ui-dashboard-tailwind/blob/main/build/assets/img/team-2.jpg?raw=true" class="shadow-xl rounded-full align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-[150px]" />
                                 </div>
                             </div>
-                            <div class="w-full text-center mt-20">
 
-                            </div>
                         </div>
-                        <div class="text-center mt-2">
+                        <div class="text-center mt-28">
                             <h3 class="text-2xl text-slate-700 font-bold leading-normal mb-1">Mike</h3>
                             <div class="text-xs mt-0 mb-2 text-slate-400 font-bold uppercase">
-                                <i class="fas fa-map-marker-alt mr-2 text-slate-400 opacity-75"></i>Email
+                                <i class="fas fa-map-marker-alt mr-2 text-slate-400 opacity-75"></i>Paris, France
                             </div>
                         </div>
                         <div class="mt-6 py-6 border-t border-slate-200 text-center">
                             <div class="flex flex-wrap justify-center">
                                 <div class="w-full px-4">
-                                    <p class="font-light leading-relaxed text-slate-600 mb-4">Description</p>
+                                    <p class="font-light leading-relaxed text-slate-600 mb-4">An artist of considerable range, Mike is the name taken by Melbourne-raised, Brooklyn-based Nick Murphy writes, performs and records all of his own music, giving it a warm.</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
+
             </section> {/** End profile part */}
 
+            {/**Edit profile */}
+            {showModal3 ? (
+
+                <section>
+
+                </section>
+            ) : null}
 
 
             {/**Form to create a posts */}
@@ -244,7 +248,7 @@ export default function Profile() {
                                         </div>
                                         {/**Button */}
                                         <div class="px-4 py-3 bg-gray-50 text-right sm:px-6 flex flex-wrap justify-between">
-                                            <button onClick={() => setShowModal(true)} type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Close</button>
+                                            <button onClick={() => setShowModal(false)} type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Close</button>
                                             <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                                                 Post
                                             </button>
@@ -271,13 +275,13 @@ export default function Profile() {
 
             {/** Card post */}
             {postData.map((post) => (
-                
+
                 <section>
                     <div className="p-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 xl:grid-cols-3 gap-5">
 
                         {/**--------------------------------------- */}
 
-                            
+
                         <div class="max-w-2xl mx-auto">
                             <div class="bg-white shadow-md border border-gray-200 rounded-lg max-w-sm dark:bg-gray-800 dark:border-gray-700">
 
@@ -288,16 +292,16 @@ export default function Profile() {
                                     <div class='flex justify-between'>
 
                                         <h4 class="text-gray-900 font-bold text-2xl tracking-tight mb-2 dark:text-white">{post.title}</h4>
-                                        <h6>01/01/2023</h6>
+                                        <h6>{post.date}</h6>
                                     </div>
                                     <div class="flex justify-between gap-1 mb-1">
                                         <a class="flex" href="#">
                                             <img class="max-w-full rounded-tl-lg"
                                                 src={post.image} />
-                                                
+
                                         </a>
                                         <div>
-                                        {console.log(post.image)}
+                                            {console.log(post.image)}
                                         </div>
                                         <a class="flex" href="#">
                                             <img class="max-w-full"
@@ -336,8 +340,8 @@ export default function Profile() {
 
                                 {/**Delete and update Button */}
                                 <div class='relative py-8 mx-6'>
-                                    <button class="absolute bottom-0 right-0 h-12 w-16 focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Delete</button>
-                                    <button class="absolute bottom-0 right-20 h-12 w-16 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Update</button>
+                                    <button onClick={() => handleDelete(post.id)} class="absolute bottom-0 right-0 h-12 w-16 focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Delete</button>
+                                    <button onClick={() => setShowModal2(true)} class="absolute bottom-0 right-20 h-12 w-16 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Update</button>
                                 </div>
                             </div>
                         </div>
@@ -511,9 +515,143 @@ export default function Profile() {
 
             </section> */}
 
+
+
+            {/* <section>
+
+                <Button variant="primary" onClick={handleShow}>
+                    Launch demo modal
+                </Button>
+
+                <Modal show={show} onHide={handleClose}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Modal heading</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <Form>
+                            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                                <Form.Label>Email address</Form.Label>
+                                <Form.Control
+                                    type="email"
+                                    placeholder="name@example.com"
+                                    autoFocus
+                                />
+                            </Form.Group>
+                            <Form.Group
+                                className="mb-3"
+                                controlId="exampleForm.ControlTextarea1"
+                            >
+                                <Form.Label>Example textarea</Form.Label>
+                                <Form.Control as="textarea" rows={3} />
+                            </Form.Group>
+                        </Form>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={handleClose}>
+                            Close
+                        </Button>
+                        <Button variant="primary" onClick={handleClose}>
+                            Save Changes
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
+            </section> */}
+
+
+            <section>
+                {postData.map((post =>
+                    <section>
+                        {showModal2 ? (
+                            <div >
+                                <div class="main-modal fixed w-full inset-0 z-50 overflow-hidden flex justify-center items-center animated fadeIn faster">
+                                    <div class="border border-blue-500 shadow-lg modal-container bg-white w-4/12 md:max-w-11/12 mx-auto rounded-xl z-50 overflow-y-auto">
+                                        <div class="modal-content py-4 text-left px-6">
+                                            <div class="flex justify-between items-center pb-1">
+                                                <p class="text-2xl font-bold text-gray-500">Update post</p>
+
+                                                <div class="modal-close cursor-pointer z-50" onClick={() => setShowModal2(false)}>
+                                                    <svg class="fill-current text-gray-500" xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                                                        viewBox="0 0 18 18">
+                                                        <path
+                                                            d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z">
+                                                        </path>
+                                                    </svg>
+                                                </div>
+
+                                            </div>
+                                            <div class="py-4">
+                                                <div class='flex justify-between'>
+
+                                                    <h4 class="text-gray-900 font-bold text-2xl tracking-tight mb-2 dark:text-white">{post.title}</h4>
+                                                    <h6>{post.date}</h6>
+                                                </div>
+
+                                                {/**Image */}
+                                                {/* <div class="flex justify-between gap-1 mb-1">
+                                                    <a class="flex" href="#">
+                                                        <img class="max-w-full rounded-tl-lg"
+                                                            src={post.image} />
+
+                                                    </a>
+                                                    <div>
+                                                        {console.log(post.image)}
+                                                    </div>
+                                                    <a class="flex" href="#">
+                                                        <img class="max-w-full"
+                                                            src={post.image} />
+                                                    </a>
+                                                    <a class="flex" href="#">
+                                                        <img class="max-w-full rounded-tr-lg"
+                                                            src={post.image} />
+                                                    </a>
+                                                </div>
+                                                <div class="flex justify-between gap-1">
+                                                    <a class="flex" href="#">
+                                                        <img class="max-w-full rounded-bl-lg "
+                                                            src={post.image} />
+                                                    </a>
+                                                    <a class="flex" href="#">
+                                                        <img class="max-w-full rounded-br-lg"
+                                                            src={post.image} />
+                                                    </a>
+                                                </div> */}
+
+
+                                            </div>
+                                            <div class="px-6">
+                                                <p class="font-normal text-gray-700 mb-3 dark:text-gray-400">{post.description}</p>
+                                            </div>
+                                            <div class="px-6">
+                                                <p class="font-normal text-gray-700 mb-3 dark:text-gray-400">{post.rate}</p>
+                                            </div>
+
+                                            <div class="px-6">
+                                                <p class="font-normal text-gray-700 mb-3 dark:text-gray-400">{post.price}</p>
+                                            </div>
+
+                                            <div class="px-6">
+                                                <p class="font-normal text-gray-700 mb-3 dark:text-gray-400">{post.location}</p>
+                                            </div>
+
+                                            <div class="flex justify-end pt-2 space-x-14">
+                                                <button
+                                                    class="px-4 bg-gray-200 p-3 rounded text-black hover:bg-gray-300 font-semibold" onClick={() => setShowModal2(false)}>Cancel</button>
+                                                <button
+                                                    class="px-4 bg-blue-500 p-3 ml-3 rounded-lg text-white hover:bg-teal-400" onClick={() => setShowModal2(false)}>Confirm</button>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        ) : null}
+                    </section>
+                ))}
+
+            </section>
         </>
-
-
 
     )
 }
