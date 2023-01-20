@@ -45,14 +45,14 @@ export default function PostsCard({handleUpdate}) {
         
           <div className="lg:col-span-9 col-span-1 items-center justify-center"> */}
             <div className="bg-white shadow-lg rounded-lg p-0 lg:p-8 pb-12 mb-8 mt-5">
-              <div className="relative overflow-hidden shadow-md pb-80 mb-6">
+              <div className="relative overflow-hidden shadow-md mb-6">
                 <img
                   src={post.image}
                   alt=""
-                  className="object-top absolute h-50 w-full object-cover shadow-lg rounded-t-lg lg:rounded-lg"
+                  className="object-top h-full w-full object-cover  shadow-lg rounded-t-lg lg:rounded-lg"
                 />
               </div>
-              <h1 className="transition duration-700 text-center mb-8 cursor-pointer hover:text-pink-600 text-3xl font-semibold">
+              <h1 className="transition duration-700 text-center mb-8 cursor-pointer hover:text-orange-600 text-3xl font-semibold">
                 <Link href={`/post/`}>{post.title}</Link>
               </h1>
 
@@ -71,7 +71,7 @@ export default function PostsCard({handleUpdate}) {
                 <div className="font-medium text-gray-700">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="h-6 w-6 inline mr-2 text-pink-500"
+                    className="h-6 w-6 inline mr-2 text-orange-500"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -93,7 +93,7 @@ export default function PostsCard({handleUpdate}) {
                 <div className="flex items-center justify-center mb-4 lg:mb-0 w-full lg:w-auto mr-8 items-center">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="h-6 w-6 inline mr-2 text-pink-500"
+                    className="h-6 w-6 inline mr-2 text-orange-500"
                     viewBox="0 0 24 24"
                   >
                     <path
@@ -110,7 +110,7 @@ export default function PostsCard({handleUpdate}) {
                 <div className="flex items-center justify-center mb-4 lg:mb-0 w-full lg:w-auto mr-8 items-center">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="h-6 w-6 inline mr-2 text-pink-500"
+                    className="h-6 w-6 inline mr-2 text-orange-500"
                     viewBox="0 0 48 48"
                   >
                     <circle
@@ -165,33 +165,13 @@ export default function PostsCard({handleUpdate}) {
               </p>
 
 
-              <div >
-                <div class="pt-1">
-                    <div class="text-sm mb-2 flex flex-start items-center">
-                        <div>
-                            <a href="#" class="cursor-pointer flex items-center text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition duration-150 ease-in-out">
-                                <img class="h-8 w-8 rounded-full object-cover"
-                                src="https://images.pexels.com/photos/1450082/pexels-photo-1450082.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260"
-                                alt="user" />
-                            </a>
-                        </div>
-                        <p class="font-bold ml-2">
-                            <a class="cursor-pointer">Joshua:</a>
-                            <span class="text-gray-700 font-medium ml-1">
-                                Good post
-                            </span>
-                        </p>
-                    </div>
-                </div>
-                </div>
-
               <div className="text-center" onClick={()=>{
                 handleUpdate(post)
               }}>
 
                 <Link href="/Post" >
 
-                  <span className="transition duration-500 ease transform hover:-translate-y-1 inline-block bg-pink-600 text-lg font-medium rounded-full text-white px-5 py-0 cursor-pointer">
+                  <span className="transition duration-500 ease transform hover:-translate-y-1 inline-block bg-orange-600 text-lg font-medium rounded-full text-white px-5 py-0 cursor-pointer">
                     more Details
                   </span>
                 </Link>
