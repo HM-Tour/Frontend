@@ -7,6 +7,7 @@ import { useState, useEffect, useContext } from "react";
 import { IoIosCreate } from "react-icons/io";
 import { AiFillEdit } from "react-icons/ai";
 import { AuthContext } from "../contexts/auth";
+import { config } from "@fortawesome/fontawesome-svg-core";
 
 
 // reactstrap components
@@ -85,19 +86,21 @@ export default function Profile() {
     const [postData, setPostData] = useState([]);
 
     useEffect(() => {
-        const fetchData = async () => {
-            const result = await axios.get(
-                "http://127.0.0.1:8000/api/posts"
+                axios.get('http://127.0.0.1:8000/api/posts/user-posts/', {
+                headers: {
+                    'Authorization': `Bearer ${tokens.access}`
+                }
+                })
+                .then(response => {
+                
+                    setPostData(response.data)
 
-            );
-            setPostData(result.data);
-        };
-        const intervalId = setInterval(() => {
-            fetchData();
-        }, 5000);
-        return () => clearInterval(intervalId);
-    }, []);
 
+                })
+                .catch(error => {
+                // handle the error
+                console.log(error)
+                });})
 
     return (
         <>
