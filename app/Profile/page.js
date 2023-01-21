@@ -8,6 +8,7 @@ import { IoIosCreate } from "react-icons/io";
 import { AiFillEdit } from "react-icons/ai";
 import { AuthContext } from "../contexts/auth";
 import { config } from "@fortawesome/fontawesome-svg-core";
+import { Button } from "react-bootstrap";
 
 // reactstrap components
 
@@ -15,8 +16,11 @@ import { config } from "@fortawesome/fontawesome-svg-core";
 export default function Profile() {
 
     {/**This for Show modal */ }
+    {/**Post */ }
     const [showModal, setShowModal] = useState(false);
+    {/**update */ }
     const [showModal2, setShowModal2] = useState(false);
+    {/**profile */ }
     const [showModal3, setShowModal3] = useState(false);
 
 
@@ -87,21 +91,22 @@ export default function Profile() {
     {/**For card posts */ }
     const [postData, setPostData] = useState([]);
     useEffect(() => {
-                axios.get('http://127.0.0.1:8000/api/posts/user-posts/', {
-                headers: {
-                    'Authorization': `Bearer ${tokens.access}`
-                }
-                })
-                .then(response => {
-                
-                    setPostData(response.data)
+        axios.get('http://127.0.0.1:8000/api/posts/user-posts/', {
+            headers: {
+                'Authorization': `Bearer ${tokens.access}`
+            }
+        })
+            .then(response => {
+
+                setPostData(response.data)
 
 
-                })
-                .catch(error => {
+            })
+            .catch(error => {
                 // handle the error
                 console.log(error)
-                });})
+            });
+    })
 
     {/**Delete the posts */ }
     const handleDelete = async (id) => {
@@ -114,119 +119,222 @@ export default function Profile() {
         await fetch(`http://127.0.0.1:8000/api/posts/${id}`, requestOptions);
     };
 
+
+    {/**User */ }
+    const [userPro, setUserPro] = useState([]);
+    useEffect(() => {
+        axios.get('http://127.0.0.1:8000/api/users/users/', {
+            headers: {
+                'Authorization': `Bearer ${tokens.access}`
+            }
+        })
+            .then(response => {
+
+                setUserPro(response.data)
+
+
+            })
+            .catch(error => {
+                // handle the error
+                console.log(error)
+            });
+    });
+
     return (
         <>
 
             {/** Profile */}
-            <section class="py-10">
-                <div class="relative max-w-md mx-auto md:max-w-2xl mt-6 min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded-xl mt-16">
-                    <div class="px-6">
-                        <div class="flex flex-wrap justify-center">
-                            <div class="w-full flex justify-center">
-                                <div class="relative">
-                                    <img src="https://github.com/creativetimofficial/soft-ui-dashboard-tailwind/blob/main/build/assets/img/team-2.jpg?raw=true" class="shadow-xl rounded-full align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-[150px]" />
+            <div>
+                {userPro.map((user =>
+                    <section class="py-10">
+                        <div class="relative max-w-md mx-auto md:max-w-2xl mt-6 min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded-xl mt-16">
+                            <div class="px-6">
+                                <div class="flex flex-wrap justify-center">
+                                    <div class="w-full flex justify-center">
+                                        <div class="relative">
+
+                                            <div class="absolute top-0 right-0 h-16 w-16 flex flex-wrap justify-between">
+                                                <button class="ml-80" onClick={() => setShowModal3(true)}>
+                                                    <AiFillEdit class="text-lg" />
+                                                </button>
+                                            </div>
+
+                                            <img src="https://github.com/creativetimofficial/soft-ui-dashboard-tailwind/blob/main/build/assets/img/team-2.jpg?raw=true" class="shadow-xl rounded-full align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-[150px]" />
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="text-center mt-28">
+                                    <h3 class="text-2xl text-slate-700 font-bold leading-normal mb-1">{user.username}</h3>
+                                    <div class="text-xs mt-0 mb-2 text-slate-400 font-bold uppercase">
+                                        <i class="fas fa-map-marker-alt mr-2 text-slate-400 opacity-75"></i>Paris, France
+                                    </div>
+                                </div>
+                                <div class="mt-6 py-6 border-t border-slate-200 text-center">
+                                    <div class="flex flex-wrap justify-center">
+                                        <div class="w-full px-4">
+                                            <p class="font-light leading-relaxed text-slate-600 mb-4">{user.description}</p>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-
                         </div>
-                        <div class="text-center mt-28">
-                            <h3 class="text-2xl text-slate-700 font-bold leading-normal mb-1">Mike</h3>
-                            <div class="text-xs mt-0 mb-2 text-slate-400 font-bold uppercase">
-                                <i class="fas fa-map-marker-alt mr-2 text-slate-400 opacity-75"></i>Paris, France
-                            </div>
-                        </div>
-                        <div class="mt-6 py-6 border-t border-slate-200 text-center">
-                            <div class="flex flex-wrap justify-center">
-                                <div class="w-full px-4">
-                                    <p class="font-light leading-relaxed text-slate-600 mb-4">An artist of considerable range, Mike is the name taken by Melbourne-raised, Brooklyn-based Nick Murphy writes, performs and records all of his own music, giving it a warm.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
 
-            </section> {/** End profile part */}
+                    </section>
+                ))}
+            </div>
 
             {/**Edit profile */}
             {showModal3 ? (
 
                 <section>
+                    {userPro.map((user =>
+                        <div>
+                            <div class="main-modal fixed w-full inset-0 z-50 overflow-hidden flex justify-center items-center animated fadeIn faster">
+                                <div class="border border-blue-500 shadow-lg modal-container bg-white w-4/12 md:max-w-11/12 mx-auto rounded-xl z-50 overflow-y-auto">
+                                    <div class="modal-content py-4 text-left px-6">
+                                        <div class="flex justify-between items-center pb-1">
+                                            <p class="text-2xl font-bold text-gray-500">Profile</p>
+
+                                            <div class="modal-close cursor-pointer z-50" onClick={() => setShowModal3(false)}>
+                                                <svg class="fill-current text-gray-500" xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                                                    viewBox="0 0 18 18">
+                                                    <path
+                                                        d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z">
+                                                    </path>
+                                                </svg>
+                                            </div>
+
+                                        </div>
+                                        <div>
+                                            <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
+                                                {/**Title label & input */}
+                                                <div class="grid grid-cols-3 gap-6">
+                                                    <div class="col-span-3 sm:col-span-2">
+                                                        <label for="company_website" class="block text-sm font-medium text-gray-700">
+                                                            Title
+                                                        </label>
+                                                        <div class="mt-1 flex rounded-md shadow-sm">
+                                                            <span class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
+
+                                                            </span>
+                                                            <input defaultValue={user.username} required type="text" name="Title" id="Title" class="ml-6 focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300" placeholder="www.example.com" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {/**Description label & input */}
+                                                <div>
+                                                    <label for="about" class="block text-sm font-medium text-gray-700">
+                                                        Description
+                                                    </label>
+                                                    <div class="mt-1">
+                                                        <input id="Description" required name="Description" rows="3" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border-gray-300 rounded-md h-16" placeholder="Description"></input>
+                                                    </div>
+
+                                                </div>
+
+                                                <div>
+                                                    <input type="file" />
+                                                </div>
+
+
+
+
+
+                                            </div>
+
+                                            <div class="flex justify-end pt-2 space-x-14">
+                                                <button
+                                                    class="px-4 bg-gray-200 p-3 rounded text-black hover:bg-gray-300 font-semibold" onClick={() => setShowModal3(false)}>Cancel</button>
+                                                <button
+                                                    class="px-4 bg-blue-500 p-3 ml-3 rounded-lg text-white hover:bg-teal-400" >Confirm</button>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+
 
                 </section>
             ) : null}
 
 
             {/**Form to create a posts */}
-            {showModal ? (
-                <section class=''>
-                    <div class='p-10 relative max-w-md mx-auto md:max-w-2xl mt-6 min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded-xl mt-16'>
-                        <div class="rounded-lg">
-                            <div class="mt-5 md:mt-0 md:col-span-2">
-                                <form action="#" onSubmit={onSubmit} method="POST">
-                                    <div class="shadow sm:rounded-md sm:overflow-hidden">
-                                        <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
-                                            {/**Title label & input */}
-                                            <div class="grid grid-cols-3 gap-6">
-                                                <div class="col-span-3 sm:col-span-2">
-                                                    <label for="company_website" class="block text-sm font-medium text-gray-700">
-                                                        Title
-                                                    </label>
-                                                    <div class="mt-1 flex rounded-md shadow-sm">
-                                                        <span class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
+            {
+                showModal ? (
+                    <section class=''>
+                        <div class='p-10 relative max-w-md mx-auto md:max-w-2xl mt-6 min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded-xl mt-16'>
+                            <div class="rounded-lg">
+                                <div class="mt-5 md:mt-0 md:col-span-2">
+                                    <form action="#" onSubmit={onSubmit} method="POST">
+                                        <div class="shadow sm:rounded-md sm:overflow-hidden">
+                                            <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
+                                                {/**Title label & input */}
+                                                <div class="grid grid-cols-3 gap-6">
+                                                    <div class="col-span-3 sm:col-span-2">
+                                                        <label for="company_website" class="block text-sm font-medium text-gray-700">
                                                             Title
-                                                        </span>
-                                                        <input onChange={onTitleChange} required type="text" name="Title" id="Title" class="ml-6 focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300" placeholder="www.example.com" />
+                                                        </label>
+                                                        <div class="mt-1 flex rounded-md shadow-sm">
+                                                            <span class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
+                                                                Title
+                                                            </span>
+                                                            <input onChange={onTitleChange} required type="text" name="Title" id="Title" class="ml-6 focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300" placeholder="www.example.com" />
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            {/**Description label & input */}
-                                            <div>
-                                                <label for="about" class="block text-sm font-medium text-gray-700">
-                                                    Description
-                                                </label>
-                                                <div class="mt-1">
-                                                    <input id="Description" onChange={onDescriptionChange} required name="Description" rows="3" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border-gray-300 rounded-md h-16" placeholder="Description"></input>
+                                                {/**Description label & input */}
+                                                <div>
+                                                    <label for="about" class="block text-sm font-medium text-gray-700">
+                                                        Description
+                                                    </label>
+                                                    <div class="mt-1">
+                                                        <input id="Description" onChange={onDescriptionChange} required name="Description" rows="3" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border-gray-300 rounded-md h-16" placeholder="Description"></input>
+                                                    </div>
+
+                                                </div>
+                                                {/**Date */}
+                                                <div>
+                                                    <label class="block text-sm font-medium text-gray-700">
+                                                        Date
+                                                    </label>
+                                                    <input name='Date' id='Date' required onChange={onDateChange} type="datetime-local"></input>
+                                                </div>
+                                                {/**Rate */}
+                                                <div>
+                                                    <label>
+                                                        Rate
+                                                    </label>
+                                                    <input type="number" name='Rate' onChange={onRateChange} id='Rate' required className="ml-6 focus:ring-indigo-500 focus:border-indigo-500 flex-1 block rounded-none rounded-r-md sm:text-sm border-gray-300"></input>
                                                 </div>
 
-                                            </div>
-                                            {/**Date */}
-                                            <div>
-                                                <label class="block text-sm font-medium text-gray-700">
-                                                    Date
-                                                </label>
-                                                <input name='Date' id='Date' required onChange={onDateChange} type="datetime-local"></input>
-                                            </div>
-                                            {/**Rate */}
-                                            <div>
-                                                <label>
-                                                    Rate
-                                                </label>
-                                                <input type="number" name='Rate' onChange={onRateChange} id='Rate' required className="ml-6 focus:ring-indigo-500 focus:border-indigo-500 flex-1 block rounded-none rounded-r-md sm:text-sm border-gray-300"></input>
-                                            </div>
-
-                                            {/* *Image */}
-                                            {/* <div>
+                                                {/* *Image */}
+                                                {/* <div>
                                                 <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Upload Image</label>
                                                 <input onChange={onFileChange} class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="file_input_help" id="file_input" type="file" />
                                                 <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">SVG, PNG, JPG or GIF.</p>
                                             </div> */}
 
-                                            <div class="flex items-center justify-center w-full">
-                                                <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600 ">
-                                                    <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                                                        <svg aria-hidden="true" class="w-10 h-10 mb-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
-                                                        <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span> or drag and drop</p>
-                                                        <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px) </p>
-                                                        <div class="ml-32">
-                                                            <input onChange={onFileChange} id="dropzone-file" type="file" class="hidden" />
+                                                <div class="flex items-center justify-center w-full">
+                                                    <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600 ">
+                                                        <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                                            <svg aria-hidden="true" class="w-10 h-10 mb-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
+                                                            <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span> or drag and drop</p>
+                                                            <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px) </p>
+                                                            <div class="ml-32">
+                                                                <input onChange={onFileChange} id="dropzone-file" type="file" class="hidden" />
 
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </label>
-                                            </div>
+                                                    </label>
+                                                </div>
 
-                                            {/* <label className='form-label' htmlFor='image'>
+                                                {/* <label className='form-label' htmlFor='image'>
                                                 Image Upload
                                             </label>
                                             <input
@@ -237,33 +345,34 @@ export default function Profile() {
                                                 required
                                             /> */}
 
-                                            {/**Location */}
-                                            <div>
-                                                <label className="my-10 py-10">Location</label>
-                                                <input name='Location' id='Location' onChange={onLocationChange} required type="text" className="ml-6 focus:ring-indigo-500 focus:border-indigo-500 flex-1 block rounded-none rounded-r-md sm:text-sm border-gray-300 shadow-lg border border-r-slate-300">
-                                                </input>
-                                            </div>
+                                                {/**Location */}
+                                                <div>
+                                                    <label className="my-10 py-10">Location</label>
+                                                    <input name='Location' id='Location' onChange={onLocationChange} required type="text" className="ml-6 focus:ring-indigo-500 focus:border-indigo-500 flex-1 block rounded-none rounded-r-md sm:text-sm border-gray-300 shadow-lg border border-r-slate-300">
+                                                    </input>
+                                                </div>
 
-                                            {/**Price */}
-                                            <div>
-                                                <label>Price</label>
-                                                <input onChange={onCostChange} id='Cost' required name='Cost' type="text" className="ml-6 focus:ring-indigo-500 focus:border-indigo-500 flex-1 block rounded-none rounded-r-md sm:text-sm border-gray-300 shadow-lg border border-r-slate-300" placeholder="0.0"></input>
+                                                {/**Price */}
+                                                <div>
+                                                    <label>Price</label>
+                                                    <input onChange={onCostChange} id='Cost' required name='Cost' type="text" className="ml-6 focus:ring-indigo-500 focus:border-indigo-500 flex-1 block rounded-none rounded-r-md sm:text-sm border-gray-300 shadow-lg border border-r-slate-300" placeholder="0.0"></input>
+                                                </div>
+                                            </div>
+                                            {/**Button */}
+                                            <div class="px-4 py-3 bg-gray-50 text-right sm:px-6 flex flex-wrap justify-between">
+                                                <button onClick={() => setShowModal(false)} type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Close</button>
+                                                <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                                    Post
+                                                </button>
                                             </div>
                                         </div>
-                                        {/**Button */}
-                                        <div class="px-4 py-3 bg-gray-50 text-right sm:px-6 flex flex-wrap justify-between">
-                                            <button onClick={() => setShowModal(false)} type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Close</button>
-                                            <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                                                Post
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>
+                                    </form>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </section>
-            ) : null}
+                    </section>
+                ) : null
+            }
 
             {/**Modal */}
             <section>
@@ -278,84 +387,85 @@ export default function Profile() {
             </section>
 
             {/** Card post */}
-            {postData.map((post) => (
+            {
+                postData.map((post) => (
 
-                <section>
-                    <div className="p-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 xl:grid-cols-3 gap-5">
+                    <section>
+                        <div className="p-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 xl:grid-cols-3 gap-5">
 
-                        {/**--------------------------------------- */}
+                            {/**--------------------------------------- */}
 
 
-                        <div class="max-w-2xl mx-auto">
-                            <div class="bg-white shadow-md border border-gray-200 rounded-lg max-w-sm dark:bg-gray-800 dark:border-gray-700">
+                            <div class="max-w-2xl mx-auto">
+                                <div class="bg-white shadow-md border border-gray-200 rounded-lg max-w-sm dark:bg-gray-800 dark:border-gray-700">
 
-                                {/**Header */}
+                                    {/**Header */}
 
-                                {/** Photos */}
-                                <div class="py-4">
-                                    <div class='flex justify-between'>
+                                    {/** Photos */}
+                                    <div class="py-4">
+                                        <div class='flex justify-between'>
 
-                                        <h4 class="text-gray-900 font-bold text-2xl tracking-tight mb-2 dark:text-white">{post.title}</h4>
-                                        <h6>{post.date}</h6>
-                                    </div>
-                                    <div class="flex justify-between gap-1 mb-1">
-                                        <a class="flex" href="#">
-                                            <img class="max-w-full rounded-tl-lg"
-                                                src={post.image} />
-
-                                        </a>
-                                        <div>
-                                            {console.log(post.image)}
+                                            <h4 class="text-gray-900 font-bold text-2xl tracking-tight mb-2 dark:text-white">{post.title}</h4>
+                                            <h6>{post.date}</h6>
                                         </div>
-                                        <a class="flex" href="#">
-                                            <img class="max-w-full"
-                                                src={post.image} />
-                                        </a>
-                                        <a class="flex" href="#">
-                                            <img class="max-w-full rounded-tr-lg"
-                                                src={post.image} />
-                                        </a>
+                                        <div class="flex justify-between gap-1 mb-1">
+                                            <a class="flex" href="#">
+                                                <img class="max-w-full rounded-tl-lg"
+                                                    src={post.image} />
+
+                                            </a>
+                                            <div>
+                                                {console.log(post.image)}
+                                            </div>
+                                            <a class="flex" href="#">
+                                                <img class="max-w-full"
+                                                    src={post.image} />
+                                            </a>
+                                            <a class="flex" href="#">
+                                                <img class="max-w-full rounded-tr-lg"
+                                                    src={post.image} />
+                                            </a>
+                                        </div>
+                                        <div class="flex justify-between gap-1">
+                                            <a class="flex" href="#">
+                                                <img class="max-w-full rounded-bl-lg "
+                                                    src={post.image} />
+                                            </a>
+                                            <a class="flex" href="#">
+                                                <img class="max-w-full rounded-br-lg"
+                                                    src={post.image} />
+                                            </a>
+                                        </div>
                                     </div>
-                                    <div class="flex justify-between gap-1">
-                                        <a class="flex" href="#">
-                                            <img class="max-w-full rounded-bl-lg "
-                                                src={post.image} />
-                                        </a>
-                                        <a class="flex" href="#">
-                                            <img class="max-w-full rounded-br-lg"
-                                                src={post.image} />
-                                        </a>
+                                    <div class="px-6">
+                                        <p class="font-normal text-gray-700 mb-3 dark:text-gray-400">{post.description}</p>
                                     </div>
-                                </div>
-                                <div class="px-6">
-                                    <p class="font-normal text-gray-700 mb-3 dark:text-gray-400">{post.description}</p>
-                                </div>
-                                <div class="px-6">
-                                    <p class="font-normal text-gray-700 mb-3 dark:text-gray-400">{post.rate}</p>
-                                </div>
+                                    <div class="px-6">
+                                        <p class="font-normal text-gray-700 mb-3 dark:text-gray-400">{post.rate}</p>
+                                    </div>
 
-                                <div class="px-6">
-                                    <p class="font-normal text-gray-700 mb-3 dark:text-gray-400">{post.price}</p>
-                                </div>
+                                    <div class="px-6">
+                                        <p class="font-normal text-gray-700 mb-3 dark:text-gray-400">{post.price}</p>
+                                    </div>
 
-                                <div class="px-6">
-                                    <p class="font-normal text-gray-700 mb-3 dark:text-gray-400">{post.location}</p>
-                                </div>
+                                    <div class="px-6">
+                                        <p class="font-normal text-gray-700 mb-3 dark:text-gray-400">{post.location}</p>
+                                    </div>
 
-                                {/**Delete and update Button */}
-                                <div class='relative py-8 mx-6'>
-                                    <button onClick={() => handleDelete(post.id)} class="absolute bottom-0 right-0 h-12 w-16 focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Delete</button>
-                                    <button onClick={() => setShowModal2(true)} class="absolute bottom-0 right-20 h-12 w-16 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Update</button>
+                                    {/**Delete and update Button */}
+                                    <div class='relative py-8 mx-6'>
+                                        <button onClick={() => handleDelete(post.id)} class="absolute bottom-0 right-0 h-12 w-16 focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Delete</button>
+                                        <button onClick={() => setShowModal2(true)} class="absolute bottom-0 right-20 h-12 w-16 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Update</button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        {/** --------------------------------------- */}
+                            {/** --------------------------------------- */}
 
 
 
-                        {/**------------------------------------------ */}
+                            {/**------------------------------------------ */}
 
-                        {/* <div class="max-w-2xl mx-auto">
+                            {/* <div class="max-w-2xl mx-auto">
                             <div class="bg-white shadow-md border border-gray-200 rounded-lg max-w-sm dark:bg-gray-800 dark:border-gray-700">
 
                                 
@@ -401,13 +511,169 @@ export default function Profile() {
                             </div>
                         </div> */}
 
-                        {/**-------------------------------------------- */}
+                            {/**-------------------------------------------- */}
 
 
-                        {/* </row> */}
-                    </div>
-                </section>
-            ))}
+                            {/* </row> */}
+                        </div>
+                    </section>
+                ))
+            }
+
+
+
+
+
+
+
+
+            {/**Update form */}
+            <section onSubmit={onSubmit}>
+                {postData.map((post =>
+                    <section>
+                        {showModal2 ? (
+                            <div>
+                                <div class="main-modal fixed w-full inset-0 z-50 overflow-hidden flex justify-center items-center animated fadeIn faster">
+                                    <div class="border border-blue-500 shadow-lg modal-container bg-white w-4/12 md:max-w-11/12 mx-auto rounded-xl z-50 overflow-y-auto">
+                                        <div class="modal-content py-4 text-left px-6">
+                                            <div class="flex justify-between items-center pb-1">
+                                                <p class="text-2xl font-bold text-gray-500">Update post</p>
+
+                                                <div class="modal-close cursor-pointer z-50" onClick={() => setShowModal2(false)}>
+                                                    <svg class="fill-current text-gray-500" xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                                                        viewBox="0 0 18 18">
+                                                        <path
+                                                            d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z">
+                                                        </path>
+                                                    </svg>
+                                                </div>
+
+                                            </div>
+                                            <div>
+                                                <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
+                                                    {/**Title label & input */}
+                                                    <div class="grid grid-cols-3 gap-6">
+                                                        <div class="col-span-3 sm:col-span-2">
+                                                            <label for="company_website" class="block text-sm font-medium text-gray-700">
+                                                                Title
+                                                            </label>
+                                                            <div class="mt-1 flex rounded-md shadow-sm">
+                                                                <span class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
+
+                                                                </span>
+                                                                <input onChange={onTitleChange} required type="text" name="Title" id="Title" class="ml-6 focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300" placeholder="www.example.com" defaultValue={post.title} />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    {/**Description label & input */}
+                                                    <div>
+                                                        <label for="about" class="block text-sm font-medium text-gray-700">
+                                                            Description
+                                                        </label>
+                                                        <div class="mt-1">
+                                                            <input id="Description" onChange={onDescriptionChange} required name="Description" rows="3" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border-gray-300 rounded-md h-16" placeholder="Description" defaultValue={post.description}></input>
+                                                        </div>
+
+                                                    </div>
+                                                    {/**Date */}
+                                                    <div>
+                                                        <label class="block text-sm font-medium text-gray-700">
+                                                            Date
+                                                        </label>
+                                                        <input name='Date' id='Date' required onChange={onDateChange} type="datetime-local" defaultValue={post.date}></input>
+                                                    </div>
+                                                    {/**Rate */}
+                                                    <div>
+                                                        <label>
+                                                            Rate
+                                                        </label>
+                                                        <input type="number" name='Rate' onChange={onRateChange} id='Rate' required className="ml-6 focus:ring-indigo-500 focus:border-indigo-500 flex-1 block rounded-none rounded-r-md sm:text-sm border-gray-300" defaultValue={post.rate}></input>
+                                                    </div>
+
+                                                    {/* *Image */}
+                                                    {/* <div>
+                                                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Upload Image</label>
+                                                <input onChange={onFileChange} class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="file_input_help" id="file_input" type="file" />
+                                                <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">SVG, PNG, JPG or GIF.</p>
+                                            </div> */}
+
+                                                    {/* <div class="flex items-center justify-center w-full">
+                                                <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600 ">
+                                                    <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                                        <svg aria-hidden="true" class="w-10 h-10 mb-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
+                                                        <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span> or drag and drop</p>
+                                                        <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px) </p>
+                                                        <div class="ml-32">
+                                                            <input onChange={onFileChange} id="dropzone-file" type="file" class="hidden" />
+
+                                                        </div>
+                                                    </div>
+                                                </label>
+                                            </div> */}
+
+                                                    {/* <label className='form-label' htmlFor='image'>
+                                                Image Upload
+                                            </label>
+                                            <input
+                                                className='form-control'
+                                                type='file'
+                                                name='image'
+                                                onChange={onFileChange}
+                                                required
+                                            /> */}
+
+                                                    {/**Location */}
+                                                    <div>
+                                                        <label className="my-10 py-10">Location</label>
+                                                        <input name='Location' id='Location' onChange={onLocationChange} required type="text" className="ml-6 focus:ring-indigo-500 focus:border-indigo-500 flex-1 block rounded-none rounded-r-md sm:text-sm border-gray-300 shadow-lg border border-r-slate-300" defaultValue={post.location}>
+                                                        </input>
+                                                    </div>
+
+                                                    {/**Price */}
+                                                    <div>
+                                                        <label>Price</label>
+                                                        <input onChange={onCostChange} id='Cost' required name='Cost' type="text" className="ml-6 focus:ring-indigo-500 focus:border-indigo-500 flex-1 block rounded-none rounded-r-md sm:text-sm border-gray-300 shadow-lg border border-r-slate-300" placeholder="0.0" defaultValue={post.price}></input>
+                                                    </div>
+                                                </div>
+
+                                                <div class="flex justify-end pt-2 space-x-14">
+                                                    <button
+                                                        class="px-4 bg-gray-200 p-3 rounded text-black hover:bg-gray-300 font-semibold" onClick={() => setShowModal2(false)}>Cancel</button>
+                                                    <button
+                                                        class="px-4 bg-blue-500 p-3 ml-3 rounded-lg text-white hover:bg-teal-400" >Confirm</button>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        ) : null}
+                    </section>
+                ))}
+
+            </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
             {/* <section>
@@ -562,99 +828,6 @@ export default function Profile() {
             </section> */}
 
 
-            <section>
-                {postData.map((post =>
-                    <section>
-                        {showModal2 ? (
-                            <div >
-                                <div class="main-modal fixed w-full inset-0 z-50 overflow-hidden flex justify-center items-center animated fadeIn faster">
-                                    <div class="border border-blue-500 shadow-lg modal-container bg-white w-4/12 md:max-w-11/12 mx-auto rounded-xl z-50 overflow-y-auto">
-                                        <div class="modal-content py-4 text-left px-6">
-                                            <div class="flex justify-between items-center pb-1">
-                                                <p class="text-2xl font-bold text-gray-500">Update post</p>
-
-                                                <div class="modal-close cursor-pointer z-50" onClick={() => setShowModal2(false)}>
-                                                    <svg class="fill-current text-gray-500" xmlns="http://www.w3.org/2000/svg" width="18" height="18"
-                                                        viewBox="0 0 18 18">
-                                                        <path
-                                                            d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z">
-                                                        </path>
-                                                    </svg>
-                                                </div>
-
-                                            </div>
-                                            <div class="py-4">
-                                                <div class='flex justify-between'>
-
-                                                    <h4 class="text-gray-900 font-bold text-2xl tracking-tight mb-2 dark:text-white">{post.title}</h4>
-                                                    <h6>{post.date}</h6>
-                                                </div>
-
-                                                {/**Image */}
-                                                {/* <div class="flex justify-between gap-1 mb-1">
-                                                    <a class="flex" href="#">
-                                                        <img class="max-w-full rounded-tl-lg"
-                                                            src={post.image} />
-
-                                                    </a>
-                                                    <div>
-                                                        {console.log(post.image)}
-                                                    </div>
-                                                    <a class="flex" href="#">
-                                                        <img class="max-w-full"
-                                                            src={post.image} />
-                                                    </a>
-                                                    <a class="flex" href="#">
-                                                        <img class="max-w-full rounded-tr-lg"
-                                                            src={post.image} />
-                                                    </a>
-                                                </div>
-                                                <div class="flex justify-between gap-1">
-                                                    <a class="flex" href="#">
-                                                        <img class="max-w-full rounded-bl-lg "
-                                                            src={post.image} />
-                                                    </a>
-                                                    <a class="flex" href="#">
-                                                        <img class="max-w-full rounded-br-lg"
-                                                            src={post.image} />
-                                                    </a>
-                                                </div> */}
-
-
-                                            </div>
-                                            <div class="px-6">
-                                                <p class="font-normal text-gray-700 mb-3 dark:text-gray-400">{post.description}</p>
-                                            </div>
-                                            <div class="px-6">
-                                                <p class="font-normal text-gray-700 mb-3 dark:text-gray-400">{post.rate}</p>
-                                            </div>
-
-                                            <div class="px-6">
-                                                <p class="font-normal text-gray-700 mb-3 dark:text-gray-400">{post.price}</p>
-                                            </div>
-
-                                            <div class="px-6">
-                                                <p class="font-normal text-gray-700 mb-3 dark:text-gray-400">{post.location}</p>
-                                            </div>
-
-                                            <div class="flex justify-end pt-2 space-x-14">
-                                                <button
-                                                    class="px-4 bg-gray-200 p-3 rounded text-black hover:bg-gray-300 font-semibold" onClick={() => setShowModal2(false)}>Cancel</button>
-                                                <button
-                                                    class="px-4 bg-blue-500 p-3 ml-3 rounded-lg text-white hover:bg-teal-400" onClick={() => setShowModal2(false)}>Confirm</button>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                        ) : null}
-                    </section>
-                ))}
-
-            </section>
         </>
 
     )

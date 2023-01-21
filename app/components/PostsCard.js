@@ -45,11 +45,11 @@ export default function PostsCard({handleUpdate}) {
         
           <div className="lg:col-span-9 col-span-1 items-center justify-center"> */}
             <div className="bg-white shadow-lg rounded-lg p-0 lg:p-8 pb-12 mb-8 mt-5">
-              <div className="relative overflow-hidden shadow-md mb-6">
+              <div className="object-contain hover:object-scale-down">
                 <img
                   src={post.image}
                   alt=""
-                  className="object-top h-full w-full object-cover  shadow-lg rounded-t-lg lg:rounded-lg"
+                  className="object-none h-48 w-full"
                 />
               </div>
               <h1 className="transition duration-700 text-center mb-8 cursor-pointer hover:text-orange-600 text-3xl font-semibold">
