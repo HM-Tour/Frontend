@@ -10,26 +10,22 @@ import '../styles/globals.scss'
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      {/*
-        <head /> will contain the components returned by the nearest parent
-        head.jsx. Find out more at https://beta.nextjs.org/docs/api-reference/file-conventions/head
-      */}
-      <head />
+     
       <AuthWrapper>
       <body>
+
         <header>
           <Headero />
         </header>
         
         <main>
-
           {children}
         </main>
         
         <footer>
           <Footer/>
-
         </footer>
+
       </body>
       </AuthWrapper>
     </html>
