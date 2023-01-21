@@ -7,7 +7,7 @@ import { useState, useEffect, useContext } from "react";
 import { IoIosCreate } from "react-icons/io";
 import { AiFillEdit } from "react-icons/ai";
 import { AuthContext } from "../contexts/auth";
-import { config } from "@fortawesome/fontawesome-svg-core";
+//import { config } from "@fontawesome/fontawesome-svg-core";
 
 // reactstrap components
 
