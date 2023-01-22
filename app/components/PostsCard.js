@@ -1,32 +1,59 @@
 "use client";
-import React, { useEffect, useState } from "react";
+//import React, { useEffect, useState } from "react";
 import moment from "moment";
 import Link from "next/link";
 import axios from "axios";
+import useSWR from 'swr';
+
+
+// const fetchDataCall = async () => {
+//   let apiReturn = await axios
+//     .get("http://127.0.0.1:8000/api/posts")
+//     .then(async function(response) {
+//       return response;
+//     })
+//     .catch(function(error) {
+//       console.log(error);
+//     });
+//   return apiReturn;
+// };
 
 export default function PostsCard({ handleUpdate }) {
   // Data fetching part:
-  const [postData, setPostData] = useState([]);
+  //const [postData, setPostData] = useState([]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const result = await axios.get("http://127.0.0.1:8000/api/posts");
 
-      // console.log(result.data)
-      setPostData(result.data);
-      const id = result.data.id;
-      //console.log(id)
-    };
-    const intervalId = setInterval(() => {
-      fetchData();
-    }, 5000);
-    return () => clearInterval(intervalId);
-  }, []);
+  const url = "http://127.0.0.1:8000/api/posts"
+
+  const fetcher = url => axios.get(url).then(res => res.data);
+  console.log("fetcher",fetcher)
+
+  const { data, error, isLoading } = useSWR(url, fetcher);
+  if (error) return <div>failed to load</div>
+  if (isLoading) return <div>loading...</div>
+
+
+  // useEffect(() => {
+
+  //   const fetchData = async () => {
+  //     const result = await axios.get("http://127.0.0.1:8000/api/posts")
+  //     // .then(result => {       
+  //     //   return result.data;
+  //     // } )
+  //     setPostData(result.data);
+  //     const id = result.data.id;
+
+  //   };
+  //   const intervalId = setInterval(() => {
+  //     fetchData();
+  //   }, 5000);
+  //   return () => clearInterval(intervalId);
+  // }, []);
 
   return (
     // Home Page after login
     <>
-      {postData.map((post) => (
+      {data.map((post) => (
         <div key={post.title}>
           {/* <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center justify-center">
         
