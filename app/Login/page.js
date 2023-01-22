@@ -54,7 +54,7 @@ export default function Login(){
   <div class="rounded-xl bg-gray-800 bg-opacity-50 px-16 py-10 shadow-lg backdrop-blur-md max-sm:px-8">
     <div class="text-white">
       <div class="mb-8 flex flex-col items-center">
-        <img src="https://o.remove.bg/downloads/faa7e67b-b420-47f5-bade-b5748e725475/logo-removebg-preview.png"width="150" alt="" srcset="" />
+        <img src="https://i.postimg.cc/76VP8VzQ/logo-removebg-preview.png"width="150" alt="" srcset="" />
         <h1 class="mb-2 text-2xl">HM Tour</h1>
         <span class="text-gray-300"> Login </span>
       </div>
