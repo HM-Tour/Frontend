@@ -1,7 +1,7 @@
 "use client";
 import  {useContext,  useState ,useEffect} from "react";
 import Link from "next/link"
-
+import Router from 'next/router';
 import {AuthContext} from '../contexts/auth';
 
 
@@ -18,6 +18,8 @@ export default function Login(){
 
 
     const [PassWord,setPassWord]=useState('')
+
+    
 
     const usernameOnChangeHandler=(e)=>{
 
