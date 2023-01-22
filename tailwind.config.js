@@ -7,7 +7,7 @@ module.exports = {
   ],
   theme: {
     extend: {backgroundImage: {
-      'petra': "url('https://c4.wallpaperflare.com/wallpaper/445/597/251/petra-ancient-jordan-country-candles-wallpaper-preview.jpg')",
+      'petra': "url('https://i.postimg.cc/05V0qjJt/download123.jpg')",
       'footer-texture': "url('/img/footer-texture.png')",
     }},
   },
