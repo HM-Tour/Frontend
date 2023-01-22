@@ -29,7 +29,7 @@ export default function Register() {
       <div class="mb-8 flex flex-col items-center">
         <img src="https://i.postimg.cc/76VP8VzQ/logo-removebg-preview.png"width="150" alt="" srcset="" />
         <h1 class="mb-2 text-2xl">HM Tour</h1>
-        <span class="text-gray-300"> Login </span>
+        <span class="text-gray-300"> Sign up </span>
       </div>
       <form action="#" onSubmit={handleSubmit}>
         <div class="mb-4 text-lg">
