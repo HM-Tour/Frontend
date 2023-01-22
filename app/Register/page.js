@@ -1,13 +1,17 @@
 "use client";
 import { useState } from "react";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
 export default function Register() {
   const [user, setUser] = useState({
     username: "",
     email: "",
     password: "",
-    passwordConfirm: ""
+  
   });
+
+  const router = useRouter();
 
   const handleChange = e => {
     setUser({
@@ -16,10 +20,30 @@ export default function Register() {
     });
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    // Perform registration logic here, such as sending a request to your server
-    console.log(user);
+
+    
+
+    axios.post('http://127.0.0.1:8000/api/users/users/', user)
+    .then(response => {
+      if (response.status === 201) {
+        alert('User has been created successfully');
+        router.push("/Login")
+      } else {
+        alert(response.data);
+      }
+    })
+    .catch(error => {
+      console.log(error);
+      alert(error.response.data.detail);
+    });
+            
+    console.log(response.data)
+    
+    
+
+    
   };
 
   return (
