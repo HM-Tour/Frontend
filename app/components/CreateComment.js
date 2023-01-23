@@ -36,25 +36,25 @@ export default function CreateComment({ postId }) {
 
   return (
     <>
-      <div class="bg-white shadow-lg rounded-lg p-8 pb-12 mb-8">
-        <form onSubmit={handleSubmit} class="w-full p-4">
-          <div class="mb-2">
+      <div className="bg-white shadow-lg rounded-lg p-8 pb-12 mb-8">
+        <form onSubmit={handleSubmit} className="w-full p-4">
+          <div className="mb-2">
             <label
               for="comment"
-              class="text-xl mb-8 font-semibold border-b pb-4"
+              className="text-xl mb-8 font-semibold border-b pb-4"
             >
               Add a comment
             </label>
             <div className="grid grid-cols-1 gap-4 mb-4">
               <textarea
-                class="p-4 outline-none w-full rounded-lg h-40 focus:ring-2 focus:ring-gray-200 bg-gray-100 text-gray-700"
+                className="p-4 outline-none w-full rounded-lg h-40 focus:ring-2 focus:ring-gray-200 bg-gray-100 text-gray-700"
                 name="comment"
                 placeholder=""
               ></textarea>
             </div>
           </div>
           <div>
-            <button class="transition duration-500 ease hover:bg-orange-900 inline-block bg-orange-600 text-lg font-medium rounded-full text-white px-5 py-0 cursor-pointer">
+            <button className="transition duration-500 ease hover:bg-orange-900 inline-block bg-orange-600 text-lg font-medium rounded-full text-white px-5 py-0 cursor-pointer">
               Post Comment
             </button>
           </div>

@@ -3,7 +3,7 @@
 import React,{useEffect,useState}from "react";
 import axios from "axios";
 
-// const KEY='AIzaSyDIhbyjL0U1MFdSxtL6xY9Ie_tiSMt07ns'
+const KEY='AIzaSyDIhbyjL0U1MFdSxtL6xY9Ie_tiSMt07ns'
 
 export default function Map({location}){
 
@@ -27,7 +27,7 @@ export default function Map({location}){
     }
 
     catch (error) {
-        console.log(error);
+        //console.log(error);
         // handle the error here
       }
 
