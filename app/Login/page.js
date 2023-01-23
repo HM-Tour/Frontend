@@ -9,41 +9,6 @@ import {AuthContext} from '../contexts/auth';
 export default function Login(){
 
 
-  const { tokens, isAuthenticated, login } = useContext(AuthContext);
-
-   
-
-
-
-
-  const[UserName,setUserName]=useState('')
-
-
-  const [PassWord,setPassWord]=useState('')
-  const [isRedirect, setIsRedirect] = useState(false);
-    
-
-  const usernameOnChangeHandler=(e)=>{
-
-    setUserName(e.target.value)
-           
-    }
-
-  const passwordOnChangeHandler=(e)=>{
-
-    setPassWord(e.target.value)
-      
-    }
-
-
-
-
-
-
-
-  const handleOnSubmit =(e)=>{
-      
-      e.preventDefault()
       login({"username":UserName,
       "password":PassWord
     }
