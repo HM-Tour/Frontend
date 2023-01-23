@@ -8,27 +8,26 @@ import './globals.css'
 import '../styles/globals.scss'
 
 export default function RootLayout({ children }) {
-  
   return (
     <html lang="en">
-     
+
       <AuthWrapper>
-      <body>
+        <body>
 
-        <header>
-          <Headero />
-        </header>
-        
-        <main>
-          
-          {children}
-        </main>
-        
-        <footer>
-          <Footer/>
-        </footer>
+          <header>
+            <Headero />
+          </header>
 
-      </body>
+          <main>
+
+            {children}
+          </main>
+
+          <footer>
+            <Footer />
+          </footer>
+
+        </body>
       </AuthWrapper>
     </html>
   )

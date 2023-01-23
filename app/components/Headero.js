@@ -6,24 +6,24 @@ import Logo from "public/assets/logo_transparent.png";
 export default function Headero() {
   return (
     <header>
-      <nav class="">
-        <div class="container mx-auto px-10 md:px-12 lg:px-7">
+      <nav className="">
+        <div className="container mx-auto px-10 md:px-12 lg:px-7">
           <div className="border-b w-full inline-block border-orange-600 py-1">
-            <div class="flex flex-wrap items-center justify-between py-3 gap-6 md:py-4 md:gap-0">
-              <div class="w-full px-6 flex justify-between lg:w-max md:px-0">
+            <div className="flex flex-wrap items-center justify-between py-3 gap-6 md:py-4 md:gap-0">
+              <div className="w-full px-6 flex justify-between lg:w-max md:px-0">
                 <a
                   href="/"
                   aria-label="logo"
-                  class="flex space-x-2 items-center"
+                  className="flex space-x-2 items-center"
                 >
                   <Image
                     src={Logo}
-                    class="w-12 "
+                    className="w-12 "
                     alt="HM-Tour"
                     width="144"
                     height="133"
                   />
-                  <span class="text-2xl font-bold text-orange-600">
+                  <span className="text-2xl font-bold text-orange-600">
                     HM-Tour
                   </span>
                 </a>
@@ -31,28 +31,28 @@ export default function Headero() {
                 <button
                   aria-label="humburger"
                   id="hamburger"
-                  class="relative w-10 h-10 -mr-2 lg:hidden"
+                  className="relative w-10 h-10 -mr-2 lg:hidden"
                 >
                   <div
                     aria-hidden="true"
                     id="line"
-                    class="inset-0 w-6 h-0.5 m-auto rounded bg-yellow-900 transtion duration-300"
+                    className="inset-0 w-6 h-0.5 m-auto rounded bg-yellow-900 transtion duration-300"
                   ></div>
                   <div
                     aria-hidden="true"
                     id="line2"
-                    class="inset-0 w-6 h-0.5 mt-2 m-auto rounded bg-yellow-900 transtion duration-300"
+                    className="inset-0 w-6 h-0.5 mt-2 m-auto rounded bg-yellow-900 transtion duration-300"
                   ></div>
                 </button>
               </div>
 
-              <div class="hidden w-full lg:flex flex-wrap justify-end items-center space-y-6 p-6 rounded-xl bg-white md:space-y-0 md:p-0 md:flex-nowrap md:bg-transparent md:float-left md:contents lg:w-7/12">
-                <div class="text-gray-600 lg:pr-4">
-                  <ul class="space-y-6 tracking-wide font-medium text-sm md:flex md:space-y-0">
+              <div className="hidden w-full lg:flex flex-wrap justify-end items-center space-y-6 p-6 rounded-xl bg-white md:space-y-0 md:p-0 md:flex-nowrap md:bg-transparent md:float-left md:contents lg:w-7/12">
+                <div className="text-gray-600 lg:pr-4">
+                  <ul className="space-y-6 tracking-wide font-medium text-sm md:flex md:space-y-0">
                     <li>
                       <Link
                         href="/"
-                        class="block md:px-4 transition hover:text-yellow-700"
+                        className="block md:px-4 transition hover:text-yellow-700"
                       >
                         <span>
                           <svg
@@ -71,7 +71,7 @@ export default function Headero() {
                     <li>
                       <Link
                         href="/Profile"
-                        class="block md:px-4 transition hover:text-yellow-700"
+                        className="block md:px-4 transition hover:text-yellow-700"
                       >
                         <span>
                           <svg
@@ -81,21 +81,21 @@ export default function Headero() {
                           >
                             <g fill="currentColor">
                               <path
-                                fill-rule="evenodd"
+                                fillRule="evenodd"
                                 d="M24 42c9.941 0 18-8.059 18-18S33.941 6 24 6S6 14.059 6 24s8.059 18 18 18Zm0 2c11.046 0 20-8.954 20-20S35.046 4 24 4S4 12.954 4 24s8.954 20 20 20Z"
-                                clip-rule="evenodd"
+                                clipRule="evenodd"
                               />
                               <path d="M12 35.63c0-1.033.772-1.906 1.8-2.02c7.715-.854 12.72-.777 20.418.019a1.99 1.99 0 0 1 1.108 3.472c-9.085 7.919-14.277 7.81-22.686.008c-.41-.38-.64-.92-.64-1.478Z" />
                               <path
-                                fill-rule="evenodd"
+                                fillRule="evenodd"
                                 d="M34.115 34.623c-7.637-.79-12.57-.864-20.206-.019A1.028 1.028 0 0 0 13 35.631c0 .286.119.557.32.745c4.168 3.866 7.326 5.613 10.413 5.624c3.098.011 6.426-1.722 10.936-5.652a.99.99 0 0 0-.554-1.724ZM13.69 32.616c7.796-.863 12.874-.785 20.632.018a2.99 2.99 0 0 1 1.662 5.221c-4.575 3.988-8.385 6.16-12.257 6.145c-3.883-.014-7.525-2.223-11.766-6.158A3.018 3.018 0 0 1 11 35.63a3.028 3.028 0 0 1 2.69-3.015Z"
-                                clip-rule="evenodd"
+                                clipRule="evenodd"
                               />
                               <path d="M32 20a8 8 0 1 1-16 0a8 8 0 0 1 16 0Z" />
                               <path
-                                fill-rule="evenodd"
+                                fillRule="evenodd"
                                 d="M24 26a6 6 0 1 0 0-12a6 6 0 0 0 0 12Zm0 2a8 8 0 1 0 0-16a8 8 0 0 0 0 16Z"
-                                clip-rule="evenodd"
+                                clipRule="evenodd"
                               />
                             </g>
                           </svg>
@@ -105,7 +105,7 @@ export default function Headero() {
                     <li>
                       <Link
                         href="/About"
-                        class="block md:px-4 transition hover:text-yellow-700"
+                        className="block md:px-4 transition hover:text-yellow-700"
                       >
                         <span>
                           <svg
@@ -128,7 +128,7 @@ export default function Headero() {
                     <li>
                       <Link
                         href="/"
-                        class="block md:px-4 transition hover:text-yellow-700"
+                        className="block md:px-4 transition hover:text-yellow-700"
                       >
                         <span>
                           <svg
@@ -147,16 +147,16 @@ export default function Headero() {
                   </ul>
                 </div>
 
-                <div class="w-full space-y-2 border-yellow-200 lg:space-y-0 md:w-max lg:border-l md:float-left md:contents">
+                <div className="w-full space-y-2 border-yellow-200 lg:space-y-0 md:w-max lg:border-l md:float-left md:contents">
                 <Link
                     href="/Register"
-                    class="w-full py-3 px-6 text-center rounded-full transition bg-orange-300 hover:bg-orange-200 active:bg-orange-300 focus:bg-orange-300 sm:w-max"
+                    className="w-full py-3 px-6 text-center rounded-full transition bg-orange-300 hover:bg-orange-200 active:bg-orange-300 focus:bg-orange-300 sm:w-max"
                   >
                     <span>Sign up</span>
                   </Link>
                   <Link
                     href="/Login"
-                    class="w-full py-3 px-6 text-center rounded-full transition bg-orange-300 hover:bg-orange-200 active:bg-orange-300 focus:bg-orange-300 sm:w-max"
+                    className="w-full py-3 px-6 text-center rounded-full transition bg-orange-300 hover:bg-orange-200 active:bg-orange-300 focus:bg-orange-300 sm:w-max"
                   >
                     <span>Login</span>
                   </Link>
