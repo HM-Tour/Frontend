@@ -127,7 +127,7 @@ export default function Headero() {
                     </li>
                     <li>
                       <Link
-                        href="/"
+                        href="/Team"
                         className="block md:px-4 transition hover:text-yellow-700"
                       >
                         <span>
