@@ -34,11 +34,11 @@ export default function AuthWrapper({ children }) {
             })
             .catch((error) => {
                 alert('Wrong Username or Password');
-                console.error(error);
+                //console.error(error);
             });
         } catch (error) {
             alert('Wrong Username or Password');
-            console.error(error);
+            //console.error(error);
         }
     }
 
