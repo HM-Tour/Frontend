@@ -27,7 +27,7 @@ export default function Map({location}){
     }
 
     catch (error) {
-        console.log(error);
+        //console.log(error);
         // handle the error here
       }
 
