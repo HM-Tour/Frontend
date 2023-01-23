@@ -49,30 +49,30 @@ export default function Comments({ postId }) {
 
   return (
     <>
-      <div class="bg-white shadow-lg rounded-lg p-8 pb-12 mb-8">
-        <h3 class="text-xl mb-8 font-semibold border-b pb-4">Comments</h3>
+      <div className="bg-white shadow-lg rounded-lg p-8 pb-12 mb-8">
+        <h3 className="text-xl mb-8 font-semibold border-b pb-4">Comments</h3>
 
         {data.map((item) => (
-          <div key={item.id} class="border-b border-gray-100 mb-4 pb-4">
-            <div class="flex">
-              <div class="flex-shrink-0 mr-3">
+          <div key={item.id} className="border-b border-gray-100 mb-4 pb-4">
+            <div className="flex">
+              <div className="flex-shrink-0 mr-3">
                 <img
-                  class="mt-2 rounded-full w-8 h-8 sm:w-10 sm:h-10"
+                  className="mt-2 rounded-full w-8 h-8 sm:w-10 sm:h-10"
                   src="https://images.unsplash.com/photo-1604426633861-11b2faead63c?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=200&h=200&q=80"
                   alt=""
                 />
               </div>
-              <div class="flex-1 border rounded-lg px-4 py-2 sm:px-6 sm:py-4 leading-relaxed">
+              <div className="flex-1 border rounded-lg px-4 py-2 sm:px-6 sm:py-4 leading-relaxed">
                 <strong>{item.owner_username}</strong>{" "}
-                <span class="text-xs text-gray-400">{item.created_at}</span>
-                <p class="text-sm">{item.body}</p>
+                <span className="text-xs text-gray-400">{item.created_at}</span>
+                <p className="text-sm">{item.body}</p>
                 <button
                   onClick={() => handleDelete(item.id)}
                   type="button"
                   title="Start buying"
-                  class="w-full py-3 px-6 text-center rounded-full transition bg-blue-400 hover:bg-blue-200 active:bg-blue-400 focus:bg-yellow-300 sm:w-max"
+                  className="w-full py-3 px-6 text-center rounded-full transition bg-blue-400 hover:bg-blue-200 active:bg-blue-400 focus:bg-yellow-300 sm:w-max"
                 >
-                  <span class="block text-black font-semibold text-sm">
+                  <span className="block text-black font-semibold text-sm">
                     {del}
                   </span>
                 </button>
