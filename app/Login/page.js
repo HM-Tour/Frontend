@@ -10,9 +10,7 @@ export default function Login() {
 
 
   const { tokens, isAuthenticated, login } = useContext(AuthContext);
-  const [UserName, setUserName] = useState('')
-  const [PassWord, setPassWord] = useState('')
-  const [isRedirect, setIsRedirect] = useState(false);
+
 
 
   const usernameOnChangeHandler = (e) => {
@@ -75,4 +73,3 @@ export default function Login() {
   );
 
 
-}
