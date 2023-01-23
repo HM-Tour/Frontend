@@ -1,8 +1,6 @@
 'use client'
 import react from "react";
 import axios from 'axios';
-import Head from "next/head";
-import Image from 'next/image';
 import { useState, useEffect, useContext } from "react";
 import { IoIosCreate } from "react-icons/io";
 import { AiFillEdit } from "react-icons/ai";
