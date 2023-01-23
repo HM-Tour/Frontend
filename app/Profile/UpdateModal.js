@@ -7,7 +7,7 @@ import { useState, useEffect, useContext } from "react";
 import { IoIosCreate } from "react-icons/io";
 import { AiFillEdit } from "react-icons/ai";
 import { AuthContext } from "../contexts/auth";
-// import UpdateModal from "./UpdateModal";
+import UpdatePost from './UpdatePost';
 
 
 // reactstrap components
@@ -19,18 +19,14 @@ export default function Profile() {
     {/**Post */ }
     const [showModal, setShowModal] = useState(false);
     {/**update */ }
-    // const [showModal2, setShowModal2] = useState(false);
+    const [showModal2, setShowModal2] = useState(false);
     {/**profile */ }
     const [showModal3, setShowModal3] = useState(false);
-
-    const [showModal4, setShowModal4] = useState(false);
-
 
 
 
     {/**This for a database */ }
-    const [image, setImage] = useState(null);
-    const [altText, setAltText] = useState('');
+    const [image, setImage] = useState(null);image
     const [Title, setTitle] = useState('');
     const [Description, setDescription] = useState('');
     const [Date, setDate] = useState('');
@@ -42,7 +38,6 @@ export default function Profile() {
 
 
     const onFileChange = e => setImage(e.target.files[0]);
-    const onAltChange = e => setAltText(e.target.value);
     const onTitleChange = e => setTitle(e.target.value);
     const onDescriptionChange = e => setDescription(e.target.value);
     const onDateChange = e => setDate(e.target.value);
@@ -69,7 +64,6 @@ export default function Profile() {
 
         const formData = new FormData();
         formData.append('image', image);
-        formData.append('alt_text', altText);
         formData.append('Title', Title);
         formData.append('Description', Description);
         formData.append('Date', Date);
@@ -85,8 +79,6 @@ export default function Profile() {
 
             if (res.status === 201) {
                 setUpdated(!updated);
-                alert("Your post has been published")
-                setShowModal(false)
             }
         } catch (err) {
 
@@ -102,65 +94,16 @@ export default function Profile() {
             }
         })
             .then(response => {
+
                 setPostData(response.data)
+
+
             })
             .catch(error => {
                 // handle the error
-                // console.log(error)
+                //console.log(error)
             });
     })
-
-
-
-    const handleUpdatePost = ( event) => {
-        event.preventDefault();
-
-        const headers = new Headers();
-        headers.append("Authorization", `Bearer ${tokens.access}`);
-        const config = {
-            headers: {
-                method: "PUT",
-                headers: headers,
-            }
-        };
-        console.log(headers)
-
-        const body = JSON.stringify({
-            title: Title,
-            description: Description,
-            date: Date,
-            rate: Rate,
-            image: image,
-            location: Location,
-            price: Cost
-        });
-        const id=currentPost.id
-        axios
-        .put(`http://127.0.0.1:8000/api/posts/update/${id}/`, body, config)    
-        .then(res => {
-            //update the post data in the state to reflect the changes
-            setPostData(prevPostData => prevPostData.map(post => {
-                    if (post.id === currentPost.id) {
-                        return res.data;
-                    }
-                    return post;
-                }))
-                console.log(config)
-                setEditingPostId(null);
-            })
-            .catch(error => {
-                //console.log(error);
-            });
-        }
-        // console.log(handleUpdatePost);
-        
-    const [currentPost, setCurrentPost] = useState(null);
-    const [selectedPost, setSelectedPost] = useState(false);
-
-    const handleUpdate = async (post) => {
-        setSelectedPost(true);
-        setCurrentPost(post)
-    }
 
     {/**Delete the posts */ }
     const handleDelete = async (id) => {
@@ -174,13 +117,10 @@ export default function Profile() {
     };
 
 
-
-
-
     {/**User */ }
     const [userPro, setUserPro] = useState([]);
     useEffect(() => {
-        axios.get('http://127.0.0.1:8000/apii/current_user', {
+        axios.get('http://127.0.0.1:8000/api/users/users/', {
             headers: {
                 'Authorization': `Bearer ${tokens.access}`
             }
@@ -188,127 +128,197 @@ export default function Profile() {
             .then(response => {
 
                 setUserPro(response.data)
-                // console.log(userPro)
 
 
             })
             .catch(error => {
                 // handle the error
-                // console.log(error)
+                //console.log(error)
             });
     });
+
+   {/********************************************** */ }
+    // state variable to keep track of the post being edited
+    const [editingPostId, setEditingPostId] = useState(null);
+    //function to handle edit post
+    const handleEditPost = (postId) => {
+        setEditingPostId(postId);
+    }
+    //function to handle cancel edit post
+    const handleCancelEdit = () => {
+        setEditingPostId(null);
+    }
+    //function to handle update post
+    const handleUpdatePost = ( event) => {
+        event.preventDefault();
+
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                "Authorization": `Bearer ${tokens.access}`
+            }
+        };
+
+        const body = JSON.stringify({
+            title: Title,
+            description: Description,
+            date: Date,
+            rate: Rate,
+            image: image,
+            location: Location,
+            price: Cost
+        });
+        const id=currentPost.id
+        console.log(id);
+        axios
+        .put(`http://127.0.0.1:8000/api/posts/${id}/`, body, config)    
+        .then(response => {
+                //update the post data in the state to reflect the changes
+                setPostData(prevPostData => prevPostData.map(post => {
+                    if (post.id === currentPost.id) {
+                        return response.data;
+                    }
+                    return post;
+                }))
+                setEditingPostId(null);
+            })
+            .catch(error => {
+                //console.log(error);
+            });
+    }
+
+    const [currentPost, setCurrentPost] = useState(null);
+    const [isUpdateFormOpen, setIsUpdateFormOpen] = useState(false);
+
+
+    const handleUpdate= async (post)=>{
+        setIsUpdateFormOpen(true);
+        setCurrentPost(post);
+        console.log(post)
+       
+    }
+    {/********************************************** */ }
 
     return (
         <>
 
             {/** Profile */}
             <div>
+                {userPro.map((user =>
+                    <section class="py-10">
+                        <div class="relative max-w-md mx-auto md:max-w-2xl mt-6 min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded-xl mt-16">
+                            <div class="px-6">
+                                <div class="flex flex-wrap justify-center">
+                                    <div class="w-full flex justify-center">
+                                        <div class="relative">
 
-                <section class="py-10">
-                    <div class="relative max-w-md mx-auto md:max-w-2xl mt-6 min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded-xl mt-16">
-                        <div class="px-6">
-                            <div class="flex flex-wrap justify-center">
-                                <div class="w-full flex justify-center">
-                                    <div class="relative">
+                                            <div class="absolute top-0 right-0 h-16 w-16 flex flex-wrap justify-between">
+                                                <button class="ml-80" onClick={() => setShowModal3(true)}>
+                                                    <AiFillEdit class="text-lg" />
+                                                </button>
+                                            </div>
 
-                                        <div class="absolute top-0 right-0 h-16 w-16 flex flex-wrap justify-between">
-                                            <button class="ml-80" onClick={() => setShowModal3(true)}>
-                                                <AiFillEdit class="text-lg" />
-                                            </button>
+                                            <img src="https://github.com/creativetimofficial/soft-ui-dashboard-tailwind/blob/main/build/assets/img/team-2.jpg?raw=true" class="shadow-xl rounded-full align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-[150px]" />
                                         </div>
-
-                                        <img src="https://github.com/creativetimofficial/soft-ui-dashboard-tailwind/blob/main/build/assets/img/team-2.jpg?raw=true" class="shadow-xl rounded-full align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-[150px]" />
                                     </div>
                                 </div>
-                            </div>
 
 
-                            <div class="text-center mt-28">
-                                <h3 class="text-2xl text-slate-700 font-bold leading-normal mb-1">{userPro.username}</h3>
-                                <div class="text-xs mt-0 mb-2 text-slate-400 font-bold uppercase">
-                                    <i class="fas fa-map-marker-alt mr-2 text-slate-400 opacity-75"></i>{userPro.email}
+                                <div class="text-center mt-28">
+                                    <h3 class="text-2xl text-slate-700 font-bold leading-normal mb-1">{user.username}</h3>
+                                    <div class="text-xs mt-0 mb-2 text-slate-400 font-bold uppercase">
+                                        <i class="fas fa-map-marker-alt mr-2 text-slate-400 opacity-75"></i>Paris, France
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="mt-6 py-6 border-t border-slate-200 text-center">
-                                <div class="flex flex-wrap justify-center">
-                                    <div class="w-full px-4">
-                                        <p class="font-light leading-relaxed text-slate-600 mb-4">{userPro.description}</p>
+                                <div class="mt-6 py-6 border-t border-slate-200 text-center">
+                                    <div class="flex flex-wrap justify-center">
+                                        <div class="w-full px-4">
+                                            <p class="font-light leading-relaxed text-slate-600 mb-4">{user.description}</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
 
-                </section>
-
+                    </section>
+                ))}
             </div>
 
             {/**Edit profile */}
             {showModal3 ? (
 
                 <section>
-                    <div>
-                        <div class="main-modal fixed w-full inset-0 z-50 overflow-hidden flex justify-center items-center animated fadeIn faster">
-                            <div class="border border-blue-500 shadow-lg modal-container bg-white w-4/12 md:max-w-11/12 mx-auto rounded-xl z-50 overflow-y-auto">
-                                <div class="modal-content py-4 text-left px-6">
-                                    <div class="flex justify-between items-center pb-1">
-                                        <p class="text-2xl font-bold text-gray-500">Profile</p>
+                    {userPro.map((user =>
+                        <div>
+                            <div class="main-modal fixed w-full inset-0 z-50 overflow-hidden flex justify-center items-center animated fadeIn faster">
+                                <div class="border border-blue-500 shadow-lg modal-container bg-white w-4/12 md:max-w-11/12 mx-auto rounded-xl z-50 overflow-y-auto">
+                                    <div class="modal-content py-4 text-left px-6">
+                                        <div class="flex justify-between items-center pb-1">
+                                            <p class="text-2xl font-bold text-gray-500">Profile</p>
 
-                                        <div class="modal-close cursor-pointer z-50" onClick={() => setShowModal3(false)}>
-                                            <svg class="fill-current text-gray-500" xmlns="http://www.w3.org/2000/svg" width="18" height="18"
-                                                viewBox="0 0 18 18">
-                                                <path
-                                                    d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z">
-                                                </path>
-                                            </svg>
+                                            <div class="modal-close cursor-pointer z-50" onClick={() => setShowModal3(false)}>
+                                                <svg class="fill-current text-gray-500" xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                                                    viewBox="0 0 18 18">
+                                                    <path
+                                                        d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z">
+                                                    </path>
+                                                </svg>
+                                            </div>
+
                                         </div>
+                                        <div>
+                                            <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
+                                                {/**Title label & input */}
+                                                <div class="grid grid-cols-3 gap-6">
+                                                    <div class="col-span-3 sm:col-span-2">
+                                                        <label for="company_website" class="block text-sm font-medium text-gray-700">
+                                                            Title
+                                                        </label>
+                                                        <div class="mt-1 flex rounded-md shadow-sm">
+                                                            <span class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
 
-                                    </div>
-                                    <div>
-                                        <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
-                                            {/**Title label & input */}
-                                            <div class="grid grid-cols-3 gap-6">
-                                                <div class="col-span-3 sm:col-span-2">
-                                                    <label for="company_website" class="block text-sm font-medium text-gray-700">
-                                                        Title
-                                                    </label>
-                                                    <div class="mt-1 flex rounded-md shadow-sm">
-                                                        <span class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
-
-                                                        </span>
-                                                        <input defaultValue={userPro.username} required type="text" name="Title" id="Title" class="ml-6 focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300" placeholder="www.example.com" />
+                                                            </span>
+                                                            <input defaultValue={user.username} required type="text" name="Title" id="Title" class="ml-6 focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300" placeholder="www.example.com" />
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            {/**Description label & input */}
-                                            <div>
-                                                <label for="about" class="block text-sm font-medium text-gray-700">
-                                                    Description
-                                                </label>
-                                                <div class="mt-1">
-                                                    <input id="Description" required name="Description" rows="3" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border-gray-300 rounded-md h-16" placeholder="Description"></input>
+                                                {/**Description label & input */}
+                                                <div>
+                                                    <label for="about" class="block text-sm font-medium text-gray-700">
+                                                        Description
+                                                    </label>
+                                                    <div class="mt-1">
+                                                        <input id="Description" required name="Description" rows="3" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border-gray-300 rounded-md h-16" placeholder="Description"></input>
+                                                    </div>
+
                                                 </div>
 
+                                                <div>
+                                                    <input type="file" />
+                                                </div>
+
+
+
+
+
                                             </div>
 
-                                            <div>
-                                                <input type="file" />
+                                            <div class="flex justify-end pt-2 space-x-14">
+                                                <button
+                                                    class="px-4 bg-gray-200 p-3 rounded text-black hover:bg-gray-300 font-semibold" onClick={() => setShowModal3(false)}>Cancel</button>
+                                                <button
+                                                    class="px-4 bg-blue-500 p-3 ml-3 rounded-lg text-white hover:bg-teal-400" >Confirm</button>
                                             </div>
-                                        </div>
 
-                                        <div class="flex justify-end pt-2 space-x-14">
-                                            <button
-                                                class="px-4 bg-gray-200 p-3 rounded text-black hover:bg-gray-300 font-semibold" onClick={() => setShowModal3(false)}>Cancel</button>
-                                            <button
-                                                class="px-4 bg-blue-500 p-3 ml-3 rounded-lg text-white hover:bg-teal-400" >Confirm</button>
                                         </div>
-
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    ))}
+
+
                 </section>
             ) : null}
 
@@ -330,8 +340,10 @@ export default function Profile() {
                                                             Title
                                                         </label>
                                                         <div class="mt-1 flex rounded-md shadow-sm">
-
-                                                            <input onChange={onTitleChange} required type="text" name="Title" id="Title" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" placeholder="Title" />
+                                                            <span class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
+                                                                Title
+                                                            </span>
+                                                            <input onChange={onTitleChange} required type="text" name="Title" id="Title" class="ml-6 focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300" placeholder="www.example.com" />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -341,8 +353,7 @@ export default function Profile() {
                                                         Description
                                                     </label>
                                                     <div class="mt-1">
-                                                        {/* <input id="Description" onChange={onDescriptionChange} required name="Description" rows="3" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" placeholder="Description"></input> */}
-                                                        <textarea onChange={onDescriptionChange} required name="Description" id="textarea" type="textarea" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"></textarea>
+                                                        <input id="Description" onChange={onDescriptionChange} required name="Description" rows="3" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border-gray-300 rounded-md h-16" placeholder="Description"></input>
                                                     </div>
 
                                                 </div>
@@ -351,14 +362,14 @@ export default function Profile() {
                                                     <label class="block text-sm font-medium text-gray-700">
                                                         Date
                                                     </label>
-                                                    <input name='Date' id='Date' required onChange={onDateChange} type="datetime-local" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"></input>
+                                                    <input name='Date' id='Date' required onChange={onDateChange} type="datetime-local"></input>
                                                 </div>
                                                 {/**Rate */}
                                                 <div>
                                                     <label>
                                                         Rate
                                                     </label>
-                                                    <input type="number" name='Rate' onChange={onRateChange} id='Rate' required className="block px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"></input>
+                                                    <input type="number" name='Rate' onChange={onRateChange} id='Rate' required className="ml-6 focus:ring-indigo-500 focus:border-indigo-500 flex-1 block rounded-none rounded-r-md sm:text-sm border-gray-300"></input>
                                                 </div>
 
                                                 {/* *Image */}
@@ -371,7 +382,7 @@ export default function Profile() {
                                                 <div class="flex items-center justify-center w-full">
                                                     <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600 ">
                                                         <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                                                            <svg aria-hidden="true" class="w-10 h-10 mb-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" strokeWidth="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
+                                                            <svg aria-hidden="true" class="w-10 h-10 mb-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
                                                             <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span> or drag and drop</p>
                                                             <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px) </p>
                                                             <div class="ml-32">
@@ -395,21 +406,20 @@ export default function Profile() {
 
                                                 {/**Location */}
                                                 <div>
-                                                    <label for="passwordConfirmation">Location</label>
-                                                    <input name='Location' id='Location' onChange={onLocationChange} required type="text" className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" />
+                                                    <label className="my-10 py-10">Location</label>
+                                                    <input name='Location' id='Location' onChange={onLocationChange} required type="text" className="ml-6 focus:ring-indigo-500 focus:border-indigo-500 flex-1 block rounded-none rounded-r-md sm:text-sm border-gray-300 shadow-lg border border-r-slate-300">
+                                                    </input>
                                                 </div>
 
                                                 {/**Price */}
                                                 <div>
                                                     <label>Price</label>
-                                                    <input onChange={onCostChange} id='Cost' required name='Cost' type="text" className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" placeholder="0.0"></input>
+                                                    <input onChange={onCostChange} id='Cost' required name='Cost' type="text" className="ml-6 focus:ring-indigo-500 focus:border-indigo-500 flex-1 block rounded-none rounded-r-md sm:text-sm border-gray-300 shadow-lg border border-r-slate-300" placeholder="0.0"></input>
                                                 </div>
                                             </div>
                                             {/**Button */}
                                             <div class="px-4 py-3 bg-gray-50 text-right sm:px-6 flex flex-wrap justify-between">
-                                                <button onClick={() => setShowModal(false)} type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Close
-                                                </button>
-
+                                                <button onClick={() => setShowModal(false)} type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Close</button>
                                                 <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                                                     Post
                                                 </button>
@@ -431,16 +441,20 @@ export default function Profile() {
                         <IoIosCreate class='h-8 w-8' />
                     </button>
                 </div>
+
+
             </section>
 
-
             {/** Card post */}
-            <div class="p-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 xl:grid-cols-3 gap-5">
-                {postData.map((post) => (
+            {
+                postData.map((post) => (
 
                     <section>
-                        <div className="">
+                        <div className="p-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 xl:grid-cols-3 gap-5">
+
                             {/**--------------------------------------- */}
+
+
                             <div class="max-w-2xl mx-auto">
                                 <div class="bg-white shadow-md border border-gray-200 rounded-lg max-w-sm dark:bg-gray-800 dark:border-gray-700">
 
@@ -456,15 +470,28 @@ export default function Profile() {
                                         <div class="flex justify-between gap-1 mb-1">
                                             <a class="flex" href="#">
                                                 <img class="max-w-full rounded-tl-lg"
-                                                    src={post.image}
-                                                    onError={({ currentTarget }) => {
-                                                        currentTarget.onerror = null;
-                                                        currentTarget.src = "   assets/logo.png"
-                                                    }}
-                                                />
+                                                    src={post.image} />
 
                                             </a>
-
+                                         
+                                            <a class="flex" href="#">
+                                                <img class="max-w-full"
+                                                    src={post.image} />
+                                            </a>
+                                            <a class="flex" href="#">
+                                                <img class="max-w-full rounded-tr-lg"
+                                                    src={post.image} />
+                                            </a>
+                                        </div>
+                                        <div class="flex justify-between gap-1">
+                                            <a class="flex" href="#">
+                                                <img class="max-w-full rounded-bl-lg "
+                                                    src={post.image} />
+                                            </a>
+                                            <a class="flex" href="#">
+                                                <img class="max-w-full rounded-br-lg"
+                                                    src={post.image} />
+                                            </a>
                                         </div>
                                     </div>
                                     <div class="px-6">
@@ -484,24 +511,18 @@ export default function Profile() {
 
                                     {/**Delete and update Button */}
                                     <div class='relative py-8 mx-6'>
-                                        <button onClick={() => handleDelete(post.id)}
-                                            class="absolute bottom-0 right-0 h-12 w-16 focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
-                                            Delete
-                                        </button>
-                                        <button onClick={() => handleUpdate(post)}
-                                            class="absolute bottom-0 right-20 h-12 w-16 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-                                            Update
-                                        </button>
+                                        <button onClick={() => handleDelete(post.id)} class="absolute bottom-0 right-0 h-12 w-16 focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Delete</button>
+                                        <button onClick={() => handleUpdate(post)} class="absolute bottom-0 left-0 h-12 w-16 focus:outline-none text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-900">Update</button>
                                     </div>
-
                                 </div>
                             </div>
+                            {/** --------------------------------------- */}
+
+                            {/* </row> */}
                         </div>
                     </section>
                 ))
-                }
-            </div>
-
+            }
 
 
 
@@ -511,75 +532,66 @@ export default function Profile() {
 
 
             {/**Update form */}
-            <section>
-                {selectedPost &&<section>
-                    <form onSubmit={handleUpdatePost}>
-                    <div>
-                        <div class="main-modal w-full inset-0 z-50 overflow-hidden flex justify-center items-center animated fadeIn faster">
-                            <div class="border border-blue-500 shadow-lg modal-container bg-white w-4/12 md:max-w-11/12 mx-auto rounded-xl z-50 overflow-y-auto">
-                                <div class="modal-content py-4 text-left px-6">
-                                    <div class="flex justify-between items-center pb-1">
-                                        <p class="text-2xl font-bold text-gray-500">Update post</p>
+            {isUpdateFormOpen && <section >
+                        <form onSubmit={handleUpdatePost}>
+                            <div class="main-modal  w-full inset-0 z-50 overflow-hidden flex justify-center items-center animated fadeIn faster">
+                                <div class="border border-blue-500 shadow-lg modal-container bg-white w-4/12 md:max-w-11/12 mx-auto rounded-xl z-50 overflow-y-auto">
+                                    <div class="modal-content py-4 text-left px-6">
+                                        <div class="flex justify-between items-center pb-1">
+                                            <p class="text-2xl font-bold text-gray-500">Update post</p>
 
-                                        <div class="modal-close cursor-pointer z-50" onClick={() => setSelectedPost(false)}>
-                                            <svg class="fill-current text-gray-500" xmlns="http://www.w3.org/2000/svg" width="18" height="18"
-                                                viewBox="0 0 18 18">
-                                                <path
-                                                    d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z">
-                                                </path>
-                                            </svg>
+                                            <div class="modal-close cursor-pointer z-50" onClick={() => setIsUpdateFormOpen(false)}>
+                                                <svg class="fill-current text-gray-500" xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                                                    viewBox="0 0 18 18">
+                                                    <path
+                                                        d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z">
+                                                    </path>
+                                                </svg>
+                                            </div>
+
                                         </div>
 
-                                    </div>
+                                        <div>
+                                            <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
+                                                {/**Title label & input */}
+                                                <div class="grid grid-cols-3 gap-6">
+                                                    <div class="col-span-3 sm:col-span-2">
+                                                        <label for="company_website" class="block text-sm font-medium text-gray-700">
+                                                            Title
+                                                        </label>
+                                                        <div class="mt-1 flex rounded-md shadow-sm">
 
-                                    <div>
-                                        <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
-                                            {/**Title label & input */}
-                                            <div class="grid grid-cols-3 gap-6">
-                                                <div class="col-span-3 sm:col-span-2">
-                                                    <label for="company_website" class="block text-sm font-medium text-gray-700">
-                                                        Title
-                                                    </label>
-                                                    <div class="mt-1 flex rounded-md shadow-sm">
-
-                                                        <input defaultValue={currentPost.title} required type="text" name="Title" id="Title" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" placeholder="www.example.com" />
+                                                            <input onChange={onTitleChange} defaultValue={currentPost.title} required type="text" name="Title" id="Title" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" placeholder="www.example.com"/>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            {/**Description label & input */}
-                                            <div>
-                                                <label for="about" class="block text-sm font-medium text-gray-700">
-                                                    Description
-                                                </label>
+                                                {/**Description label & input */}
+                                                <div>
+                                                    <label for="about" class="block text-sm font-medium text-gray-700">
+                                                        Description
+                                                    </label>
 
-                                                <div class="mt-1">
-                                                    <textarea defaultValue={currentPost.description} required name="Description" id="textarea" type="textarea" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"></textarea>
+                                                    <div class="mt-1">
+                                                        <textarea onChange={onDescriptionChange} defaultValue={currentPost.description} required name="Description" id="textarea" type="textarea" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"></textarea>
+                                                    </div>
+
                                                 </div>
-
-                                            </div>
-                                            {/**Date */}
-                                            <div>
-                                                <label class="block text-sm font-medium text-gray-700">
-                                                    Date
-                                                </label>
-                                                <input defaultValue={currentPost.date} name='Date' id='Date' required type="datetime-local" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"></input>
-                                            </div>
-                                            {/**Rate */}
-                                            <div>
-                                                <label>
-                                                    Rate
-                                                </label>
-                                                <input defaultValue={currentPost.rate} type="number" name='Rate' id='Rate' required className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" ></input>
-                                            </div>
-                                            {/**Location */}
-                                            <div>
-                                                <label className="my-10 py-10">Location</label>
-                                                <input defaultValue={currentPost.location} name='Location' id='Location' required type="text" className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" >
-                                                </input>
-                                            </div>
-
-                                            <div>
-                                            <label className='form-label' htmlFor='image'>
+                                                {/**Date */}
+                                                <div>
+                                                    <label class="block text-sm font-medium text-gray-700">
+                                                        Date
+                                                    </label>
+                                                    <input onChange={onDateChange} defaultValue={currentPost.date} name='Date' id='Date' required type="datetime-local"  class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"></input>
+                                                </div>
+                                                {/**Rate */}
+                                                <div>
+                                                    <label>
+                                                        Rate
+                                                    </label>
+                                                    <input onChange={onRateChange} defaultValue={currentPost.rate} type="number" name='Rate' id='Rate' required className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" ></input>
+                                                </div>
+                                                 {/* *Image */}
+                                                   <label className='form-label' htmlFor='image'>
                                                 Image Upload
                                             </label>
                                             <input
@@ -589,32 +601,36 @@ export default function Profile() {
                                                 onChange={onFileChange}
                                                 required
                                             />
+                                                {/**Location */}
+                                                <div>
+                                                    <label className="my-10 py-10">Location</label>
+                                                    <input  onChange={onLocationChange} defaultValue={currentPost.location} name='Location' id='Location' required type="text" className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" >
+                                                    </input>
+                                                </div>
+
+                                                {/**Price */}
+                                                <div>
+                                                    <label>Price</label>
+                                                    <input onChange={onCostChange} defaultValue={currentPost.price} id='Cost' required name='Cost' type="text" className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" placeholder="0.0" ></input>
+                                                </div>
                                             </div>
 
-                                            {/**Price */}
-                                            <div>
-                                                <label>Price</label>
-                                                <input defaultValue={currentPost.price} id='Cost' required name='Cost' type="text" className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" placeholder="0.0" ></input>
+                                            <div class="flex justify-end pt-2 space-x-14">
+                                                <button
+                                                    class="px-4 bg-gray-200 p-3 rounded text-black hover:bg-gray-300 font-semibold" onClick={() => setIsUpdateFormOpen(false)}>Cancel</button>
+                                                <button
+                                                    
+                                                    class="px-4 bg-blue-500 p-3 ml-3 rounded-lg text-white hover:bg-teal-400" >Confirm
+                                                </button>
                                             </div>
-                                        </div>
-
-                                        <div class="flex justify-end pt-2 space-x-14">
-                                            <button
-                                                class="px-4 bg-gray-200 p-3 rounded text-black hover:bg-gray-300 font-semibold" 
-                                                onClick={() => setSelectedPost(false)}>Cancel</button>
-                                            <button
-                                                class="px-4 bg-blue-500 p-3 ml-3 rounded-lg text-white hover:bg-teal-400" >Confirm
-                                            </button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    </form>
-                </section>
-        }
-            </section>
+                        </form>
+                </section>}
+
+
 
 
 
@@ -785,6 +801,8 @@ export default function Profile() {
                     </Modal.Footer>
                 </Modal>
             </section> */}
+
+
         </>
 
     )
