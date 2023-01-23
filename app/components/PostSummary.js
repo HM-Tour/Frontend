@@ -1,37 +1,45 @@
 "use client";
-import React, { useEffect, useState } from "react";
+//import React, { useEffect, useState } from "react";
 import moment from 'moment';
 import Link from 'next/link';
 import axios from "axios";
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
-
+import useSWR from 'swr';
 
 export default function PostSummary({handleUpdate}) {
 
     // Data fetching part: 
-    const [postData, setPostData] = useState([]);
+    //const [postData, setPostData] = useState([]);
   
   
-    
+    const url = "http://127.0.0.1:8000/api/posts"
+
+    const fetcher = url => axios.get(url).then(res => res.data);
+    console.log("fetcher",fetcher)
   
-    useEffect(() => {
-      const fetchData = async () => {
-        const result = await axios.get(
-          "http://127.0.0.1:8000/api/posts"
+    const { data, error, isLoading } = useSWR(url, fetcher);
+    if (error) return <div>failed to load</div>
+    if (isLoading) return <div>loading...</div>
   
-        );
   
-        // console.log(result.data)
-        setPostData(result.data);
-        const id = result.data.id;
-        //console.log(id)
-      };
-      const intervalId = setInterval(() => {
-        fetchData();
-      }, 5000);
-      return () => clearInterval(intervalId);
-    }, []);
+    // useEffect(() => {
+    //   const fetchData = async () => {
+    //     const result = await axios.get(
+    //       "http://127.0.0.1:8000/api/posts"
+  
+    //     );
+  
+    //     // console.log(result.data)
+    //     setPostData(result.data);
+    //     const id = result.data.id;
+    //     //console.log(id)
+    //   };
+    //   const intervalId = setInterval(() => {
+    //     fetchData();
+    //   }, 5000);
+    //   return () => clearInterval(intervalId);
+    // }, []);
 
 
     const customLeftArrow = (
@@ -78,7 +86,7 @@ export default function PostSummary({handleUpdate}) {
       <Carousel infinite customLeftArrow={customLeftArrow} customRightArrow={customRightArrow} responsive={responsive} itemClass="px-4">
 
       
-      {postData.map((post) => (
+      {data.map((post) => (
         <div key={post.title} >
 
 
