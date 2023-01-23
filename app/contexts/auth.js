@@ -3,15 +3,14 @@
 import { createContext, useEffect, useState } from 'react';
 import axios from 'axios'
 import { useRouter } from "next/navigation";
-
-export const AuthContext = createContext();
+export const AuthContext = createContext(1);
 
 export default function AuthWrapper({ children }) {
 
 
     const [globalState, setGlobalState] = useState({
         tokens: localStorage.getItem('data') ? JSON.parse(localStorage.getItem('data')) : null,
-        isAuthenticated: false,
+        isAuthenticated: localStorage.getItem('data') ? true : false,
         login
     });
     const router = useRouter();
@@ -24,13 +23,15 @@ export default function AuthWrapper({ children }) {
         try {
             axios.post(url, userInfo)
             .then((res) => {
+                localStorage.setItem('data', JSON.stringify(res.data));
                 router.push("/")
                 setGlobalState({
                     tokens: res.data,
                     isAuthenticated: true,
                     login
                 });
-                localStorage.setItem('data', JSON.stringify(res.data));
+                
+                
             })
             .catch((error) => {
                 alert('Wrong Username or Password');
@@ -44,6 +45,7 @@ export default function AuthWrapper({ children }) {
 
     return (
         <AuthContext.Provider value={globalState}>
+
             {children}
         </AuthContext.Provider>
     )

@@ -1,10 +1,43 @@
-import React, { useContext } from "react";
+"use client";
+import React, { useContext,useEffect,useState,setNotificationCount} from "react";
 import Link from "next/link";
 import Image from "next/image";
 import Logo from "public/assets/logo_transparent.png";
+import { useRouter } from "next/navigation";
+
 
 export default function Headero() {
+
+
+
+  
+const router = useRouter();
+let data = false;
+if(localStorage.getItem('data')){
+  data =true ;
+}
+const [isAuthenticated, setIsAuthenticated] = useState(data);
+
+useEffect(
+  () => {
+      
+      
+      if (!isAuthenticated && data) {
+        
+         window.location.reload();
+      }
+  },[localStorage.getItem('data')]
+)
+  
+  const handleLogout = () => {
+    localStorage.removeItem("data");
+    setIsAuthenticated(false);
+    router.push("/")
+  }
+
   return (
+    
+    
     <header>
       <nav className="">
         <div className="container mx-auto px-10 md:px-12 lg:px-7">
@@ -69,7 +102,10 @@ export default function Headero() {
                       </Link>
                     </li>
                     <li>
-                      <Link
+
+
+                      
+                      {isAuthenticated&&<Link
                         href="/Profile"
                         className="block md:px-4 transition hover:text-yellow-700"
                       >
@@ -100,7 +136,7 @@ export default function Headero() {
                             </g>
                           </svg>
                         </span>
-                      </Link>
+                      </Link>}
                     </li>
                     <li>
                       <Link
@@ -148,6 +184,8 @@ export default function Headero() {
                 </div>
 
                 <div className="w-full space-y-2 border-yellow-200 lg:space-y-0 md:w-max lg:border-l md:float-left md:contents">
+                
+                {!isAuthenticated? (<>
                 <Link
                     href="/Register"
                     className="w-full py-3 px-6 text-center rounded-full transition bg-orange-300 hover:bg-orange-200 active:bg-orange-300 focus:bg-orange-300 sm:w-max"
@@ -160,6 +198,17 @@ export default function Headero() {
                   >
                     <span>Login</span>
                   </Link>
+                  </>): (<button onClick={handleLogout}
+                  
+                    className="w-full py-3 px-6 text-center rounded-full transition bg-orange-300 hover:bg-orange-200 active:bg-orange-300 focus:bg-orange-300 sm:w-max"
+                    >
+                    <span>Logout</span>
+                    </button>
+                    
+                )}
+
+
+
                 </div>
               </div>
             </div>

@@ -2,13 +2,13 @@
 import  {useContext,  useState ,useEffect} from "react";
 import { Redirect } from 'react-router-dom';
 import {AuthContext} from '../contexts/auth';
-
+import { useRouter } from "next/navigation";
 
 
 
 export default function Login(){
 
-
+  const router = useRouter();
   const { tokens, isAuthenticated, login } = useContext(AuthContext);
 
    
@@ -48,6 +48,11 @@ export default function Login(){
       "password":PassWord
     }
       )
+
+      
+    
+
+      
     
    
 
