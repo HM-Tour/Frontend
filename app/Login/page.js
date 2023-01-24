@@ -68,18 +68,18 @@ export default function Login(){
   <div class="rounded-xl bg-gray-800 bg-opacity-50 px-16 py-10 shadow-lg backdrop-blur-md max-sm:px-8">
     <div class="text-white">
       <div class="mb-8 flex flex-col items-center">
-        <img src="https://i.postimg.cc/76VP8VzQ/logo-removebg-preview.png"width="150" alt="" srcset="" />
+        <img src="https://i.postimg.cc/8CC5t5qF/HM-TOUR-removebg-preview.png"width="150" alt="" srcset="" />
         <h1 class="mb-2 text-2xl">HM Tour</h1>
         <span class="text-gray-300"> Login </span>
       </div>
       <form action="#" onSubmit={handleOnSubmit}>
         <div class="mb-4 text-lg">
-          <input class="rounded-3xl border-none bg-yellow-400 bg-opacity-50 px-6 py-2 text-center text-inherit placeholder-slate-200 shadow-lg outline-none backdrop-blur-md" type="text" name="name" placeholder="UserName" onChange={usernameOnChangeHandler} />
+          <input class="rounded-3xl border-none bg-amber-300 bg-opacity-50 px-6 py-2 text-center text-inherit placeholder-slate-200 shadow-lg outline-none backdrop-blur-md" type="text" name="name" placeholder="UserName" onChange={usernameOnChangeHandler} />
         </div>
 
               <div class="mb-4 text-lg">
                 <input
-                  class="rounded-3xl border-none bg-yellow-400 bg-opacity-50 px-6 py-2 text-center text-inherit placeholder-slate-200 shadow-lg outline-none backdrop-blur-md"
+                  class="rounded-3xl border-none bg-amber-300 bg-opacity-50 px-6 py-2 text-center text-inherit placeholder-slate-200 shadow-lg outline-none backdrop-blur-md"
                   type="Password"
                   name="name"
                   placeholder="password"
@@ -90,7 +90,7 @@ export default function Login(){
                 {/* <Link href = "/"> */}
                 <button
                   type="submit"
-                  class="rounded-3xl bg-yellow-400 bg-opacity-50 px-10 py-2 text-white shadow-xl backdrop-blur-md transition-colors duration-300 hover:bg-yellow-600"
+                  class="rounded-3xl bg-sky-400 bg-opacity-50 px-10 py-2 text-white shadow-xl backdrop-blur-md transition-colors duration-300 hover:bg-yellow-600"
                 >
                   Login
                 </button>
