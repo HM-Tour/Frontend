@@ -38,7 +38,7 @@ export default function Headero({ isAuthenticated }) {
                 >
                   <Image
                     src={Logo}
-                    className="w-12 "
+                    className="w-14"
                     alt="HM-Tour"
                     width="180"
                     height="160"
