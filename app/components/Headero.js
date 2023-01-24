@@ -7,7 +7,7 @@ import React, {
 } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import Logo from "public/assets/logon.png";
+import Logo from "public/assets/logo_transparent.png";
 import { useRouter } from "next/navigation";
 export default function Headero({ isAuthenticated }) {
 
