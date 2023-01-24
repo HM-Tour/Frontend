@@ -175,7 +175,7 @@ export default function Headero({ isAuthenticated }) {
                   {isAuthenticated ? (
                     <button
                       onClick={handleLogout}
-                      className="w-full py-3 px-6 text-center rounded-full transition bg-orange-300 hover:bg-orange-200 active:bg-orange-300 focus:bg-orange-300 sm:w-max"
+                      className="w-full py-2 px-4 text-center text-white rounded-full transition bg-orange-300 hover:bg-orange-200 active:bg-orange-300 focus:bg-orange-300 sm:w-max"
                     >
                       <span>Logout</span>
                     </button>
@@ -183,15 +183,15 @@ export default function Headero({ isAuthenticated }) {
                     <>
                       <Link
                         href="/Register"
-                        className="w-full py-3 px-6 text-center rounded-full transition bg-orange-300 hover:bg-orange-200 active:bg-orange-300 focus:bg-orange-300 sm:w-max"
+                        className="w-full py-2 px-4 mx-3 text-center text-white rounded-full transition bg-orange-300 hover:bg-orange-200 active:bg-orange-300 focus:bg-orange-300 sm:w-max"
                       >
-                        <span>Sign up</span>
+                        <span>SignUp</span>
                       </Link>
                       <Link
                         href="/Login"
-                        className="w-full py-3 px-6 text-center rounded-full transition bg-orange-300 hover:bg-orange-200 active:bg-orange-300 focus:bg-orange-300 sm:w-max"
+                        className="w-full py-2 px-4 text-center text-white rounded-full transition bg-orange-300 hover:bg-orange-200 active:bg-orange-300 focus:bg-orange-300 sm:w-max"
                       >
-                        <span>Login</span>
+                        <span>LogIn</span>
                       </Link>
                     </>
                   )}
