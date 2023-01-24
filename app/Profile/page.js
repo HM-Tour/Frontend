@@ -168,11 +168,24 @@ export default function Profile() {
         console.log(id,body)
 
         axios
+
+            .put(`http://127.0.0.1:8000/api/posts/update/${id}/`, body, {
+                headers: {
+                    "Authorization": `Bearer ${tokens.access}`,
+                    'Content-Type': 'application/json',
+                }
+            })
+            .then(res => {
+                //update the post data in the state to reflect the changes
+
         .put(`http://127.0.0.1:8000/api/posts/update/${id}/`, body, config)    
         .then(res => {
             //update the post data in the state to reflect the changes
+
                 console.log(res.data)
-                setSelectedPost(null);
+                alert("Updated successfully!")
+                setSelectedPost(false)
+                
             })
             .catch(error => {
                 //console.log(error);
@@ -215,7 +228,7 @@ export default function Profile() {
         .then(res => {
             //update the post data in the state to reflect the changes
                 console.log(res.data)
-
+                alert("Updated successfully!")
                 setShowModal3(false)
                 
             })
@@ -466,10 +479,10 @@ export default function Profile() {
                                                     <label for="dropzone-file" className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600 ">
                                                         <div className="flex flex-col items-center justify-center pt-5 pb-6">
                                                             <svg aria-hidden="true" className="w-10 h-10 mb-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
-                                                            <p className="mb-2 text-sm text-gray-500 dark:text-gray-400"><span className="font-semibold">Click to upload</span> or drag and drop</p>
+                                                            <p className="mb-2 text-sm text-gray-500 dark:text-gray-400"><span className="font-semibold">Click to upload</span> </p>
                                                             <p className="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px) </p>
                                                             <div className="ml-32">
-                                                                <input onChange={onFileChange} id="dropzone-file" type="file" className="hidden" />
+                                                                <input onChange={onFileChange} id="dropzone-file" type="file" className='form-control' />
 
                                                             </div>
                                                         </div>
@@ -495,7 +508,7 @@ export default function Profile() {
 
                                                 {/**Price */}
                                                 <div>
-                                                    <label>Price/day</label>
+                                                    <label>Cost/day</label>
                                                     <input onChange={onCostChange} id='Cost' required name='Cost' type="text" className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" placeholder="0.0"></input>
                                                 </div>
                                             </div>
@@ -668,30 +681,29 @@ export default function Profile() {
 
                                                 {/**Rate */}
                                                 <div>
-                                                    
+                                                    <label></label>
                                                     {/* <input onChange={onRateChange} defaultValue={currentPost.rate} type="number" name='Rate' id='Rate' required className="block w-full px-2 py-1 mt-1 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" ></input> */}
                                                     <Typography component="legend">Rate</Typography>
                                                     <Rating
-                                                        onRateChange={onRateChange}
-                                                        name="simple-controlled"
-                                                        value={Rate}
-                                                        defaultValue={currentPost.rate}
-                                                        onInput={(event, newValue) => {
-                                                            setRate(newValue);
-                                                        }}
+                                                    name="simple-controlled"
+                                                    value={Rate}
+                                                    onRateChange={onRateChange}
+                                                    onChange={(event, newValue) => {
+                                                        setRate(newValue);
+                                                    }}
                                                     />
                                                 </div>
 
                                                 {/**Location */}
                                                 <div>
-                                                    <label className="my-10 py-10">Location</label>
+                                                    <label className="my-10 py-10">City</label>
                                                     <input onInput={onLocationChange} defaultValue={currentPost.location} name='Location' id='Location' required type="text" className="block w-full px-2 py-1 mt-1 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" >
                                                     </input>
                                                 </div>
 
                                                 {/**Price */}
                                                 <div>
-                                                    <label>Price</label>
+                                                    <label>Cost/day</label>
                                                     <input onInput={onCostChange} defaultValue={currentPost.price} id='Cost' required name='Cost' type="text" className="block w-full px-2 py-1 mt-1 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" placeholder="0.0" ></input>
                                                 </div>
                                             </div>
