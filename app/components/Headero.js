@@ -171,11 +171,11 @@ export default function Headero({ isAuthenticated }) {
                   </ul>
                 </div>
 
-                <div className="w-full space-y-2 border-yellow-200 lg:space-y-0 md:w-max lg:border-l md:float-left md:contents">
+                <div className="w-full space-y-2 border-yellow-500 lg:space-y-0 md:w-max lg:border-l md:float-left md:contents">
                   {isAuthenticated ? (
                     <button
                       onClick={handleLogout}
-                      className="w-full py-2 px-4 text-center text-white rounded-full transition bg-orange-300 hover:bg-orange-200 active:bg-orange-300 focus:bg-orange-300 sm:w-max"
+                      className="w-full py-2 px-4 text-center text-white rounded-full transition bg-orange-500 hover:bg-orange-200 active:bg-orange-300 focus:bg-orange-300 sm:w-max"
                     >
                       <span>Logout</span>
                     </button>
@@ -183,13 +183,13 @@ export default function Headero({ isAuthenticated }) {
                     <>
                       <Link
                         href="/Register"
-                        className="w-full py-2 px-4 mx-3 text-center text-white rounded-full transition bg-orange-300 hover:bg-orange-200 active:bg-orange-300 focus:bg-orange-300 sm:w-max"
+                        className="w-full py-2 px-4 mx-3 text-center text-white rounded-full transition bg-orange-500 hover:bg-orange-300 active:bg-orange-300 focus:bg-orange-300 sm:w-max"
                       >
                         <span>SignUp</span>
                       </Link>
                       <Link
                         href="/Login"
-                        className="w-full py-2 px-4 text-center text-white rounded-full transition bg-orange-300 hover:bg-orange-200 active:bg-orange-300 focus:bg-orange-300 sm:w-max"
+                        className="w-full py-2 px-4 text-center text-white rounded-full transition bg-orange-500 hover:bg-orange-300 active:bg-orange-300 focus:bg-orange-300 sm:w-max"
                       >
                         <span>LogIn</span>
                       </Link>
