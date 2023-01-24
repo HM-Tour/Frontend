@@ -88,6 +88,23 @@ export default function AboutSec1() {
           </div>
         </div>
       </section>
+
+      {/* <div className="container mx-auto px-10 mb-8">
+        <div className="grid grid-cols-1 lg:grid-cols-6 gap-4 ml-8">
+          <div className="col-span-1 lg:col-start-2 lg:col-span-3 ml-8">
+          <section>
+        <video
+        src={"/assets/video.mp4"}
+        controls
+        className="ml-8">
+            
+        </video>
+      </section>
+          </div>
+        </div>
+      </div> */}
+
+      
       
     </>
   );
@@ -98,12 +115,18 @@ function Slide() {
   return (
     <div className="grid md:grid-cols-2">
       <div className="image">
-        <img
+      <video
+        src={"/assets/videologo.mp4"}
+        controls
+        className="mr-8">
+            
+        </video>
+        {/* <img
           src={"/assets/togetherInTravel.jpg"}
           width={600}
           height={600}
           className="shadow-lg rounded-lg"
-        />
+        /> */}
       </div>
 
       <div className="info flex justify-center flex-col">
