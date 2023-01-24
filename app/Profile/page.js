@@ -25,8 +25,8 @@ export default function Profile() {
 
     const [showModal4, setShowModal4] = useState(false);
 
-
-
+    const [postData, setPostData] = useState([]);
+    const [userPro, setUserPro] = useState([]);
 
     {/**This for a database */ }
     const [image, setImage] = useState(null);
@@ -93,21 +93,27 @@ export default function Profile() {
     }; {/**End of onSubmit */ }
 
     {/**For card posts */ }
-    const [postData, setPostData] = useState([]);
+   
     useEffect(() => {
-        axios.get('http://127.0.0.1:8000/api/posts/user-posts/', {
+        const fetchData = async () => {
+          const result = await axios.get(
+            `http://127.0.0.1:8000/api/posts/user-posts/`
+          ,{
             headers: {
                 'Authorization': `Bearer ${tokens.access}`
-            }
-        })
-            .then(response => {
-                setPostData(response.data)
-            })
-            .catch(error => {
-                // handle the error
-                // console.log(error)
-            });
-    })
+            }});
+          setPostData(result.data);
+        };
+        const intervalId = setInterval(() => {
+          fetchData();
+        }, 5000);
+    
+        return () => clearInterval(intervalId);
+      }, []);
+
+
+
+
 
 
 
@@ -168,27 +174,48 @@ export default function Profile() {
 
 
 
+     {/**User */ }
 
-    {/**User */ }
-    const [userPro, setUserPro] = useState([]);
     useEffect(() => {
-        axios.get('http://127.0.0.1:8000/api/current_user', {
+        const fetchData = async () => {
+          const result = await axios.get(
+            `http://127.0.0.1:8000/api/current_user`
+          ,{
             headers: {
                 'Authorization': `Bearer ${tokens.access}`
-            }
-        })
-            .then(response => {
+            }});
+            setUserPro(result.data);
+        };
+        const intervalId = setInterval(() => {
+          fetchData();
+        }, 5000);
+    
+        return () => clearInterval(intervalId);
+      }, []);
 
-                setUserPro(response.data)
-                // console.log(userPro)
 
 
-            })
-            .catch(error => {
-                // handle the error
-                // console.log(error)
-            });
-    });
+
+ 
+    
+    // useEffect(() => {
+    //     axios.get('http://127.0.0.1:8000/api/current_user', {
+    //         headers: {
+    //             'Authorization': `Bearer ${tokens.access}`
+    //         }
+    //     })
+    //         .then(response => {
+
+    //             setUserPro(response.data)
+    //             // console.log(userPro)
+
+
+    //         })
+    //         .catch(error => {
+    //             // handle the error
+    //             // console.log(error)
+    //         });
+    // });
 
     return (
         <>
