@@ -36,7 +36,10 @@ export default function CreateComment({ postId }) {
 
   return (
     <>
-      <div className="bg-white shadow-lg rounded-lg p-8 pb-12 mb-8">
+    <div className="container mx-auto px-10 mb-8">
+        <div className="grid grid-cols-1 lg:grid-cols-6 gap-4">
+          <div className="col-span-1 lg:col-start-1 lg:col-span-6 mt-10">
+          <div className="bg-white shadow-lg rounded-lg p-8 pb-12 mb-8">
         <form onSubmit={handleSubmit} className="w-full p-4">
           <div className="mb-2">
             <label
@@ -54,12 +57,16 @@ export default function CreateComment({ postId }) {
             </div>
           </div>
           <div>
-            <button className="transition duration-500 ease hover:bg-orange-900 inline-block bg-orange-600 text-lg font-medium rounded-full text-white px-5 py-0 cursor-pointer">
+            <button className="w-full py-2 px-4 text-center text-white rounded-full transition bg-sky-400 hover:bg-sky-500 active:bg-sky-400 focus:bg-sky-500 sm:w-max">
               Post Comment
             </button>
           </div>
         </form>
       </div>
+          </div>
+        </div>
+      </div>
+      
     </>
   );
 }

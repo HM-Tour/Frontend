@@ -37,7 +37,7 @@ export default function Comments({ postId }) {
   const del = (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      className="h-6 w-6 inline mr-2 text-orange-500"
+      className="h-6 w-6 inline mr-2 text-sky-400 hover:text-red-500 active:text-red-600 focus:text-red-500"
       viewBox="0 0 24 24"
     >
       <path
@@ -55,21 +55,30 @@ export default function Comments({ postId }) {
         {data.map((item) => (
           <div key={item.id} className="border-b border-gray-100 mb-4 pb-4">
             <div className="flex">
-              
               <div className="flex-1 border rounded-lg px-4 py-2 sm:px-6 sm:py-4 leading-relaxed">
-                <strong>{item.owner_username}</strong>{" "}
-                <span className="text-xs text-gray-400">{item.created_at}</span>
-                <p className="text-sm">{item.body}</p>
-                <button
-                  onClick={() => handleDelete(item.id)}
-                  type="button"
-                  title="Start buying"
-                  //className="w-full py-3 px-6 text-center rounded-full transition bg-blue-400 hover:bg-blue-200 active:bg-blue-400 focus:bg-yellow-300 sm:w-max"
-                >
-                  <span className="block text-black font-semibold text-sm hover:bg-orange-200 active:bg-orange-400 focus:bg-orange-600">
-                    {del}
+                <div className="justify-between flex">
+                  <div className="flex">
+                <img
+                    src="https://www.citypng.com/public/uploads/preview/download-profile-user-round-orange-icon-symbol-png-11639594360ksf6tlhukf.png"
+                    alt=""
+                    className="h-5 w-5 mr-2 align-middle rounded-full"
+                  />
+                  <strong>{item.owner_username}</strong>{" "}
+                  </div>
+                  <span className="text-xs text-gray-400">
+                    {item.created_at}
                   </span>
-                </button>
+                </div>
+                <div className="justify-between flex">
+                  <p className="text-sm">{item.body}</p>
+                  <button
+                    onClick={() => handleDelete(item.id)}
+                    type="button"
+                    title="Start buying"
+                  >
+                    <span className="">{del}</span>
+                  </button>
+                </div>
               </div>
             </div>
           </div>

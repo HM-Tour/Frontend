@@ -7,7 +7,7 @@ import React, {
 } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import Logo from "public/assets/logo_transparent.png";
+import Logo from "public/assets/logon.png";
 import { useRouter } from "next/navigation";
 export default function Headero({ isAuthenticated }) {
 
@@ -28,7 +28,7 @@ export default function Headero({ isAuthenticated }) {
     <header>
       <nav className="">
         <div className="container mx-auto px-10 md:px-12 lg:px-7">
-          <div className="border-b w-full inline-block border-orange-600 py-1">
+          <div className="">
             <div className="flex flex-wrap items-center justify-between py-3 gap-6 md:py-4 md:gap-0">
               <div className="w-full px-6 flex justify-between lg:w-max md:px-0">
                 <a
@@ -40,10 +40,10 @@ export default function Headero({ isAuthenticated }) {
                     src={Logo}
                     className="w-12 "
                     alt="HM-Tour"
-                    width="144"
-                    height="133"
+                    width="180"
+                    height="160"
                   />
-                  <span className="text-2xl font-bold text-orange-600">
+                  <span className="text-2xl font-bold text-amber-400">
                     HM-Tour
                   </span>
                 </a>
@@ -56,12 +56,12 @@ export default function Headero({ isAuthenticated }) {
                   <div
                     aria-hidden="true"
                     id="line"
-                    className="inset-0 w-6 h-0.5 m-auto rounded bg-yellow-900 transtion duration-300"
+                    className="inset-0 w-6 h-0.5 m-auto rounded bg-amber-400 transtion duration-300"
                   ></div>
                   <div
                     aria-hidden="true"
                     id="line2"
-                    className="inset-0 w-6 h-0.5 mt-2 m-auto rounded bg-yellow-900 transtion duration-300"
+                    className="inset-0 w-6 h-0.5 mt-2 m-auto rounded bg-amber-400 transtion duration-300"
                   ></div>
                 </button>
               </div>
@@ -72,12 +72,12 @@ export default function Headero({ isAuthenticated }) {
                     <li>
                       <Link
                         href="/"
-                        className="block md:px-4 transition hover:text-yellow-700"
+                        className="block md:px-4 transition hover:text-amber-300"
                       >
                         <span>
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            className="h-6 w-6 inline mr-2 text-orange-500"
+                            className="h-6 w-6 inline mr-2 text-amber-400"
                             viewBox="0 0 24 24"
                           >
                             <path
@@ -92,12 +92,12 @@ export default function Headero({ isAuthenticated }) {
                       {isAuthenticated ? (
                         <Link
                           href="/Profile"
-                          className="block md:px-4 transition hover:text-yellow-700"
+                          className="block md:px-4 transition hover:text-amber-300"
                         >
                           <span>
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
-                              className="h-6 w-6 inline mr-2 text-orange-500"
+                              className="h-6 w-6 inline mr-2 text-amber-400"
                               viewBox="0 0 48 48"
                             >
                               <g fill="currentColor">
@@ -129,12 +129,12 @@ export default function Headero({ isAuthenticated }) {
                     <li>
                       <Link
                         href="/About"
-                        className="block md:px-4 transition hover:text-yellow-700"
+                        className="block md:px-4 transition hover:text-amber-300"
                       >
                         <span>
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            className="h-6 w-6 inline mr-2 text-orange-500"
+                            className="h-6 w-6 inline mr-2 text-amber-400"
                             viewBox="0 0 48 48"
                           >
                             <path
@@ -152,12 +152,12 @@ export default function Headero({ isAuthenticated }) {
                     <li>
                       <Link
                         href="/Team"
-                        className="block md:px-4 transition hover:text-yellow-700"
+                        className="block md:px-4 transition hover:text-amber-300"
                       >
                         <span>
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            className="h-6 w-6 inline mr-2 text-orange-500"
+                            className="h-6 w-6 inline mr-2 text-amber-400"
                             viewBox="0 0 20 20"
                           >
                             <path
@@ -171,11 +171,11 @@ export default function Headero({ isAuthenticated }) {
                   </ul>
                 </div>
 
-                <div className="w-full space-y-2 border-yellow-200 lg:space-y-0 md:w-max lg:border-l md:float-left md:contents">
+                <div className="w-full space-y-2 border-sky-300 lg:space-y-0 md:w-max lg:border-l md:float-left md:contents">
                   {isAuthenticated ? (
                     <button
                       onClick={handleLogout}
-                      className="w-full py-2 px-4 text-center text-white rounded-full transition bg-orange-300 hover:bg-orange-200 active:bg-orange-300 focus:bg-orange-300 sm:w-max"
+                      className="w-full py-2 px-4 text-center text-white rounded-full transition bg-sky-300 hover:bg-sky-400 active:bg-sky-300 focus:bg-sky-400 sm:w-max"
                     >
                       <span>Logout</span>
                     </button>
@@ -183,13 +183,13 @@ export default function Headero({ isAuthenticated }) {
                     <>
                       <Link
                         href="/Register"
-                        className="w-full py-2 px-4 mx-3 text-center text-white rounded-full transition bg-orange-300 hover:bg-orange-200 active:bg-orange-300 focus:bg-orange-300 sm:w-max"
+                        className="w-full py-2 px-4 mx-3 text-center text-white rounded-full transition bg-sky-300 hover:bg-sky-400 active:bg-sky-300 focus:bg-sky-400 sm:w-max"
                       >
                         <span>SignUp</span>
                       </Link>
                       <Link
                         href="/Login"
-                        className="w-full py-2 px-4 text-center text-white rounded-full transition bg-orange-300 hover:bg-orange-200 active:bg-orange-300 focus:bg-orange-300 sm:w-max"
+                        className="w-full py-2 px-4 text-center text-white rounded-full transition bg-sky-300 hover:bg-sky-400 active:bg-sky-300 focus:bg-sky-400 sm:w-max"
                       >
                         <span>LogIn</span>
                       </Link>
