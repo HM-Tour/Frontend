@@ -1,8 +1,9 @@
-import Header from './components/Header'
+
 import Headero from './components/Headero'
 import Footer from './components/Footer'
 import React from 'react';
 import AuthWrapper from './contexts/auth';
+import HeaderWrapper from './contexts/headerauth';
 
 import './globals.css'
 import '../styles/globals.scss'
@@ -18,7 +19,7 @@ export default function RootLayout({ children }) {
         
           <header>
           
-            <Headero />
+            <HeaderWrapper />
     
           </header>
 

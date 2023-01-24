@@ -45,7 +45,6 @@ export default function AuthWrapper({ children }) {
 
     return (
         <AuthContext.Provider value={globalState}>
-
             {children}
         </AuthContext.Provider>
     )

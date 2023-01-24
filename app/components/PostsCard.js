@@ -67,7 +67,9 @@ export default function PostsCard({ handleUpdate }) {
               />
             </div>
             <h1 className="transition duration-700 text-center mb-8 cursor-pointer hover:text-orange-600 text-3xl font-semibold">
-              <Link href={`/post/`}>{post.title}</Link>
+              <Link onClick={() => {
+                handleUpdate(post);
+              }}href={"/Post"}>{post.title}</Link>
             </h1>
 
             <div className="block lg:flex text-center items-center justify-center mb-8 w-full">

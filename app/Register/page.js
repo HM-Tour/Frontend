@@ -39,7 +39,7 @@ export default function Register() {
         alert(error.response.data.detail);
       });
 
-    console.log(response.data)
+    
 
 
 
