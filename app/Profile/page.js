@@ -313,7 +313,7 @@ export default function Profile() {
                                                     First Name
                                                 </label>
                                                 <div className="mt-1">
-                                                    <input onInput={onprofileFirstName} defaultValue={userPro.firstName} required type="text" name="Title" id="Title" className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border-gray-300 rounded-md h-16" placeholder="Description"></input>
+                                                    <input onInput={onprofileFirstName} defaultValue={userPro.firstName} required type="text" name="Title" id="Title" className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border-gray-300 rounded-md h-16" placeholder="First Name"></input>
                                                 </div>
 
                                             </div>
@@ -325,7 +325,7 @@ export default function Profile() {
                                                     Last Name
                                                 </label>
                                                 <div className="mt-1">
-                                                    <input onInput={onprofileLastName} defaultValue={userPro.lastName} id="LastName" required name="LastName" rows="3" className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border-gray-300 rounded-md h-16" placeholder="Description"></input>
+                                                    <input onInput={onprofileLastName} defaultValue={userPro.lastName} id="LastName" required name="LastName" rows="3" className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border-gray-300 rounded-md h-16" placeholder="Last Name"></input>
                                                 </div>
 
                                             </div>
@@ -336,7 +336,7 @@ export default function Profile() {
                                                     User Bio
                                                 </label>
                                                 <div className="mt-1">
-                                                    <input onInput={onProfileDescriptionChange} defaultValue={userPro.description} id="Description" required name="Description" rows="3" className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border-gray-300 rounded-md h-16" placeholder="Description"></input>
+                                                    <input onInput={onProfileDescriptionChange} defaultValue={userPro.description} id="Description" required name="Description" rows="3" className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border-gray-300 rounded-md h-16" placeholder="User Bio"></input>
                                                 </div>
 
                                             </div>
@@ -349,7 +349,7 @@ export default function Profile() {
                                                     Country
                                                 </label>
                                                 <div className="mt-1">
-                                                    <input onInput={onprofileLocation} defaultValue={userPro.location} id="Location" required name="Location" rows="3" className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border-gray-300 rounded-md h-16" placeholder="Description"></input>
+                                                    <input onInput={onprofileLocation} defaultValue={userPro.location} id="Location" required name="Location" rows="3" className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border-gray-300 rounded-md h-16" placeholder="Country"></input>
                                                 </div>
 
                                             </div>
