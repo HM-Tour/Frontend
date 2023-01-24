@@ -30,7 +30,6 @@ export default function Profile() {
 
     {/**This for a database */ }
     const [image, setImage] = useState(null);
-    const [altText, setAltText] = useState('');
     const [Title, setTitle] = useState('');
     const [Description, setDescription] = useState('');
     const [Date, setDate] = useState('');
@@ -40,6 +39,7 @@ export default function Profile() {
     const [images, setImages] = useState(null);
     const [updated, setUpdated] = useState(false);
 
+   
 
     const onFileChange = e => setImage(e.target.files[0]);
     const onAltChange = e => setAltText(e.target.value);
@@ -69,7 +69,6 @@ export default function Profile() {
 
         const formData = new FormData();
         formData.append('image', image);
-        formData.append('alt_text', altText);
         formData.append('Title', Title);
         formData.append('Description', Description);
         formData.append('Date', Date);
@@ -112,8 +111,8 @@ export default function Profile() {
 
 
 
-    const handleUpdatePost = ( event ) => {
-        event.preventDefault();
+    const handleUpdatePost = async ( e ) => {
+        //e.preventDefault();
 
         const config = {
             headers: {
@@ -123,26 +122,21 @@ export default function Profile() {
         };
         console.log(tokens.access)
 
-        const body = JSON.stringify({
+        const body = JSON.stringify ({
             title: Title,
             description: Description,
             date: Date,
             rate: Rate,
-            image: image,
             location: Location,
             price: Cost
         });
-        const id = currentPost.id
+        const id=currentPost.id
+        console.log(id,body)
+
         axios
         .put(`http://127.0.0.1:8000/api/posts/update/${id}/`, body, config)    
         .then(res => {
             //update the post data in the state to reflect the changes
-            setCurrentPost(selectedPost => selectedPost.map(post => {
-                    if (post.id === currentPost.id) {
-                        return res.data;
-                    }
-                    return post;
-                }))
                 console.log(res.data)
                 setSelectedPost(null);
             })
@@ -540,18 +534,18 @@ export default function Profile() {
                                                     </label>
                                                     <div className="mt-1 flex rounded-md shadow-sm">
 
-                                                        <input defaultValue={currentPost.title} required type="text" name="Title" id="Title" className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" placeholder="www.example.com" />
+                                                        <input onChange={onTitleChange} defaultValue={currentPost.title} required type="text" name="Title" id="Title" className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" placeholder="www.example.com" />
                                                     </div>
                                                 </div>
                                             </div>
                                             {/**Description label & input */}
                                             <div>
-                                                <label for="about" className="block text-sm font-medium text-gray-700">
+                                                <label for="about"  className="block text-sm font-medium text-gray-700">
                                                     Description
                                                 </label>
 
                                                 <div className="mt-1">
-                                                    <textarea defaultValue={currentPost.description} required name="Description" id="textarea" type="textarea" className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"></textarea>
+                                                    <textarea onChange={onDescriptionChange} defaultValue={currentPost.description} required name="Description" id="textarea" type="textarea" className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"></textarea>
                                                 </div>
 
                                             </div>
@@ -560,23 +554,23 @@ export default function Profile() {
                                                 <label className="block text-sm font-medium text-gray-700">
                                                     Date
                                                 </label>
-                                                <input defaultValue={currentPost.date} name='Date' id='Date' required type="datetime-local" className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"></input>
+                                                <input onChange={onDateChange} defaultValue={currentPost.date} name='Date' id='Date' required type="datetime-local" className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"></input>
                                             </div>
                                             {/**Rate */}
                                             <div>
                                                 <label>
                                                     Rate
                                                 </label>
-                                                <input defaultValue={currentPost.rate} type="number" name='Rate' id='Rate' required className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" ></input>
+                                                <input onChange={onRateChange} defaultValue={currentPost.rate} type="number" name='Rate' id='Rate' required className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" ></input>
                                             </div>
                                             {/**Location */}
                                             <div>
                                                 <label className="my-10 py-10">Location</label>
-                                                <input defaultValue={currentPost.location} name='Location' id='Location' required type="text" className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" >
+                                                <input onChange={onLocationChange} defaultValue={currentPost.location} name='Location' id='Location' required type="text" className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" >
                                                 </input>
                                             </div>
 
-                                            <div>
+                                            {/* <div>
                                             <label className='form-label' htmlFor='image'>
                                                 Image Upload
                                             </label>
@@ -585,14 +579,14 @@ export default function Profile() {
                                                 type='file'
                                                 name='image'
                                                 onChange={onFileChange}
-                                                required
+                                                
                                             />
-                                            </div>
+                                            </div> */}
 
                                             {/**Price */}
                                             <div>
                                                 <label>Price</label>
-                                                <input defaultValue={currentPost.price} id='Cost' required name='Cost' type="text" className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" placeholder="0.0" ></input>
+                                                <input onChange={onCostChange} defaultValue={currentPost.price} id='Cost' required name='Cost' type="text" className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" placeholder="0.0" ></input>
                                             </div>
                                         </div>
 
@@ -601,6 +595,7 @@ export default function Profile() {
                                                 className="px-4 bg-gray-200 p-3 rounded text-black hover:bg-gray-300 font-semibold" 
                                                 onClick={() => setSelectedPost(false)}>Cancel</button>
                                             <button
+                                                Type="submit"
                                                 className="px-4 bg-blue-500 p-3 ml-3 rounded-lg text-white hover:bg-teal-400" >Confirm
                                             </button>
                                         </div>
