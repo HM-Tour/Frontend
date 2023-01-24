@@ -7,7 +7,6 @@ import { useState, useEffect, useContext } from "react";
 import { IoIosCreate } from "react-icons/io";
 import { AiFillEdit } from "react-icons/ai";
 import { AuthContext } from "../contexts/auth";
-// import UpdateModal from "./UpdateModal";
 import Rating from '@mui/material/Rating';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
@@ -402,7 +401,6 @@ export default function Profile() {
                                                         Description
                                                     </label>
                                                     <div className="mt-1">
-                                                        {/* <input id="Description" onChange={onDescriptionChange} required name="Description" rows="3" className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" placeholder="Description"></input> */}
                                                         <textarea onChange={onDescriptionChange} required name="Description" id="textarea" type="textarea" className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"></textarea>
                                                     </div>
 
@@ -427,12 +425,7 @@ export default function Profile() {
                                                     />
                                                 </div>
 
-                                                {/* *Image */}
-                                                {/* <div>
-                                                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Upload Image</label>
-                                                <input onChange={onFileChange} className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="file_input_help" id="file_input" type="file" />
-                                                <p className="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">SVG, PNG, JPG or GIF.</p>
-                                            </div> */}
+                                                
 
                                                 <div className="flex items-center justify-center w-full">
                                                     <label for="dropzone-file" className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600 ">
@@ -448,16 +441,7 @@ export default function Profile() {
                                                     </label>
                                                 </div>
 
-                                                {/* <label className='form-label' htmlFor='image'>
-                                                Image Upload
-                                            </label>
-                                            <input
-                                                className='form-control'
-                                                type='file'
-                                                name='image'
-                                                onChange={onFileChange}
-                                                required
-                                            /> */}
+                                               
 
                                                 {/**Location */}
                                                 <div>
@@ -544,8 +528,6 @@ export default function Profile() {
 
                                     {/**Rate */}
                                     <div className="px-6 p-1 justify-between flex">
-                                        {/* <p className="font-normal text-gray-700 mb-3 dark:text-gray-400">{post.rate}</p> */}
-                                        {/* <Typography component="legend">Read only</Typography> */}
                                         <MdStarRate className="text-2xl" />
                                         <Rating className="mr-auto ml-3" name="read-only" value={post.rate} readOnly />
                                     </div>
@@ -567,10 +549,7 @@ export default function Profile() {
                                             className="ml-auto">
                                             <MdOutlineDelete className="text-3xl text-red-700" />
                                         </button>
-                                        {/* <button onClick={() => handleUpdate(post)}
-                                            className="absolute bottom-0 right-20 h-12 w-16 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-                                            Update
-                                        </button> */}
+                                       
 
                                     </div>
 
@@ -641,7 +620,6 @@ export default function Profile() {
                                                 {/**Rate */}
                                                 <div>
                                                     <label></label>
-                                                    {/* <input onChange={onRateChange} defaultValue={currentPost.rate} type="number" name='Rate' id='Rate' required className="block w-full px-2 py-1 mt-1 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" ></input> */}
                                                     <Typography component="legend">Rate</Typography>
                                                     <Rating
                                                         name="simple-controlled"
