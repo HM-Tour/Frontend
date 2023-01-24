@@ -1,21 +1,26 @@
-import Header from './components/Header'
+
 import Headero from './components/Headero'
 import Footer from './components/Footer'
-
+import React from 'react';
 import AuthWrapper from './contexts/auth';
+import HeaderWrapper from './contexts/headerauth';
 
 import './globals.css'
 import '../styles/globals.scss'
 
 export default function RootLayout({ children }) {
   return (
+    <AuthWrapper>
+    
     <html lang="en">
 
-      <AuthWrapper>
+     
         <body>
-
+        
           <header>
-            <Headero />
+          
+            <HeaderWrapper />
+    
           </header>
 
           <main>
@@ -27,8 +32,11 @@ export default function RootLayout({ children }) {
             <Footer />
           </footer>
 
+        
         </body>
-      </AuthWrapper>
+     
     </html>
+    
+          </AuthWrapper>
   )
 }

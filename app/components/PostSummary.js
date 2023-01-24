@@ -108,7 +108,11 @@ export default function PostSummary({handleUpdate}) {
         <p className="inline align-middle text-white text-shadow ml-2 font-medium">{post.owner}</p>
       </div>
     </div>
-    <Link href={`/post/`}><span className="cursor-pointer absolute w-full h-full" /></Link>
+
+    <Link onClick={() => {
+                handleUpdate(post);
+              }} href={'/Post'}><span className="cursor-pointer absolute w-full h-full" /></Link>
+  
   </div>
 
 

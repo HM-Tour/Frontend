@@ -172,7 +172,7 @@ export default function Profile() {
     {/**User */ }
     const [userPro, setUserPro] = useState([]);
     useEffect(() => {
-        axios.get('http://127.0.0.1:8000/apii/current_user', {
+        axios.get('http://127.0.0.1:8000/api/current_user', {
             headers: {
                 'Authorization': `Bearer ${tokens.access}`
             }
