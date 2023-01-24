@@ -27,12 +27,12 @@ export default function Profile() {
 
     const [showModal4, setShowModal4] = useState(false);
 
+    const [postData, setPostData] = useState([]);
+    const [userPro, setUserPro] = useState([]);
 
 
-
-    {/**This for a database */ }
+    {/**Post States */ }
     const [image, setImage] = useState(null);
-    const [altText, setAltText] = useState('');
     const [Title, setTitle] = useState('');
     const [Description, setDescription] = useState('');
     const [Date, setDate] = useState('');
@@ -41,15 +41,30 @@ export default function Profile() {
     const [Cost, setCost] = useState('');
     const [images, setImages] = useState(null);
     const [updated, setUpdated] = useState(false);
+    // profile States
+    const [profileFirstName, setprofileFirstName] = useState('');
+    const [profileDescription, setprofileDescription] = useState('');
+    const [profileLastName, setprofileLastName] = useState('');
+    const [profileEmail, setprofileEmail] = useState('');
+    const [profileLocation, setprofileLocation] = useState('');
+    const [profileUsername, setprofileUsername] = useState('');
 
+    // Update Post functions
     const onFileChange = e => setImage(e.target.files[0]);
-    const onAltChange = e => setAltText(e.target.value);
     const onTitleChange = e => setTitle(e.target.value);
     const onDescriptionChange = e => setDescription(e.target.value);
     const onDateChange = e => setDate(e.target.value);
     const onRateChange = e => setRate(e.target.value);
     const onLocationChange = e => setLocation(e.target.value);
     const onCostChange = e => setCost(e.target.value);
+
+    // Update profile functions
+    const onprofileFirstName = e => setprofileFirstName(e.target.value);
+    const onProfileDescriptionChange = e => setprofileDescription(e.target.value);
+    const onprofileLastName = e => setprofileLastName(e.target.value);
+    const onprofileEmail = e => setprofileEmail(e.target.value);
+    const onprofileLocation = e => setprofileLocation(e.target.value);
+    const onprofileUsername = e => setprofileUsername(e.target.value);
 
 
     const { tokens } = useContext(AuthContext)
@@ -93,22 +108,25 @@ export default function Profile() {
     }; {/**End of onSubmit */ }
 
     {/**For card posts */ }
-    const [postData, setPostData] = useState([]);
-    useEffect(() => {
-        axios.get('http://127.0.0.1:8000/api/posts/user-posts/', {
-            headers: {
-                'Authorization': `Bearer ${tokens.access}`
-            }
-        })
-            .then(response => {
-                setPostData(response.data)
-            })
-            .catch(error => {
-                // handle the error
-                console.log(error)
-            });
-    })
 
+    useEffect(() => {
+        const fetchData = async () => {
+            const result = await axios.get(
+                `http://127.0.0.1:8000/api/posts/user-posts/`
+                , {
+                    headers: {
+                        'Authorization': `Bearer ${tokens.access}`
+                    }
+                });
+            setPostData(result.data);
+        };
+        const intervalId = setInterval(() => {
+            fetchData();
+        }, 5000);
+
+        return () => clearInterval(intervalId);
+    }, []);
+    //Update post
 
     const handleUpdatePost = (event) => {
         event.preventDefault();
@@ -124,7 +142,6 @@ export default function Profile() {
         const id = currentPost.id
         console.log(id, body)
         axios
-
             .put(`http://127.0.0.1:8000/api/posts/update/${id}/`, body, {
                 headers: {
                     "Authorization": `Bearer ${tokens.access}`,
@@ -133,18 +150,10 @@ export default function Profile() {
             })
             .then(res => {
                 //update the post data in the state to reflect the changes
-
-                console.log(post.id)
-
-
-        .put(`http://127.0.0.1:8000/api/posts/update/${id}/`, body, config)    
-        .then(res => {
-            //update the post data in the state to reflect the changes
-
                 console.log(res.data)
                 alert("Updated successfully!")
                 setSelectedPost(false)
-                
+
             })
             .catch(error => {
                 console.log(error);
@@ -160,9 +169,8 @@ export default function Profile() {
         setSelectedPost(true);
         setCurrentPost(post)
     }
-
     //update profile
-    const handleUpdateProfile = async ( e ) => {
+    const handleUpdateProfile = async (e) => {
         e.preventDefault();
 
         const config = {
@@ -173,31 +181,30 @@ export default function Profile() {
         };
         console.log(tokens.access)
 
-        const body = JSON.stringify ({
+        const body = JSON.stringify({
             firstName: profileFirstName,
             lastName: profileLastName,
-            email:profileEmail,
-            description:profileDescription,
-            location:profileLocation,
-            username:profileUsername,   
+            email: profileEmail,
+            description: profileDescription,
+            location: profileLocation,
+            username: profileUsername,
         });
-        const id=userPro.id
-        console.log(id,body)
+        const id = userPro.id
+        console.log(id, body)
 
         axios
-        .put(`http://127.0.0.1:8000/api/users/update/${id}/`, body, config)    
-        .then(res => {
-            //update the post data in the state to reflect the changes
+            .put(`http://127.0.0.1:8000/api/users/update/${id}/`, body, config)
+            .then(res => {
+                //update the post data in the state to reflect the changes
                 console.log(res.data)
                 alert("Updated successfully!")
                 setShowModal3(false)
-                
+
             })
             .catch(error => {
                 //console.log(error);
             });
-        }
-
+    }
 
     {/**Delete the posts */ }
     const handleDelete = async (id) => {
@@ -215,25 +222,25 @@ export default function Profile() {
 
 
     {/**User */ }
-    const [userPro, setUserPro] = useState([]);
+
     useEffect(() => {
-        axios.get('http://127.0.0.1:8000/apii/current_user', {
-            headers: {
-                'Authorization': `Bearer ${tokens.access}`
-            }
-        })
-            .then(response => {
+        const fetchData = async () => {
+            const result = await axios.get(
+                `http://127.0.0.1:8000/api/current_user`
+                , {
+                    headers: {
+                        'Authorization': `Bearer ${tokens.access}`
+                    }
+                });
+            setUserPro(result.data);
 
-                setUserPro(response.data)
-                // console.log(userPro)
+        };
+        const intervalId = setInterval(() => {
+            fetchData();
+        }, 5000);
 
-
-            })
-            .catch(error => {
-                // handle the error
-                console.log(error)
-            });
-    });
+        return () => clearInterval(intervalId);
+    }, []);
 
     return (
         <>
@@ -259,9 +266,9 @@ export default function Profile() {
 
 
                             <div className="text-center mt-28">
-                                <h3 className="text-2xl text-slate-700 font-bold leading-normal mb-1">{userPro.FirstName}</h3>
+                                <h3 className="text-2xl text-slate-700 font-bold leading-normal mb-1">{userPro.firstName} {userPro.lastName}</h3>
                                 <div className="text-xs mt-0 mb-2 text-slate-400 font-bold uppercase">
-                                    <i className="fas fa-map-marker-alt mr-2 text-slate-400 opacity-75"></i>{userPro.email}
+                                    <i className="fas fa-map-marker-alt mr-2 text-slate-400 opacity-75"></i>{userPro.location}
                                 </div>
                             </div>
 
@@ -281,7 +288,7 @@ export default function Profile() {
             {/**Edit profile */}
             {showModal3 ? (
                 <section>
-                    <div>
+                    <form onSubmit={handleUpdateProfile}>
                         <div className="main-modal fixed w-full inset-0 z-50 overflow-hidden flex justify-center items-center animated fadeIn faster">
                             <div className="border border-blue-500 shadow-lg modal-container bg-white w-4/12 md:max-w-11/12 mx-auto rounded-xl z-50 overflow-y-auto">
                                 <div className="modal-content py-4 text-left px-6">
@@ -301,47 +308,68 @@ export default function Profile() {
                                     <div>
                                         <div className="px-4 py-5 bg-white space-y-6 sm:p-6">
                                             {/**Title label & input */}
-                                            <div className="grid grid-cols-3 gap-6">
-                                                <div className="col-span-3 sm:col-span-2">
-                                                    <label for="company_website" className="block text-sm font-medium text-gray-700">
-                                                        Title
-                                                    </label>
-                                                    <div className="mt-1 flex rounded-md shadow-sm">
-                                                        <span className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">
-
-                                                        </span>
-                                                        <input defaultValue={userPro.username} required type="text" name="Title" id="Title" className="ml-6 focus:ring-indigo-500 focus:border-indigo-500 flex-1 block w-full rounded-none rounded-r-md sm:text-sm border-gray-300" placeholder="www.example.com" />
-                                                    </div>
+                                            <div>
+                                                <label for="about" className="block text-sm font-medium text-gray-700">
+                                                    First Name
+                                                </label>
+                                                <div className="mt-1">
+                                                    <input onInput={onprofileFirstName} defaultValue={userPro.firstName} required type="text" name="Title" id="Title" className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border-gray-300 rounded-md h-16" placeholder="Description"></input>
                                                 </div>
+
                                             </div>
+
+
+                                            {/**Last Name */}
+                                            <div>
+                                                <label for="about" className="block text-sm font-medium text-gray-700">
+                                                    Last Name
+                                                </label>
+                                                <div className="mt-1">
+                                                    <input onInput={onprofileLastName} defaultValue={userPro.lastName} id="LastName" required name="LastName" rows="3" className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border-gray-300 rounded-md h-16" placeholder="Description"></input>
+                                                </div>
+
+                                            </div>
+
                                             {/**Description label & input */}
                                             <div>
                                                 <label for="about" className="block text-sm font-medium text-gray-700">
-                                                    Description
+                                                    User Bio
                                                 </label>
                                                 <div className="mt-1">
-                                                    <input id="Description" required name="Description" rows="3" className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border-gray-300 rounded-md h-16" placeholder="Description"></input>
+                                                    <input onInput={onProfileDescriptionChange} defaultValue={userPro.description} id="Description" required name="Description" rows="3" className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border-gray-300 rounded-md h-16" placeholder="Description"></input>
                                                 </div>
 
                                             </div>
 
+
+
+                                            {/**Location*/}
                                             <div>
-                                                <input type="file" />
+                                                <label for="about" className="block text-sm font-medium text-gray-700">
+                                                    Country
+                                                </label>
+                                                <div className="mt-1">
+                                                    <input onInput={onprofileLocation} defaultValue={userPro.location} id="Location" required name="Location" rows="3" className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border-gray-300 rounded-md h-16" placeholder="Description"></input>
+                                                </div>
+
                                             </div>
+
+
+
                                         </div>
 
                                         <div className="flex justify-end pt-2 space-x-14">
                                             <button
-                                                className="px-4 bg-gray-200 p-3 rounded text-black hover:bg-gray-300 font-semibold" onClick={() => setShowModal3(false)}>Cancel</button>
+                                                className="px-4 bg-gray-200 p-3 rounded text-black hover:bg-gray-400 font-semibold" onClick={() => setShowModal3(false)}>Cancel</button>
                                             <button
-                                                className="px-4 bg-blue-500 p-3 ml-3 rounded-lg text-white hover:bg-teal-400" >Confirm</button>
+                                                className="px-4 bg-[#FF8B13] hover:bg-orange-700 p-3 ml-3 rounded-lg text-white" >Confirm</button>
                                         </div>
 
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </form>
                 </section>
             ) : null}
 
@@ -388,16 +416,16 @@ export default function Profile() {
                                                 </div>
                                                 {/**Rate */}
                                                 <div>
-                                                <Typography component="legend">Rate</Typography>
-                                                <Rating
-                                                    name="simple-controlled"
-                                                    value={Rate}
-                                                    onRateChange={onRateChange}
-                                                    onChange={(event, newValue) => {
-                                                        setRate(newValue);
-                                                    }}
+                                                    <Typography component="legend">Rate</Typography>
+                                                    <Rating
+                                                        name="simple-controlled"
+                                                        value={Rate}
+                                                        onRateChange={onRateChange}
+                                                        onChange={(event, newValue) => {
+                                                            setRate(newValue);
+                                                        }}
                                                     />
-                                                    </div>
+                                                </div>
 
                                                 {/* *Image */}
                                                 {/* <div>
@@ -439,7 +467,6 @@ export default function Profile() {
 
                                                 {/**Price */}
                                                 <div>
-                                                    <label>Price</label>
                                                     <label>Cost/day</label>
                                                     <input onChange={onCostChange} id='Cost' required name='Cost' type="text" className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" placeholder="0.0"></input>
                                                 </div>
@@ -485,7 +512,7 @@ export default function Profile() {
 
                                     {/**Header */}
                                     <button className="ml-auto mr-2 justify-between flex flex-wrap py-2" onClick={() => handleUpdate(post)}>
-                                                <AiFillEdit className="text-xl text-blue-500" />
+                                        <AiFillEdit className="text-xl text-blue-500" />
                                     </button>
 
                                     {/** Photos */}
@@ -511,7 +538,7 @@ export default function Profile() {
 
 
                                     <div className="px-6 justify-between flex flex-wrap p-1">
-                                        <MdDescription className="text-2xl"/>
+                                        <MdDescription className="text-2xl" />
                                         <p className="font-normal text-gray-700 mb-3 dark:text-gray-400 mr-auto ml-3">{post.description}</p>
                                     </div>
 
@@ -519,17 +546,17 @@ export default function Profile() {
                                     <div className="px-6 p-1 justify-between flex">
                                         {/* <p className="font-normal text-gray-700 mb-3 dark:text-gray-400">{post.rate}</p> */}
                                         {/* <Typography component="legend">Read only</Typography> */}
-                                        <MdStarRate className="text-2xl"/>
+                                        <MdStarRate className="text-2xl" />
                                         <Rating className="mr-auto ml-3" name="read-only" value={post.rate} readOnly />
                                     </div>
 
                                     <div className="px-6 justify-between flex p-1">
-                                        <GrMoney className="text-2xl"/>
+                                        <GrMoney className="text-2xl" />
                                         <p className="font-normal text-gray-700 mb-3 dark:text-gray-400 my-auto mr-auto ml-3">{post.price}</p>
                                     </div>
 
                                     <div className="px-6 justify-between flex p-1">
-                                        <MdLocationOn className="text-2xl"/>
+                                        <MdLocationOn className="text-2xl" />
                                         <p className="font-normal text-gray-700 mb-3 dark:text-gray-400 my-auto mr-auto ml-3">{post.location}</p>
                                     </div>
 
@@ -538,13 +565,13 @@ export default function Profile() {
 
                                         <button onClick={() => handleDelete(post.id)}
                                             className="ml-auto">
-                                        <MdOutlineDelete className="text-3xl text-red-700"/>
+                                            <MdOutlineDelete className="text-3xl text-red-700" />
                                         </button>
                                         {/* <button onClick={() => handleUpdate(post)}
                                             className="absolute bottom-0 right-20 h-12 w-16 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
                                             Update
                                         </button> */}
-                                            
+
                                     </div>
 
                                 </div>
@@ -586,7 +613,7 @@ export default function Profile() {
                                                             Title
                                                         </label>
                                                         <div className="mt-1 flex rounded-md shadow-sm">
-                                                            <input onChange={onTitleChange} defaultValue={currentPost.title} required type="text" name="Title" id="Title" className="block w-full px-2 py-1 mt-1 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" placeholder="Title" />
+                                                            <input onInput={onTitleChange} defaultValue={currentPost.title} required type="text" name="Title" id="Title" className="block w-full px-2 py-1 mt-1 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" placeholder="Title" />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -598,7 +625,7 @@ export default function Profile() {
                                                     </label>
 
                                                     <div className="mt-1">
-                                                        <textarea onChange={onDescriptionChange} defaultValue={currentPost.description} required name="Description" id="textarea" type="textarea" className="block w-full px-2 py-1 mt-1 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"></textarea>
+                                                        <textarea onInput={onDescriptionChange} defaultValue={currentPost.description} required name="Description" id="textarea" type="textarea" className="block w-full px-2 py-1 mt-1 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"></textarea>
                                                     </div>
 
                                                 </div>
@@ -608,41 +635,26 @@ export default function Profile() {
                                                     <label className="block text-sm font-medium text-gray-700">
                                                         Date
                                                     </label>
-                                                    <input onChange={onDateChange} defaultValue={currentPost.date} name='Date' id='Date' required type="date" className="block w-full px-2 py-1 mt-1 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"></input>
+                                                    <input onInput={onDateChange} defaultValue={currentPost.date} name='Date' id='Date' required type="date" className="block w-full px-2 py-1 mt-1 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"></input>
                                                 </div>
 
                                                 {/**Rate */}
                                                 <div>
-                                                    <label>
-                                                        Rate
-                                                    </label>
-                                                    {/* <input onChange={onRateChange} defaultValue={currentPost.rate} type="number" name='Rate' id='Rate' required className="block w-full px-2 py-1 mt-1 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" ></input> */}
-                                                    <Typography component="legend">Rate</Typography>
-                                                    <Rating
-                                                        onRateChange={onRateChange}
-                                                        name="simple-controlled"
-                                                        value={Rate}
-                                                        defaultValue={currentPost.rate}
-                                                        onChange={(event, newValue) => {
-                                                            setRate(newValue);
-                                                        }}
                                                     <label></label>
                                                     {/* <input onChange={onRateChange} defaultValue={currentPost.rate} type="number" name='Rate' id='Rate' required className="block w-full px-2 py-1 mt-1 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" ></input> */}
                                                     <Typography component="legend">Rate</Typography>
                                                     <Rating
-                                                    name="simple-controlled"
-                                                    value={Rate}
-                                                    onRateChange={onRateChange}
-                                                    onChange={(event, newValue) => {
-                                                        setRate(newValue);
-                                                    }}
+                                                        name="simple-controlled"
+                                                        value={Rate}
+                                                        onRateChange={onRateChange}
+                                                        onChange={(event, newValue) => {
+                                                            setRate(newValue);
+                                                        }}
                                                     />
                                                 </div>
 
                                                 {/**Location */}
                                                 <div>
-                                                    <label className="my-10 py-10">Location</label>
-                                                    <input onChange={onLocationChange} defaultValue={currentPost.location} name='Location' id='Location' required type="text" className="block w-full px-2 py-1 mt-1 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" >
                                                     <label className="my-10 py-10">City</label>
                                                     <input onInput={onLocationChange} defaultValue={currentPost.location} name='Location' id='Location' required type="text" className="block w-full px-2 py-1 mt-1 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" >
                                                     </input>
@@ -650,8 +662,6 @@ export default function Profile() {
 
                                                 {/**Price */}
                                                 <div>
-                                                    <label>Price</label>
-                                                    <input onChange={onCostChange} defaultValue={currentPost.price} id='Cost' required name='Cost' type="text" className="block w-full px-2 py-1 mt-1 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" placeholder="0.0" ></input>
                                                     <label>Cost/day</label>
                                                     <input onInput={onCostChange} defaultValue={currentPost.price} id='Cost' required name='Cost' type="text" className="block w-full px-2 py-1 mt-1 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring" placeholder="0.0" ></input>
                                                 </div>
