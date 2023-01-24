@@ -19,8 +19,6 @@ export default function Profile() {
     {/**This for Show modal */ }
     {/**Post */ }
     const [showModal, setShowModal] = useState(false);
-    {/**update */ }
-    // const [showModal2, setShowModal2] = useState(false);
     {/**profile */ }
     const [showModal3, setShowModal3] = useState(false);
 
@@ -40,7 +38,7 @@ export default function Profile() {
     const [Cost, setCost] = useState('');
     const [images, setImages] = useState(null);
     const [updated, setUpdated] = useState(false);
-    // profile States
+    // profile States*******************************************************************************
     const [profileFirstName, setprofileFirstName] = useState('');
     const [profileDescription, setprofileDescription] = useState('');
     const [profileLastName, setprofileLastName] = useState('');
@@ -48,7 +46,7 @@ export default function Profile() {
     const [profileLocation, setprofileLocation] = useState('');
     const [profileUsername, setprofileUsername] = useState('');
 
-    // Update Post functions
+    // {Update Post functions}**********************************************************************
     const onFileChange = e => setImage(e.target.files[0]);
     const onTitleChange = e => setTitle(e.target.value);
     const onDescriptionChange = e => setDescription(e.target.value);
@@ -57,7 +55,7 @@ export default function Profile() {
     const onLocationChange = e => setLocation(e.target.value);
     const onCostChange = e => setCost(e.target.value);
 
-    // Update profile functions
+    //{ Update profile functions }*******************************************************************
     const onprofileFirstName = e => setprofileFirstName(e.target.value);
     const onProfileDescriptionChange = e => setprofileDescription(e.target.value);
     const onprofileLastName = e => setprofileLastName(e.target.value);
@@ -312,7 +310,7 @@ export default function Profile() {
                                                     First Name
                                                 </label>
                                                 <div className="mt-1">
-                                                    <input onInput={onprofileFirstName} defaultValue={userPro.firstName} required type="text" name="Title" id="Title" className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border-gray-300 rounded-md h-16" placeholder="First Name"></input>
+                                                    <input onInput={onprofileFirstName} defaultValue={userPro.firstName} required type="text" name="Title" id="Title" className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border-gray-300 rounded-md h-16" placeholder="First Name:"></input>
                                                 </div>
 
                                             </div>
