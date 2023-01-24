@@ -64,9 +64,9 @@ export default function Comments({ postId }) {
                   onClick={() => handleDelete(item.id)}
                   type="button"
                   title="Start buying"
-                  className="w-full py-3 px-6 text-center rounded-full transition bg-blue-400 hover:bg-blue-200 active:bg-blue-400 focus:bg-yellow-300 sm:w-max"
+                  //className="w-full py-3 px-6 text-center rounded-full transition bg-blue-400 hover:bg-blue-200 active:bg-blue-400 focus:bg-yellow-300 sm:w-max"
                 >
-                  <span className="block text-black font-semibold text-sm">
+                  <span className="block text-black font-semibold text-sm hover:bg-orange-200 active:bg-orange-400 focus:bg-orange-600">
                     {del}
                   </span>
                 </button>
@@ -76,7 +76,7 @@ export default function Comments({ postId }) {
         ))}
       </div>
 
-      <div className="grid  place-items-center">
+      <div className="grid  place-items-center ">
         <CreateComment postId={postId} />
       </div>
     </>

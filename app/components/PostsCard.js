@@ -151,7 +151,7 @@ export default function PostsCard({ handleUpdate }) {
                   />
                 </svg>
                 <p className="inline align-middle text-gray-700 ml-2 font-medium text-lg">
-                  {post.price}/D
+                  {post.price}$/D
                 </p>
               </div>
 
