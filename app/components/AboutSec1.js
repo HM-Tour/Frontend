@@ -1,6 +1,6 @@
 export default function AboutSec1() {
   const bg = {
-    backgroundImage: "url('/assets/wcb.jpg')",
+    backgroundImage: "url('/assets/wcbr.png')",
     backgroundRepeat: "no-repeat",
     backgroundPosition: "right bottom",
   };
@@ -26,7 +26,7 @@ export default function AboutSec1() {
           <div className="item">
             <div className="images">
               <img
-                src={"https://www.gonomad.com/wp-content/uploads/2019/12/digital-nomad.jpg"}
+                src={"/assets/f1.jpg"}
                 width={500}
                 height={350}
                 className="shadow-lg rounded-lg"
@@ -34,7 +34,7 @@ export default function AboutSec1() {
             </div>
             <div className="info flex justify-center flex-col">
               <div className="title">
-                <h1 className="font-bold text-ml md:text-xl text-center mt-5 mb-3">
+                <h1 className="font-bold  text-ml md:text-xl text-center mt-5 mb-3">
                 CONNECTION
                 </h1>
               </div>
@@ -47,7 +47,7 @@ export default function AboutSec1() {
           <div className="item">
             <div className="images">
               <img
-                src={"/assets/travelEx.jpg"}
+                src={"/assets/f2.jpg"}
                 width={500}
                 height={350}
                 className="shadow-lg rounded-lg"
@@ -69,7 +69,7 @@ export default function AboutSec1() {
           <div className="item">
             <div className="images">
               <img
-                src={"/assets/travelAd1.PNG"}
+                src={"/assets/f3.png"}
                 width={500}
                 height={350}
                 className="shadow-lg rounded-lg"
@@ -116,7 +116,7 @@ function Slide() {
     <div className="grid md:grid-cols-2">
       <div className="image">
       <video
-        src={"/assets/videologo.mp4"}
+        src={"/assets/videon.mp4"}
         controls
         className="mr-8">
             
