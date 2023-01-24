@@ -31,7 +31,11 @@ export default function Profile() {
     const [userPro, setUserPro] = useState([]);
 
 
+
     {/**Post States */ }
+
+    
+
     const [image, setImage] = useState(null);
     const [Title, setTitle] = useState('');
     const [Description, setDescription] = useState('');
@@ -41,6 +45,7 @@ export default function Profile() {
     const [Cost, setCost] = useState('');
     const [images, setImages] = useState(null);
     const [updated, setUpdated] = useState(false);
+
     // profile States
     const [profileFirstName, setprofileFirstName] = useState('');
     const [profileDescription, setprofileDescription] = useState('');
@@ -50,6 +55,10 @@ export default function Profile() {
     const [profileUsername, setprofileUsername] = useState('');
 
     // Update Post functions
+
+
+   
+
     const onFileChange = e => setImage(e.target.files[0]);
     const onTitleChange = e => setTitle(e.target.value);
     const onDescriptionChange = e => setDescription(e.target.value);
@@ -78,12 +87,13 @@ export default function Profile() {
                 'Accept': 'application/json',
                 'Content-Type': 'multipart/form-data',
                 "Authorization": `Bearer ${tokens.access}`
+
+
             }
         };
 
         const formData = new FormData();
         formData.append('image', image);
-        formData.append('alt_text', altText);
         formData.append('Title', Title);
         formData.append('Description', Description);
         formData.append('Date', Date);
@@ -125,22 +135,40 @@ export default function Profile() {
     
         return () => clearInterval(intervalId);
       }, []);
+
     //Update post
 
-    const handleUpdatePost = (event) => {
-        event.preventDefault();
+
+
+
+
+
+
+
+    const handleUpdatePost = async ( e ) => {
+        //e.preventDefault();
+
+        const config = {
+            headers: {
+                'Content-Type': 'application/json',
+                "Authorization": `Bearer ${tokens.access}`
+            }
+        };
         console.log(tokens.access)
-        const body = JSON.stringify({
+
+        const body = JSON.stringify ({
             title: Title,
             description: Description,
             date: Date,
             rate: Rate,
             location: Location,
-            price: Cost,
+            price: Cost
         });
-        const id = currentPost.id
-        console.log(id, body)
+        const id=currentPost.id
+        console.log(id,body)
+
         axios
+
             .put(`http://127.0.0.1:8000/api/posts/update/${id}/`, body, {
                 headers: {
                     "Authorization": `Bearer ${tokens.access}`,
@@ -149,18 +177,22 @@ export default function Profile() {
             })
             .then(res => {
                 //update the post data in the state to reflect the changes
+
+        .put(`http://127.0.0.1:8000/api/posts/update/${id}/`, body, config)    
+        .then(res => {
+            //update the post data in the state to reflect the changes
+
                 console.log(res.data)
                 alert("Updated successfully!")
                 setSelectedPost(false)
                 
             })
             .catch(error => {
-                console.log(error);
+                //console.log(error);
             });
-
-    }
-    // console.log(handleUpdatePost);
-
+        }
+        // console.log(handleUpdatePost);
+        
     const [currentPost, setCurrentPost] = useState(null);
     const [selectedPost, setSelectedPost] = useState(false);
 
@@ -219,8 +251,12 @@ export default function Profile() {
 
 
 
+     {/**User */ }
 
-    {/**User */ }
+
+ 
+
+
 
     useEffect(() => {
         const fetchData = async () => {
@@ -231,7 +267,9 @@ export default function Profile() {
                 'Authorization': `Bearer ${tokens.access}`
             }});
             setUserPro(result.data);
+
             
+
         };
         const intervalId = setInterval(() => {
           fetchData();
@@ -239,6 +277,7 @@ export default function Profile() {
     
         return () => clearInterval(intervalId);
       }, []);
+
 
     return (
         <>
@@ -249,7 +288,7 @@ export default function Profile() {
                     <div className="relative max-w-md mx-auto md:max-w-2xl mt-6 ml- min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded-xl mt-16">
                         <div className="px-6">
                             <div className="flex flex-wrap justify-center">
-                                <div className="w-full flex justify-center">
+                                <div className="w-50 flex justify-center">
                                     <div className="relative">
                                         <div className="absolute top-0 right-0 h-16 w-16 flex flex-wrap justify-between max-w-md mx-auto md:max-w-2xl">
                                             <button className="ml-80" onClick={() => setShowModal3(true)}>
@@ -264,7 +303,11 @@ export default function Profile() {
 
 
                             <div className="text-center mt-28">
+
                                 <h3 className="text-2xl text-slate-700 font-bold leading-normal mb-1">{userPro.firstName} {userPro.lastName}</h3>
+
+                                <h3 className="text-2xl text-slate-700 font-bold leading-normal mb-1">{userPro.username}</h3>
+
                                 <div className="text-xs mt-0 mb-2 text-slate-400 font-bold uppercase">
                                     <i className="fas fa-map-marker-alt mr-2 text-slate-400 opacity-75"></i>{userPro.location}
                                 </div>
