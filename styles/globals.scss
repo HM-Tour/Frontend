@@ -8,14 +8,14 @@ html,
 body {
   padding: 0;
   margin: 0;
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Playfair Display', sans-serif;
   &:before{
     content:'';
     content: "";
     width: 100%;
     height: 100vh;
-    background: linear-gradient(to right bottom, #f1f1f1, #ebecf1, #e3fbff, #e7e7e7, #e6d4a3);
-    // background: #ffffff;
+    //background: linear-gradient(to right bottom, #f1f1f1, #ebecf1, #e3fbff, #e7e7e7, #e6d4a3);
+    background: #f4f6eb;
     //background-image: url("./bg.jpg");
     position: fixed;
     left: 0;
