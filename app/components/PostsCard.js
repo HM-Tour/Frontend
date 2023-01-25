@@ -8,7 +8,7 @@ import useSWR from 'swr';
 
 // const fetchDataCall = async () => {
 //   let apiReturn = await axios
-//     .get("http://127.0.0.1:8000/api/posts")
+//     .get("http://52.87.231.115:8000/api/posts")
 //     .then(async function(response) {
 //       return response;
 //     })
@@ -23,7 +23,7 @@ export default function PostsCard({ handleUpdate }) {
   //const [postData, setPostData] = useState([]);
 
 
-  const url = "http://127.0.0.1:8000/api/posts"
+  const url = "http://52.87.231.115:8000/api/posts"
 
   const fetcher = url => axios.get(url).then(res => res.data);
   console.log("fetcher",fetcher)
@@ -36,7 +36,7 @@ export default function PostsCard({ handleUpdate }) {
   // useEffect(() => {
 
   //   const fetchData = async () => {
-  //     const result = await axios.get("http://127.0.0.1:8000/api/posts")
+  //     const result = await axios.get("http://52.87.231.115:8000/api/posts")
   //     // .then(result => {       
   //     //   return result.data;
   //     // } )

@@ -19,7 +19,7 @@ export default function AuthWrapper({ children }) {
     function login(userInfo) {
 
         
-        const url = 'http://127.0.0.1:8000/api/token/'
+        const url = 'http://52.87.231.115:8000/api/token/'
         try {
             axios.post(url, userInfo)
             .then((res) => {
