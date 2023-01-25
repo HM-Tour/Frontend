@@ -17,7 +17,7 @@ export default function Home({}) {
 
   function handleUpdate(post) {
     setData(post);
-    post && localStorage.setItem("details", JSON.stringify(post));
+    typeof window !== 'undefined' && post && localStorage.setItem("details", JSON.stringify(post));
   }
 
 

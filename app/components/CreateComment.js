@@ -26,7 +26,7 @@ export default function CreateComment({ postId }) {
     };
 
     await fetch(
-      `http://127.0.0.1:8000/api/comments/post/${postId}`,
+      `http://52.87.231.115:8000/api/comments/post/${postId}`,
       requestOptions
     );
 
