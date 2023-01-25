@@ -9,7 +9,7 @@ export default function AuthWrapper({ children }) {
 
 
     const [globalState, setGlobalState] = useState({
-        tokens: typeof window !== 'undefined' ? (localStorage.getItem('data') ? JSON.parse(localStorage.getItem('data')) : null) : null ,
+        tokens: localStorage.getItem('data') ? JSON.parse(localStorage.getItem('data')) : null,
         isAuthenticated: localStorage.getItem('data') ? true : false,
         login
     });
@@ -23,8 +23,7 @@ export default function AuthWrapper({ children }) {
         try {
             axios.post(url, userInfo)
             .then((res) => {
-                typeof window !== 'undefined' ? (localStorage.setItem('data', JSON.stringify(res.data))) : null;
-
+                localStorage.setItem('data', JSON.stringify(res.data));
                 router.push("/")
                 setGlobalState({
                     tokens: res.data,
