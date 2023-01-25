@@ -9,7 +9,7 @@ export default function AuthWrapper({ children }) {
 
 
     const [globalState, setGlobalState] = useState({
-        tokens: localStorage.getItem('data') ? JSON.parse(localStorage.getItem('data')) : null,
+        tokens: typeof window !== 'undefined' && localStorage.getItem('data') ? JSON.parse(localStorage.getItem('data')) : null,
         isAuthenticated: localStorage.getItem('data') ? true : false,
         login
     });
