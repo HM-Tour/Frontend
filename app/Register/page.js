@@ -23,7 +23,7 @@ export default function Register() {
     e.preventDefault();
 
     axios
-      .post("http://127.0.0.1:8000/api/users/users/", user)
+      .post("http://52.87.231.115:8000/api/users/users/", user)
       .then((response) => {
         if (response.status === 201) {
           alert("User has been created successfully");

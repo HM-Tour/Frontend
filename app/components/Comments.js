@@ -11,7 +11,7 @@ export default function Comments({ postId }) {
   useEffect(() => {
     const fetchData = async () => {
       const result = await axios.get(
-        `http://127.0.0.1:8000/api/comments/post/${postId}`
+        `http://52.87.231.115:8000/api/comments/post/${postId}`
       );
       setData(result.data);
     };
@@ -31,7 +31,7 @@ export default function Comments({ postId }) {
       headers: headers,
     };
 
-    await fetch(`http://127.0.0.1:8000/api/comments/${id}`, requestOptions);
+    await fetch(`http://52.87.231.115:8000/api/comments/${id}`, requestOptions);
   };
 
   const del = (

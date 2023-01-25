@@ -13,7 +13,7 @@ export default function PostSummary({handleUpdate}) {
     //const [postData, setPostData] = useState([]);
   
   
-    const url = "http://127.0.0.1:8000/api/posts"
+    const url = "http://52.87.231.115:8000/api/posts"
 
     const fetcher = url => axios.get(url).then(res => res.data);
     console.log("fetcher",fetcher)
@@ -26,7 +26,7 @@ export default function PostSummary({handleUpdate}) {
     // useEffect(() => {
     //   const fetchData = async () => {
     //     const result = await axios.get(
-    //       "http://127.0.0.1:8000/api/posts"
+    //       "http://52.87.231.115:8000/api/posts"
   
     //     );
   

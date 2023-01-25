@@ -80,7 +80,6 @@ export default function Profile() {
 
         const formData = new FormData();
         formData.append('image', image);
-        formData.append('alt_text', altText);
         formData.append('Title', Title);
         formData.append('Description', Description);
         formData.append('Date', Date);
@@ -92,7 +91,7 @@ export default function Profile() {
 
         const body = formData;
         try {
-            const res = await axios.post('http://localhost:8000/api/posts/upload', body, config);
+            const res = await axios.post('http://52.87.231.115:8000/api/posts/upload', body, config);
 
             if (res.status === 201) {
                 setUpdated(!updated);
@@ -109,7 +108,7 @@ export default function Profile() {
     useEffect(() => {
         const fetchData = async () => {
             const result = await axios.get(
-                `http://127.0.0.1:8000/api/posts/user-posts/`
+                `http://52.87.231.115:8000/api/posts/user-posts/`
                 , {
                     headers: {
                         'Authorization': `Bearer ${tokens.access}`
@@ -139,7 +138,7 @@ export default function Profile() {
         const id = currentPost.id
         console.log(id, body)
         axios
-            .put(`http://127.0.0.1:8000/api/posts/update/${id}/`, body, {
+            .put(`http://52.87.231.115:8000/api/posts/update/${id}/`, body, {
                 headers: {
                     "Authorization": `Bearer ${tokens.access}`,
                     'Content-Type': 'application/json',
@@ -190,7 +189,7 @@ export default function Profile() {
         console.log(id, body)
 
         axios
-            .put(`http://127.0.0.1:8000/api/users/update/${id}/`, body, config)
+            .put(`http://52.87.231.115:8000/api/users/update/${id}/`, body, config)
             .then(res => {
                 //update the post data in the state to reflect the changes
                 console.log(res.data)
@@ -211,7 +210,7 @@ export default function Profile() {
             method: "DELETE",
             headers: headers,
         };
-        await fetch(`http://127.0.0.1:8000/api/posts/${id}`, requestOptions);
+        await fetch(`http://52.87.231.115:8000/api/posts/${id}`, requestOptions);
     };
 
 
@@ -223,7 +222,7 @@ export default function Profile() {
     useEffect(() => {
         const fetchData = async () => {
             const result = await axios.get(
-                `http://127.0.0.1:8000/api/current_user`
+                `http://52.87.231.115:8000/api/current_user`
                 , {
                     headers: {
                         'Authorization': `Bearer ${tokens.access}`
