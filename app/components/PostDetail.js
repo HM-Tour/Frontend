@@ -9,7 +9,7 @@ import * as React from "react";
 import { MdStarRate } from "react-icons/md";
 
 export default function PostDetail() {
-  const details = typeof window !== 'undefined' && JSON.parse(localStorage.getItem("details"));
+  const details = typeof window !== 'undefined' ? (JSON.parse(localStorage.getItem("details"))) : null;
 
   return (
     <>
