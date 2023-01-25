@@ -116,7 +116,7 @@ function Slide() {
     <div className="grid md:grid-cols-2">
       <div className="image">
       <video
-        src={"/assets/videon.mp4"}
+        src={"/assets/Videom.mp4"}
         controls
         className="mr-8">
             
