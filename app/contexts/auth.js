@@ -23,6 +23,7 @@ export default function AuthWrapper({ children }) {
         try {
             axios.post(url, userInfo)
             .then((res) => {
+                typeof window !== 'undefined' &&
                 localStorage.setItem('data', JSON.stringify(res.data));
                 router.push("/")
                 setGlobalState({
